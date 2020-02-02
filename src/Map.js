@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { Map, TileLayer, Polygon } from 'react-leaflet';
 
-function GameMap() {
+function GameMap({ defaultPosition }) {
     const [zoom, setZoom] = useState(17);
-    const [position, setPosition] = useState([48.583079, 7.687539]);
 
     const [polygonPosition, setPolygonPosition] = useState([]);
 
@@ -12,6 +11,7 @@ function GameMap() {
         setPolygonPosition(polygonPosition.concat(newPositon));
     };
 
+    console.log(defaultPosition);
     return (
         <>
             <link
@@ -22,10 +22,12 @@ function GameMap() {
                 rel="stylesheet"
                 href="//cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.css"
             />
-            <Map center={position} zoom={zoom} onClick={handleClick}>
-                <TileLayer url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png" />
-                <Polygon color="purple" positions={polygonPosition} />
-            </Map>
+            {defaultPosition.length !== 0 && (
+                <Map center={defaultPosition} zoom={zoom} onClick={handleClick}>
+                    <TileLayer url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png" />
+                    <Polygon color="purple" positions={polygonPosition} />
+                </Map>
+            )}
         </>
     );
 }
