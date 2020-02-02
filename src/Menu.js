@@ -23,6 +23,12 @@ const Menu = () => {
                     <li>
                         <Link to="/maps">Maps</Link>
                     </li>
+                    <li>
+                        <Link to="/configuration">Configuration</Link>
+                    </li>
+                    <li>
+                        <Link to="/games">Games</Link>
+                    </li>
                 </ul>
             </nav>
         );

@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Route } from 'react-router-dom';
+import { Map, TileLayer, Polygon } from 'react-leaflet';
 
 import { AuthProvider } from './auth';
 
@@ -7,14 +8,16 @@ import Menu from './Menu';
 import Signin from './Signin';
 import Signup from './Signup';
 import Maps from './Maps';
+import Configuration from './Configuration';
+import Games from './Games';
 
 const Home = () => <h3>You're at home</h3>;
 
 const App = () => {
     return (
         <AuthProvider>
+            <Menu />
             <Route exact path="/">
-                <Menu />
                 <Home />
             </Route>
             <Route path="/signin">
@@ -25,6 +28,12 @@ const App = () => {
             </Route>
             <Route path="/maps">
                 <Maps />
+            </Route>
+            <Route path="/configuration">
+                <Configuration />
+            </Route>
+            <Route path="/games">
+                <Games />
             </Route>
         </AuthProvider>
     );
