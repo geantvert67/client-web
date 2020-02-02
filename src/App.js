@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
+import GameMap from './Map';
 
 function App() {
-    return <h1>Hello world</h1>;
+    return (
+        <>
+            <GameMap />
+        </>
+    );
 }
 
 export default App;
