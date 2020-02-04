@@ -7,7 +7,7 @@ function App() {
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(e => {
             setDevicePosition([e.coords.latitude, e.coords.longitude]);
-        });
+        }) || setDevicePosition([48.529918, 7.737041]);
     }, []);
 
     return (

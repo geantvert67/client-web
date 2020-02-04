@@ -8,7 +8,7 @@ p {
     text-align: center;
 }
 .leaflet-container {
-    height: 800px;
+    height: 600px;
     width: 80%;
     margin: 0 auto;
 }
@@ -30,8 +30,4 @@ code {
 .leaflet-div-icon {
     background: transparent !important;
     border: none !important;
-}
-
-.neutral {
-    color: grey;
 }

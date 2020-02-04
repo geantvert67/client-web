@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { iconWhiteFlag } from './FlagIcons';
 import { Map, TileLayer, Polygon, Marker, Popup } from 'react-leaflet';
 
@@ -7,7 +7,32 @@ function GameMap({ defaultPosition, action }) {
     const [polygonPosition, setPolygonPosition] = useState([]);
     const [flagsPositions, setFlagsPositions] = useState([]);
 
-    console.log(flagsPositions);
+    useEffect(() => {
+        let conflict = false;
+        flagsPositions.filter(
+            flag => (conflict = conflict || !isInZone(flag[0], flag[1]))
+        );
+
+        if (conflict) {
+            if (
+                // eslint-disable-next-line no-restricted-globals
+                confirm(
+                    'Attention ! La nouvelle zone ne contient pas tous les drapeaux déjà disposés. Les drapeaux hors de la zone seront supprimés. Voulez-vous continuer ?'
+                )
+            ) {
+                setFlagsPositions(
+                    flagsPositions.filter(point => isInZone(point[0], point[1]))
+                );
+            } else
+                setPolygonPosition(
+                    polygonPosition.filter(
+                        point =>
+                            polygonPosition.indexOf(point) !=
+                            polygonPosition.length - 1
+                    )
+                );
+        }
+    }, [polygonPosition]);
 
     const handleClick = e => {
         return action === 'flags'
@@ -22,23 +47,41 @@ function GameMap({ defaultPosition, action }) {
         setPolygonPosition(polygonPosition.concat(newPositon));
     };
 
-    const addFlag = e => {
-        const newPositon = [[e.latlng.lat, e.latlng.lng]];
-        return polygonPosition.length >= 3
+    const addFlag = point => {
+        const newPositon = [[point.latlng.lat, point.latlng.lng]];
+        return isInZone(point.latlng.lat, point.latlng.lng)
             ? setFlagsPositions(flagsPositions.concat(newPositon))
-            : alert(
-                  'Veuillez créer une zone de jeu valide avant de positionner des drapeaux.'
-              );
+            : alert('Veuillez placer les drapeaux dans une zone de jeu.');
     };
 
     const moveFlag = (e, flag) => {
-        console.log(e);
-
         const otherFlags = flagsPositions.filter(f => f !== flag);
         const newPositon = [
             [e.target.getLatLng().lat, e.target.getLatLng().lng]
         ];
-        setFlagsPositions(otherFlags.concat(newPositon));
+        return isInZone(e.target.getLatLng().lat, e.target.getLatLng().lng)
+            ? setFlagsPositions(otherFlags.concat(newPositon))
+            : setFlagsPositions(otherFlags);
+    };
+
+    const isInZone = (x, y) => {
+        var inside = false;
+        for (
+            var i = 0, j = polygonPosition.length - 1;
+            i < polygonPosition.length;
+            j = i++
+        ) {
+            let xi = polygonPosition[i][0],
+                yi = polygonPosition[i][1];
+            let xj = polygonPosition[j][0],
+                yj = polygonPosition[j][1];
+
+            let intersect =
+                yi > y != yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi;
+            if (intersect) inside = !inside;
+        }
+
+        return inside;
     };
 
     return (
