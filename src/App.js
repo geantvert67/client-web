@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import GameMap from './Map';
+import MapCreator from './MapCreator';
 
 function App() {
     const [devicePosition, setDevicePosition] = useState([]);
@@ -10,10 +10,9 @@ function App() {
         });
     }, []);
 
-    console.log(devicePosition);
     return (
         <>
-            <GameMap defaultPosition={devicePosition} />
+            <MapCreator defaultPosition={devicePosition} />
         </>
     );
 }
