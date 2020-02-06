@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
-import { useAuth } from './auth';
+import { useHistory } from 'react-router-dom';
 
 const Configuration = () => {
+    const history = useHistory();
+    const handleSubmit = e => {
+        e.preventDefault();
+        history.push('./mapcreator');
+    };
+
     return (
         <>
             <h1>Choix des paramètres</h1>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <>
                     <label for="name">Choix du nom de la partie :</label>
                     <input type="text" name="name" id="name" />
@@ -28,7 +34,7 @@ const Configuration = () => {
                 </>
                 <br />
                 <>
-                    <label for="nbrTeam">Nombre d'équipe?</label>
+                    <label for="nbrTeam">Nombre d'équipes?</label>
                     <input type="number" name="nbrTeam" id="nbrTeam" />
                 </>
                 <br />
@@ -38,11 +44,6 @@ const Configuration = () => {
                 </>
                 <br />
                 <>
-                    <button>Mise en place de la carte</button>
-                </>
-                <br />
-                <>
-                    <button>Exporter une configurationn de base</button>
                     <button type="submit">Valider</button>
                 </>
             </form>

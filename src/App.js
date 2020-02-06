@@ -7,7 +7,7 @@ import { AuthProvider } from './auth';
 import Menu from './Menu';
 import Signin from './Signin';
 import Signup from './Signup';
-import Maps from './Maps';
+import MapCreator from './MapCreator';
 import Configuration from './Configuration';
 import Games from './Games';
 
@@ -26,8 +26,8 @@ const App = () => {
             <Route path="/signup">
                 <Signup />
             </Route>
-            <Route path="/maps">
-                <Maps />
+            <Route path="/mapcreator">
+                <MapCreator />
             </Route>
             <Route path="/configuration">
                 <Configuration />

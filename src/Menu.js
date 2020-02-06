@@ -21,7 +21,7 @@ const Menu = () => {
                         <Link to="/signup">Signup</Link>
                     </li>
                     <li>
-                        <Link to="/maps">Maps</Link>
+                        <Link to="/mapcreator">Configuration de la map</Link>
                     </li>
                     <li>
                         <Link to="/configuration">Configuration</Link>
