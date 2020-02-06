@@ -1,20 +1,42 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { Route } from 'react-router-dom';
+import { Map, TileLayer, Polygon } from 'react-leaflet';
+
+import { AuthProvider } from './auth';
+
+import Menu from './Menu';
+import Signin from './Signin';
+import Signup from './Signup';
 import MapCreator from './MapCreator';
+import Configuration from './Configuration';
+import Games from './Games';
 
-function App() {
-    const [devicePosition, setDevicePosition] = useState([]);
+const Home = () => <h3>You're at home</h3>;
 
-    useEffect(() => {
-        navigator.geolocation.getCurrentPosition(e => {
-            setDevicePosition([e.coords.latitude, e.coords.longitude]);
-        }) || setDevicePosition([48.529918, 7.737041]);
-    }, []);
-
+const App = () => {
     return (
-        <>
-            <MapCreator defaultPosition={devicePosition} />
-        </>
+        <AuthProvider>
+            <Menu />
+            <Route exact path="/">
+                <Home />
+            </Route>
+            <Route path="/signin">
+                <Signin />
+            </Route>
+            <Route path="/signup">
+                <Signup />
+            </Route>
+            <Route path="/mapcreator">
+                <MapCreator />
+            </Route>
+            <Route path="/configuration">
+                <Configuration />
+            </Route>
+            <Route path="/games">
+                <Games />
+            </Route>
+        </AuthProvider>
     );
-}
+};
 
 export default App;
