@@ -1,8 +1,8 @@
 import L from 'leaflet';
 
 const iconWhiteFlag = new L.Icon({
-    iconUrl: require('./img/white-flag.svg'),
-    iconRetinaUrl: require('./img/white-flag.svg'),
+    iconUrl: require('../../img/white-flag.svg'),
+    iconRetinaUrl: require('../../img/white-flag.svg'),
     iconAnchor: null,
     popupAnchor: null,
     shadowUrl: null,
