@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { iconWhiteFlag } from './FlagIcons';
 import ZoneButtons from './ZoneButtons';
 import { Map, TileLayer, Polygon, Marker } from 'react-leaflet';
 import FlagsButtons from './FlagsButtons';
-import { isInZone } from './utils';
+import { isInZone } from '../../utils/utils';
+import Markers from './Markers';
 
 function GameMap({ defaultPosition, action }) {
     const [zoom, setZoom] = useState(17);
@@ -77,6 +77,14 @@ function GameMap({ defaultPosition, action }) {
             : setFlagsPositions(otherFlags);
     };
 
+    const movePolygon = (e, point) => {
+        const otherPoints = polygonPosition.filter(f => f !== point);
+        const newPositon = [
+            [e.target.getLatLng().lat, e.target.getLatLng().lng]
+        ];
+        setPolygonPosition(otherPoints.concat(newPositon));
+    };
+
     return (
         <>
             <link
@@ -97,15 +105,12 @@ function GameMap({ defaultPosition, action }) {
                         <TileLayer url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png" />
                         <Polygon color="green" positions={polygonPosition} />
 
-                        {flagsPositions.map(flag => (
-                            <Marker
-                                key={flag}
-                                position={flag}
-                                icon={iconWhiteFlag}
-                                draggable
-                                onDragend={e => moveFlag(e, flag)}
-                            ></Marker>
-                        ))}
+                        <Markers
+                            polygonPosition={polygonPosition}
+                            flagsPositions={flagsPositions}
+                            movePolygon={movePolygon}
+                            moveFlag={moveFlag}
+                        />
                     </Map>
 
                     {action === 'mainZone' ? (

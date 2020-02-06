@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { Route } from 'react-router-dom';
 import { Map, TileLayer, Polygon } from 'react-leaflet';
 
-import { AuthProvider } from './auth';
+import { AuthProvider } from '../utils/auth';
 
 import Menu from './Menu';
-import Signin from './Signin';
-import Signup from './Signup';
-import MapCreator from './MapCreator';
-import Configuration from './Configuration';
+import Signin from './authentification/Signin';
+import Signup from './authentification/Signup';
+import MapCreator from './map/MapCreator';
+import Configuration from './configuration/Configuration';
 import Games from './Games';
 
 const Home = () => <h3>You're at home</h3>;
