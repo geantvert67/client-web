@@ -1,16 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { iconWhiteFlag } from './FlagIcons';
-import { Map, TileLayer, Polygon, Marker, Popup } from 'react-leaflet';
+import ZoneButtons from './ZoneButtons';
+import { Map, TileLayer, Polygon, Marker } from 'react-leaflet';
+import FlagsButtons from './FlagsButtons';
+import { isInZone } from './utils';
 
 function GameMap({ defaultPosition, action }) {
     const [zoom, setZoom] = useState(17);
     const [polygonPosition, setPolygonPosition] = useState([]);
     const [flagsPositions, setFlagsPositions] = useState([]);
 
+    console.log(flagsPositions);
+
     useEffect(() => {
         let conflict = false;
         flagsPositions.filter(
-            flag => (conflict = conflict || !isInZone(flag[0], flag[1]))
+            flag =>
+                (conflict =
+                    conflict || !isInZone(flag[0], flag[1], polygonPosition))
         );
 
         if (conflict) {
@@ -21,13 +28,15 @@ function GameMap({ defaultPosition, action }) {
                 )
             ) {
                 setFlagsPositions(
-                    flagsPositions.filter(point => isInZone(point[0], point[1]))
+                    flagsPositions.filter(point =>
+                        isInZone(point[0], point[1], polygonPosition)
+                    )
                 );
             } else
                 setPolygonPosition(
                     polygonPosition.filter(
                         point =>
-                            polygonPosition.indexOf(point) !=
+                            polygonPosition.indexOf(point) !==
                             polygonPosition.length - 1
                     )
                 );
@@ -49,7 +58,7 @@ function GameMap({ defaultPosition, action }) {
 
     const addFlag = point => {
         const newPositon = [[point.latlng.lat, point.latlng.lng]];
-        return isInZone(point.latlng.lat, point.latlng.lng)
+        return isInZone(point.latlng.lat, point.latlng.lng, polygonPosition)
             ? setFlagsPositions(flagsPositions.concat(newPositon))
             : alert('Veuillez placer les drapeaux dans une zone de jeu.');
     };
@@ -59,29 +68,13 @@ function GameMap({ defaultPosition, action }) {
         const newPositon = [
             [e.target.getLatLng().lat, e.target.getLatLng().lng]
         ];
-        return isInZone(e.target.getLatLng().lat, e.target.getLatLng().lng)
+        return isInZone(
+            e.target.getLatLng().lat,
+            e.target.getLatLng().lng,
+            polygonPosition
+        )
             ? setFlagsPositions(otherFlags.concat(newPositon))
             : setFlagsPositions(otherFlags);
-    };
-
-    const isInZone = (x, y) => {
-        var inside = false;
-        for (
-            var i = 0, j = polygonPosition.length - 1;
-            i < polygonPosition.length;
-            j = i++
-        ) {
-            let xi = polygonPosition[i][0],
-                yi = polygonPosition[i][1];
-            let xj = polygonPosition[j][0],
-                yj = polygonPosition[j][1];
-
-            let intersect =
-                yi > y != yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi;
-            if (intersect) inside = !inside;
-        }
-
-        return inside;
     };
 
     return (
@@ -102,7 +95,7 @@ function GameMap({ defaultPosition, action }) {
                         onClick={handleClick}
                     >
                         <TileLayer url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png" />
-                        <Polygon color="purple" positions={polygonPosition} />
+                        <Polygon color="green" positions={polygonPosition} />
 
                         {flagsPositions.map(flag => (
                             <Marker
@@ -114,6 +107,20 @@ function GameMap({ defaultPosition, action }) {
                             ></Marker>
                         ))}
                     </Map>
+
+                    {action === 'mainZone' ? (
+                        <ZoneButtons
+                            polygonPosition={polygonPosition}
+                            setPolygonPosition={setPolygonPosition}
+                        />
+                    ) : action === 'flags' ? (
+                        <FlagsButtons
+                            flagsPositions={flagsPositions}
+                            setFlagsPositions={setFlagsPositions}
+                        />
+                    ) : (
+                        ''
+                    )}
                 </>
             )}
         </>
