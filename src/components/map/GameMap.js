@@ -9,8 +9,9 @@ function GameMap({ defaultPosition, action }) {
     const [zoom, setZoom] = useState(17);
     const [polygonPosition, setPolygonPosition] = useState([]);
     const [flagsPositions, setFlagsPositions] = useState([]);
+    const [maxOrder, setMaxOrder] = useState(0);
 
-    console.log(flagsPositions);
+    console.log(polygonPosition);
 
     useEffect(() => {
         let conflict = false;
@@ -32,7 +33,7 @@ function GameMap({ defaultPosition, action }) {
                         isInZone(point[0], point[1], polygonPosition)
                     )
                 );
-            } else
+            } else {
                 setPolygonPosition(
                     polygonPosition.filter(
                         point =>
@@ -40,6 +41,7 @@ function GameMap({ defaultPosition, action }) {
                             polygonPosition.length - 1
                     )
                 );
+            }
         }
     }, [polygonPosition]);
 
@@ -52,7 +54,12 @@ function GameMap({ defaultPosition, action }) {
     };
 
     const createMainZone = e => {
-        const newPositon = [[e.latlng.lat, e.latlng.lng]];
+        const newPositon = {
+            lat: e.latlng.lat,
+            lng: e.latlng.lng,
+            order: maxOrder
+        };
+        setMaxOrder(maxOrder + 1);
         setPolygonPosition(polygonPosition.concat(newPositon));
     };
 
@@ -79,10 +86,23 @@ function GameMap({ defaultPosition, action }) {
 
     const movePolygon = (e, point) => {
         const otherPoints = polygonPosition.filter(f => f !== point);
-        const newPositon = [
-            [e.target.getLatLng().lat, e.target.getLatLng().lng]
-        ];
-        setPolygonPosition(otherPoints.concat(newPositon));
+        const newPositon = {
+            lat: e.target.getLatLng().lat,
+            lng: e.target.getLatLng().lng,
+            order: maxOrder
+        };
+
+        setMaxOrder(maxOrder + 1);
+        otherPoints.splice(polygonPosition.indexOf(point), 0, newPositon);
+
+        let conflict = false;
+        flagsPositions.filter(
+            flag =>
+                (conflict =
+                    conflict || !isInZone(flag[0], flag[1], otherPoints))
+        );
+
+        conflict || setPolygonPosition(otherPoints);
     };
 
     return (
