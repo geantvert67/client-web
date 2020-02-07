@@ -1,7 +1,7 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import { checkStatus } from './utils';
 import request from './request';
+import Cookies from 'js-cookie';
 
 const AuthContext = createContext();
 
@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {
 
     const signup = credentials => {
         return request.post('/signup', credentials).then(res => {
-            window.localStorage.setItem('token', res.data.token);
+            Cookies.set('token', res.data.token);
             setUser(res.data.user);
             history.push('/');
         });
@@ -38,14 +38,14 @@ export const AuthProvider = ({ children }) => {
 
     const signin = credentials => {
         return request.post('/signin', credentials).then(res => {
-            window.localStorage.setItem('token', res.data.token);
+            Cookies.set('token', res.data.token);
             setUser(res.data.user);
             history.push('/');
         });
     };
 
     const signout = () => {
-        window.localStorage.removeItem('token');
+        Cookies.remove('token');
         setUser(null);
         history.push('/');
     };
