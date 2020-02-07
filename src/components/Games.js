@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useDataFromUrl } from '../utils/data';
 
+/*
 function createData(name, mode, nbrPlayeur) {
     return { name, mode, nbrPlayeur };
 }
+
 
 const rows = [
     createData('Apocalypse Now', 'Attaque et destruction', 6),
@@ -12,8 +15,12 @@ const rows = [
     createData('Peace of War', 'Cristal unique', 2),
     createData('Anarchy', 'Chacun pour soi', 10)
 ];
+*/
 
 const Games = () => {
+    const { data: configurations, setData: setConfigurations } = useDataFromUrl(
+        `/configs`
+    );
     return (
         <>
             <h1>Parties en attentes de joueurs</h1>
@@ -21,15 +28,15 @@ const Games = () => {
                 <tr>
                     <td>Nom de partie</td>
                     <td>Mode de jeu</td>
-                    <td>Nombre de joueur</td>
+                    <td>Nombre de joueurs</td>
                     <td>Rejoindre</td>
                 </tr>
-                {rows !== null &&
-                    rows.map(row => (
-                        <tr>
-                            <td>{row.name}</td>
-                            <td>{row.mode}</td>
-                            <td>{row.nbrPlayeur}</td>
+                {configurations !== null &&
+                    configurations.map(configuration => (
+                        <tr key={configuration.id}>
+                            <td>{configuration.name}</td>
+                            <td>{configuration.gameMode}</td>
+                            <td>{configuration.maxPlayers}</td>
                             <td>
                                 <Link to="/">Rejoindre</Link>
                             </td>

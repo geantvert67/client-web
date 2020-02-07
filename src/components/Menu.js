@@ -20,6 +20,14 @@ const Menu = () => {
                     <li>
                         <Link to="/signup">Signup</Link>
                     </li>
+                </ul>
+            </nav>
+        );
+    } else {
+        items.push(
+            <nav>
+                <ul>
+                    <li>Connected as {user.username}</li>
                     <li>
                         <Link to="/mapcreator">Configuration de la map</Link>
                     </li>
@@ -29,15 +37,11 @@ const Menu = () => {
                     <li>
                         <Link to="/games">Games</Link>
                     </li>
+                    <li>
+                        <button onClick={signout}>Signout</button>
+                    </li>
                 </ul>
             </nav>
-        );
-    } else {
-        items.push(
-            <li>Connected as {user.username}</li>,
-            <li>
-                <button onClick={signout}>Signout</button>
-            </li>
         );
     }
     return <ul>{items}</ul>;
