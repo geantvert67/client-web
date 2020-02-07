@@ -1,8 +1,16 @@
-import React from 'react';
-import { Marker } from 'react-leaflet';
+import React, { useState } from 'react';
+import { Marker, Popup } from 'react-leaflet';
 import { iconWhiteFlag } from './FlagIcons';
 
-function Markers({ polygonPosition, flagsPositions, movePolygon, moveFlag }) {
+function Markers({
+    polygonPosition,
+    flagsPositions,
+    movePolygon,
+    moveFlag,
+    deletePolygonPosition,
+    deleteFlagPosition
+}) {
+    const [movedPoint, setMovedPoint] = useState([]);
     return (
         <>
             {flagsPositions.map(flag => (
@@ -12,7 +20,11 @@ function Markers({ polygonPosition, flagsPositions, movePolygon, moveFlag }) {
                     icon={iconWhiteFlag}
                     draggable
                     onDragend={e => moveFlag(e, flag)}
-                ></Marker>
+                >
+                    <Popup>
+                        <button onClick={e => console.log(e)}>Supprimer</button>
+                    </Popup>
+                </Marker>
             ))}
 
             {polygonPosition.map(point => (
@@ -20,8 +32,16 @@ function Markers({ polygonPosition, flagsPositions, movePolygon, moveFlag }) {
                     key={point}
                     position={point}
                     draggable
-                    onDragend={e => movePolygon(e, point)}
-                ></Marker>
+                    autoPan
+                    onDragend={e => movePolygon(e, point, movedPoint)}
+                    onDragStart={e => setMovedPoint(e.target.getLatLng())}
+                >
+                    <Popup>
+                        <button onClick={e => deletePolygonPosition(point)}>
+                            Supprimer
+                        </button>
+                    </Popup>
+                </Marker>
             ))}
         </>
     );

@@ -12,7 +12,6 @@ function GameMap({ defaultPosition, action }) {
     const [maxOrder, setMaxOrder] = useState(0);
 
     console.log(polygonPosition);
-
     useEffect(() => {
         let conflict = false;
         flagsPositions.filter(
@@ -84,11 +83,16 @@ function GameMap({ defaultPosition, action }) {
             : setFlagsPositions(otherFlags);
     };
 
-    const movePolygon = (e, point) => {
+    const movePolygon = (e, point, movedPoint) => {
         const otherPoints = polygonPosition.filter(f => f !== point);
         const newPositon = {
             lat: e.target.getLatLng().lat,
             lng: e.target.getLatLng().lng,
+            order: maxOrder
+        };
+        const oldPosition = {
+            lat: movedPoint.lat,
+            lng: movedPoint.lng,
             order: maxOrder
         };
 
@@ -102,7 +106,18 @@ function GameMap({ defaultPosition, action }) {
                     conflict || !isInZone(flag[0], flag[1], otherPoints))
         );
 
-        conflict || setPolygonPosition(otherPoints);
+        conflict &&
+            otherPoints.splice(polygonPosition.indexOf(point), 1, oldPosition);
+
+        setPolygonPosition(otherPoints);
+    };
+
+    const deletePolygonPosition = point => {
+        setPolygonPosition(polygonPosition.filter(p => p !== point));
+    };
+
+    const deleteFlagPosition = point => {
+        setFlagsPositions(flagsPositions.filter(p => p !== point));
     };
 
     return (
@@ -130,6 +145,8 @@ function GameMap({ defaultPosition, action }) {
                             flagsPositions={flagsPositions}
                             movePolygon={movePolygon}
                             moveFlag={moveFlag}
+                            deletePolygonPosition={deletePolygonPosition}
+                            deleteFlagPosition={deleteFlagPosition}
                         />
                     </Map>
 
