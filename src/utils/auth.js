@@ -1,6 +1,7 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { checkStatus } from './utils';
+import request from './request';
 
 const AuthContext = createContext();
 
@@ -11,16 +12,10 @@ export const AuthProvider = ({ children }) => {
     const history = useHistory();
 
     useEffect(() => {
-        const token = window.localStorage.getItem('token');
-        fetch('/whoami', {
-            headers: {
-                Authorization: 'Bearer ' + token
-            }
-        })
-            .then(checkStatus)
-            .then(res => res.json())
-            .then(user => {
-                setUser(user);
+        request
+            .get('/user')
+            .then(res => {
+                setUser(res.data.user);
                 setLoading(false);
             })
             .catch(() => {
@@ -34,30 +29,19 @@ export const AuthProvider = ({ children }) => {
     }
 
     const signup = credentials => {
-        return fetch('/signup', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(credentials)
-        })
-            .then(checkStatus)
-            .then(() => {
-                history.push('/signin');
-            });
+        return request.post('/signup', credentials).then(res => {
+            window.localStorage.setItem('token', res.data.token);
+            setUser(res.data.user);
+            history.push('/');
+        });
     };
 
     const signin = credentials => {
-        return fetch('/signin', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(credentials)
-        })
-            .then(checkStatus)
-            .then(res => res.json())
-            .then(data => {
-                window.localStorage.setItem('token', data.token);
-                setUser(data.user);
-                history.push('/');
-            });
+        return request.post('/signin', credentials).then(res => {
+            window.localStorage.setItem('token', res.data.token);
+            setUser(res.data.user);
+            history.push('/');
+        });
     };
 
     const signout = () => {
