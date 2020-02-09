@@ -44,6 +44,16 @@ export const AuthProvider = ({ children }) => {
         });
     };
 
+    const update = credentials => {
+        return request.put('/user', credentials).then(res => {
+            setUser(res.data.user);
+        });
+    };
+
+    const updatePassword = credentials => {
+        return request.put('/user/password', credentials);
+    };
+
     const signout = () => {
         Cookies.remove('token');
         setUser(null);
@@ -51,7 +61,9 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ user, signup, signin, signout }}>
+        <AuthContext.Provider
+            value={{ user, signup, signin, update, updatePassword, signout }}
+        >
             {children}
         </AuthContext.Provider>
     );

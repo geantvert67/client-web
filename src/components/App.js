@@ -10,6 +10,7 @@ import Signup from './authentification/Signup';
 import MapCreator from './map/MapCreator';
 import Configuration from './configuration/Configuration';
 import Games from './Games';
+import Profil from './user/Profil';
 
 const Home = () => <h3>You're at home</h3>;
 
@@ -36,9 +37,8 @@ const App = () => {
                 <Route exact path="/games">
                     <Games />
                 </Route>
-
-                <Route exact path="/games/test">
-                    <h1>test</h1>
+                <Route exact path="/profil">
+                    <Profil />
                 </Route>
             </Switch>
         </AuthProvider>

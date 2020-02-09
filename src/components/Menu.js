@@ -29,7 +29,7 @@ const Menu = () => {
                 <ul>
                     <li>Connected as {user.username}</li>
                     <li>
-                        <Link to="/mapcreator">Configuration de la map</Link>
+                        <Link to="/profil">Changement du profil</Link>
                     </li>
                     <li>
                         <Link to="/configuration">Configuration</Link>
