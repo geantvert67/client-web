@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import { Marker, Popup } from 'react-leaflet';
-import { iconWhiteFlag } from './FlagIcons';
+import { iconWhiteFlag, iconPoint } from './FlagIcons';
 
 function Markers({
     polygonPosition,
     flagsPositions,
+    forbiddenZones,
     movePolygon,
     moveFlag,
+    moveForbiddenZone,
     deletePolygonPosition,
-    deleteFlagPosition
+    deleteFlagPosition,
+    deleteForbiddenZonePoint
 }) {
     const [movedPoint, setMovedPoint] = useState([]);
     return (
@@ -19,10 +22,13 @@ function Markers({
                     position={flag}
                     icon={iconWhiteFlag}
                     draggable
-                    onDragend={e => moveFlag(e, flag)}
+                    onDragend={e => moveFlag(e, flag, movedPoint)}
+                    onDragStart={e => setMovedPoint(e.target.getLatLng())}
                 >
                     <Popup>
-                        <button onClick={e => console.log(e)}>Supprimer</button>
+                        <button onClick={e => deleteFlagPosition(flag)}>
+                            Supprimer
+                        </button>
                     </Popup>
                 </Marker>
             ))}
@@ -43,6 +49,34 @@ function Markers({
                     </Popup>
                 </Marker>
             ))}
+
+            {forbiddenZones.map(zone =>
+                zone.map(point => (
+                    <Marker
+                        key={point}
+                        position={point}
+                        draggable
+                        autoPan
+                        onDragend={e =>
+                            moveForbiddenZone(
+                                e,
+                                point,
+                                movedPoint,
+                                forbiddenZones.indexOf(zone)
+                            )
+                        }
+                        onDragStart={e => setMovedPoint(e.target.getLatLng())}
+                    >
+                        <Popup>
+                            <button
+                                onClick={e => deleteForbiddenZonePoint(point)}
+                            >
+                                Supprimer
+                            </button>
+                        </Popup>
+                    </Marker>
+                ))
+            )}
         </>
     );
 }

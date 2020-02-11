@@ -6,7 +6,7 @@ const Menu = () => {
     const { user, signout } = useAuth();
 
     const items = [
-        <li>
+        <li key="home">
             <Link to="/">Home</Link>
         </li>
     ];
@@ -14,10 +14,10 @@ const Menu = () => {
         items.push(
             <nav>
                 <ul>
-                    <li>
+                    <li key="signin">
                         <Link to="/signin">Signin</Link>
                     </li>
-                    <li>
+                    <li key="signup">
                         <Link to="/signup">Signup</Link>
                     </li>
                 </ul>
@@ -27,17 +27,17 @@ const Menu = () => {
         items.push(
             <nav>
                 <ul>
-                    <li>Connected as {user.username}</li>
-                    <li>
+                    <li key="connected">Connected as {user.username}</li>
+                    <li key="mapcreator">
                         <Link to="/mapcreator">Configuration de la map</Link>
                     </li>
-                    <li>
+                    <li key="config">
                         <Link to="/configuration">Configuration</Link>
                     </li>
-                    <li>
+                    <li key="games">
                         <Link to="/games">Games</Link>
                     </li>
-                    <li>
+                    <li key="signout">
                         <button onClick={signout}>Signout</button>
                     </li>
                 </ul>

@@ -4,43 +4,30 @@ import { Map, TileLayer, Polygon, Marker } from 'react-leaflet';
 import FlagsButtons from './FlagsButtons';
 import { isInZone } from '../../utils/utils';
 import Markers from './Markers';
+import ForbiddenZonesList from './ForbiddenZonesList';
 
 function GameMap({ defaultPosition, action }) {
     const [zoom, setZoom] = useState(17);
     const [polygonPosition, setPolygonPosition] = useState([]);
     const [flagsPositions, setFlagsPositions] = useState([]);
-    const [maxOrder, setMaxOrder] = useState(0);
+    const [forbiddenZones, setForbiddenZones] = useState([]);
+    const [forbiddenZoneIndex, setForbiddenZoneIndex] = useState(null);
 
-    console.log(polygonPosition);
     useEffect(() => {
         let conflict = false;
-        flagsPositions.filter(
-            flag =>
-                (conflict =
-                    conflict || !isInZone(flag[0], flag[1], polygonPosition))
-        );
+        flagsPositions.filter(flag => {
+            conflict = conflict || !isInZone(flag[0], flag[1], polygonPosition);
+        });
 
         if (conflict) {
-            if (
-                // eslint-disable-next-line no-restricted-globals
-                confirm(
-                    'Attention ! La nouvelle zone ne contient pas tous les drapeaux déjà disposés. Les drapeaux hors de la zone seront supprimés. Voulez-vous continuer ?'
+            alert(
+                'Attention, certains drapeaux ne se situent plus dans la nouvelle zone. Ceux-ci ont été supprimés.'
+            );
+            setFlagsPositions(
+                flagsPositions.filter(point =>
+                    isInZone(point[0], point[1], polygonPosition)
                 )
-            ) {
-                setFlagsPositions(
-                    flagsPositions.filter(point =>
-                        isInZone(point[0], point[1], polygonPosition)
-                    )
-                );
-            } else {
-                setPolygonPosition(
-                    polygonPosition.filter(
-                        point =>
-                            polygonPosition.indexOf(point) !==
-                            polygonPosition.length - 1
-                    )
-                );
-            }
+            );
         }
     }, [polygonPosition]);
 
@@ -49,67 +36,120 @@ function GameMap({ defaultPosition, action }) {
             ? addFlag(e)
             : action === 'mainZone'
             ? createMainZone(e)
+            : action === 'forbiddenZone'
+            ? forbiddenZoneIndex !== null
+                ? createForbiddenZone(e)
+                : alert('Veuillez créer une première zone interdite.')
             : '';
     };
 
     const createMainZone = e => {
         const newPositon = {
             lat: e.latlng.lat,
-            lng: e.latlng.lng,
-            order: maxOrder
+            lng: e.latlng.lng
         };
-        setMaxOrder(maxOrder + 1);
         setPolygonPosition(polygonPosition.concat(newPositon));
+    };
+
+    const createForbiddenZone = e => {
+        const newPositon = {
+            lat: e.latlng.lat,
+            lng: e.latlng.lng
+        };
+        const actualZones = forbiddenZones.filter(
+            zone => forbiddenZones.indexOf(zone) !== forbiddenZoneIndex
+        );
+        const forbiddenZone = forbiddenZones[forbiddenZoneIndex].concat(
+            newPositon
+        );
+        actualZones.splice(forbiddenZoneIndex, 0, forbiddenZone);
+        isInZone(newPositon.lat, newPositon.lng, polygonPosition) &&
+            setForbiddenZones(actualZones);
     };
 
     const addFlag = point => {
         const newPositon = [[point.latlng.lat, point.latlng.lng]];
-        return isInZone(point.latlng.lat, point.latlng.lng, polygonPosition)
+        let conflict = false;
+
+        forbiddenZones.map(zone => {
+            isInZone(point.latlng.lat, point.latlng.lng, zone) &&
+                (conflict = true);
+        });
+
+        return !conflict &&
+            isInZone(point.latlng.lat, point.latlng.lng, polygonPosition)
             ? setFlagsPositions(flagsPositions.concat(newPositon))
-            : alert('Veuillez placer les drapeaux dans une zone de jeu.');
+            : alert(
+                  'Veuillez placer les drapeaux dans une zone de jeu valide.'
+              );
     };
 
-    const moveFlag = (e, flag) => {
-        const otherFlags = flagsPositions.filter(f => f !== flag);
-        const newPositon = [
-            [e.target.getLatLng().lat, e.target.getLatLng().lng]
-        ];
-        return isInZone(
+    console.log(polygonPosition);
+
+    const moveFlag = (e, flag, movedPoint) => {
+        let otherFlags = flagsPositions.filter(f => f !== flag);
+        const newPositon = [e.target.getLatLng().lat, e.target.getLatLng().lng];
+        let conflict = false;
+
+        forbiddenZones.map(zone => {
+            isInZone(
+                e.target.getLatLng().lat,
+                e.target.getLatLng().lng,
+                zone
+            ) && (conflict = true);
+        });
+
+        !conflict &&
+        isInZone(
             e.target.getLatLng().lat,
             e.target.getLatLng().lng,
             polygonPosition
         )
-            ? setFlagsPositions(otherFlags.concat(newPositon))
-            : setFlagsPositions(otherFlags);
+            ? otherFlags.push(newPositon)
+            : otherFlags.push(movedPoint);
+
+        setFlagsPositions(otherFlags);
     };
 
-    const movePolygon = (e, point, movedPoint) => {
+    const movePolygon = (e, point) => {
         const otherPoints = polygonPosition.filter(f => f !== point);
         const newPositon = {
             lat: e.target.getLatLng().lat,
-            lng: e.target.getLatLng().lng,
-            order: maxOrder
-        };
-        const oldPosition = {
-            lat: movedPoint.lat,
-            lng: movedPoint.lng,
-            order: maxOrder
+            lng: e.target.getLatLng().lng
         };
 
-        setMaxOrder(maxOrder + 1);
         otherPoints.splice(polygonPosition.indexOf(point), 0, newPositon);
 
-        let conflict = false;
-        flagsPositions.filter(
-            flag =>
-                (conflict =
-                    conflict || !isInZone(flag[0], flag[1], otherPoints))
+        setPolygonPosition(otherPoints);
+    };
+
+    const moveForbiddenZone = (e, point, movedPoint, movedPointIndex) => {
+        let otherPoints = [];
+        forbiddenZones.map(zone => {
+            otherPoints.push(zone.filter(f => f !== point));
+        });
+
+        console.log(otherPoints);
+
+        const newPositon = {
+            lat: e.target.getLatLng().lat,
+            lng: e.target.getLatLng().lng
+        };
+
+        otherPoints[movedPointIndex].splice(
+            otherPoints[movedPointIndex].indexOf(point),
+            0,
+            newPositon
         );
 
-        conflict &&
-            otherPoints.splice(polygonPosition.indexOf(point), 1, oldPosition);
+        !isInZone(newPositon.lat, newPositon.lng, polygonPosition) &&
+            otherPoints[movedPointIndex].splice(
+                otherPoints[movedPointIndex].indexOf(point),
+                0,
+                movedPoint
+            );
 
-        setPolygonPosition(otherPoints);
+        setForbiddenZones(otherPoints);
     };
 
     const deletePolygonPosition = point => {
@@ -118,6 +158,12 @@ function GameMap({ defaultPosition, action }) {
 
     const deleteFlagPosition = point => {
         setFlagsPositions(flagsPositions.filter(p => p !== point));
+    };
+
+    const deleteForbiddenZonePoint = point => {
+        setForbiddenZones(
+            forbiddenZones.map(zone => zone.filter(p => p !== point))
+        );
     };
 
     return (
@@ -139,26 +185,38 @@ function GameMap({ defaultPosition, action }) {
                     >
                         <TileLayer url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png" />
                         <Polygon color="green" positions={polygonPosition} />
+                        {forbiddenZones.map(zone => (
+                            <Polygon
+                                color="red"
+                                positions={
+                                    forbiddenZones[forbiddenZones.indexOf(zone)]
+                                }
+                            />
+                        ))}
 
                         <Markers
                             polygonPosition={polygonPosition}
                             flagsPositions={flagsPositions}
+                            forbiddenZones={forbiddenZones}
                             movePolygon={movePolygon}
                             moveFlag={moveFlag}
+                            moveForbiddenZone={moveForbiddenZone}
                             deletePolygonPosition={deletePolygonPosition}
                             deleteFlagPosition={deleteFlagPosition}
+                            deleteForbiddenZonePoint={deleteForbiddenZonePoint}
                         />
                     </Map>
 
                     {action === 'mainZone' ? (
-                        <ZoneButtons
-                            polygonPosition={polygonPosition}
-                            setPolygonPosition={setPolygonPosition}
-                        />
+                        <ZoneButtons setPolygonPosition={setPolygonPosition} />
                     ) : action === 'flags' ? (
-                        <FlagsButtons
-                            flagsPositions={flagsPositions}
-                            setFlagsPositions={setFlagsPositions}
+                        <FlagsButtons setFlagsPositions={setFlagsPositions} />
+                    ) : action === 'forbiddenZone' ? (
+                        <ForbiddenZonesList
+                            forbiddenZones={forbiddenZones}
+                            forbiddenZoneIndex={forbiddenZoneIndex}
+                            setForbiddenZones={setForbiddenZones}
+                            setForbiddenZoneIndex={setForbiddenZoneIndex}
                         />
                     ) : (
                         ''
