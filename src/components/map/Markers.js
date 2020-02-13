@@ -57,14 +57,7 @@ function Markers({
                         position={point}
                         draggable
                         autoPan
-                        onDragend={e =>
-                            moveForbiddenZone(
-                                e,
-                                point,
-                                movedPoint,
-                                forbiddenZones.indexOf(zone)
-                            )
-                        }
+                        onDragend={e => moveForbiddenZone(e, point)}
                         onDragStart={e => setMovedPoint(e.target.getLatLng())}
                     >
                         <Popup>
