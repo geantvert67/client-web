@@ -12,20 +12,31 @@ function MapCreator() {
         }) || setDevicePosition([48.529918, 7.737041]);
     }, []);
 
-    console.log(action);
     return (
         <>
             {devicePosition.length !== 0 && (
                 <>
-                    <GameMap defaultPosition={devicePosition} action={action} />
                     <div className="center">
-                        <button onClick={e => setAction('mainZone')}>
+                        <button
+                            className={action === 'mainZone' && 'selected'}
+                            onClick={e => setAction('mainZone')}
+                        >
                             Créer une zone de jeu
                         </button>
-                        <button onClick={e => setAction('flags')}>
+                        <button
+                            className={action === 'flags' && 'selected'}
+                            onClick={e => setAction('flags')}
+                        >
                             Placer des drapeaux
                         </button>
+                        <button
+                            className={action === 'forbiddenZone' && 'selected'}
+                            onClick={e => setAction('forbiddenZone')}
+                        >
+                            Gérer les zones interdites
+                        </button>
                     </div>
+                    <GameMap defaultPosition={devicePosition} action={action} />
                 </>
             )}
         </>
