@@ -12,4 +12,16 @@ const iconWhiteFlag = new L.Icon({
     className: 'leaflet-div-icon'
 });
 
-export { iconWhiteFlag };
+const iconPoint = new L.Icon({
+    iconUrl: require('../../img/point.png'),
+    iconRetinaUrl: require('../../img/point.png'),
+    iconAnchor: null,
+    popupAnchor: null,
+    shadowUrl: null,
+    shadowSize: null,
+    shadowAnchor: null,
+    iconSize: new L.Point(10, 10),
+    className: 'leaflet-div-icon'
+});
+
+export { iconWhiteFlag, iconPoint };

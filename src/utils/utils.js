@@ -15,8 +15,8 @@ export const isInZone = (x, y, polygonPosition) => {
         i < polygonPosition.length;
         j = i++
     ) {
-        let [xi, yi] = polygonPosition[i];
-        let [xj, yj] = polygonPosition[j];
+        let { lat: xi, lng: yi } = polygonPosition[i];
+        let { lat: xj, lng: yj } = polygonPosition[j];
 
         let intersect =
             yi > y !== yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi;
