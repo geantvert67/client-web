@@ -3,8 +3,8 @@ import L from 'leaflet';
 const iconWhiteFlag = new L.Icon({
     iconUrl: require('../../img/white-flag.svg'),
     iconRetinaUrl: require('../../img/white-flag.svg'),
-    iconAnchor: null,
-    popupAnchor: null,
+    iconAnchor: null, // A modifier pour centrer le cristal
+    popupAnchor: [0, -20],
     shadowUrl: null,
     shadowSize: null,
     shadowAnchor: null,
@@ -15,8 +15,8 @@ const iconWhiteFlag = new L.Icon({
 const iconPoint = new L.Icon({
     iconUrl: require('../../img/point.png'),
     iconRetinaUrl: require('../../img/point.png'),
-    iconAnchor: null,
-    popupAnchor: null,
+    iconAnchor: null, // A modifier pour centrer les points de zone
+    popupAnchor: [0, 10],
     shadowUrl: null,
     shadowSize: null,
     shadowAnchor: null,
