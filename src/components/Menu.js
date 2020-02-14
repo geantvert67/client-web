@@ -27,9 +27,9 @@ const Menu = () => {
         items.push(
             <nav>
                 <ul>
-                    <li key="connected">Connected as {user.username}</li>
-                    <li key="mapcreator">
-                        <Link to="/mapcreator">Configuration de la map</Link>
+                    <li>Connected as {user.username}</li>
+                    <li>
+                        <Link to="/profil">Changement du profil</Link>
                     </li>
                     <li key="config">
                         <Link to="/configuration">Configuration</Link>

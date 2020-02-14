@@ -22,6 +22,7 @@ function Markers({
                     position={flag}
                     icon={iconWhiteFlag}
                     draggable
+                    onClick={e => console.log(e)}
                     onDragend={e => moveFlag(e, flag, movedPoint)}
                     onDragStart={e => setMovedPoint(e.target.getLatLng())}
                 >
@@ -37,8 +38,10 @@ function Markers({
                 <Marker
                     key={point}
                     position={point}
+                    icon={iconPoint}
                     draggable
                     autoPan
+                    onClick={e => console.log(e)}
                     onDragend={e => movePolygon(e, point, movedPoint)}
                     onDragStart={e => setMovedPoint(e.target.getLatLng())}
                 >
@@ -57,6 +60,7 @@ function Markers({
                         position={point}
                         draggable
                         autoPan
+                        onClick={e => console.log(e)}
                         onDragend={e => moveForbiddenZone(e, point)}
                         onDragStart={e => setMovedPoint(e.target.getLatLng())}
                     >

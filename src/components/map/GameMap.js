@@ -89,9 +89,11 @@ function GameMap({ defaultPosition, action }) {
               );
     };
 
+    console.log(flagsPositions);
     const moveFlag = (e, flag, movedPoint) => {
         let otherFlags = flagsPositions.filter(f => f !== flag);
         const newPositon = [e.target.getLatLng().lat, e.target.getLatLng().lng];
+        const oldPosition = [movedPoint.lat, movedPoint.lng];
         let conflict = false;
 
         forbiddenZones.map(zone => {
@@ -109,7 +111,7 @@ function GameMap({ defaultPosition, action }) {
             polygonPosition
         )
             ? otherFlags.push(newPositon)
-            : otherFlags.push(movedPoint);
+            : otherFlags.push(oldPosition);
 
         setFlagsPositions(otherFlags);
     };
@@ -150,7 +152,7 @@ function GameMap({ defaultPosition, action }) {
                 1,
                 point
             );
-
+        console.log(otherPoints);
         setForbiddenZones(otherPoints);
     };
 
