@@ -1,8 +1,8 @@
 import L from 'leaflet';
 
 const iconWhiteFlag = new L.Icon({
-    iconUrl: require('../../img/white-flag.svg'),
-    iconRetinaUrl: require('../../img/white-flag.svg'),
+    iconUrl: require('../../img/cristal.gif'),
+    iconRetinaUrl: require('../../img/cristal.gif'),
     iconAnchor: null, // A modifier pour centrer le cristal
     popupAnchor: [0, -20],
     shadowUrl: null,
@@ -12,16 +12,16 @@ const iconWhiteFlag = new L.Icon({
     className: 'leaflet-div-icon'
 });
 
-const iconPoint = new L.Icon({
-    iconUrl: require('../../img/point.png'),
-    iconRetinaUrl: require('../../img/point.png'),
+const iconPylone = new L.Icon({
+    iconUrl: require('../../img/pylone.png'),
+    iconRetinaUrl: require('../../img/pylone.png'),
     iconAnchor: null, // A modifier pour centrer les points de zone
     popupAnchor: [0, 10],
     shadowUrl: null,
     shadowSize: null,
     shadowAnchor: null,
-    iconSize: new L.Point(10, 10),
+    iconSize: new L.Point(30, 60),
     className: 'leaflet-div-icon'
 });
 
-export { iconWhiteFlag, iconPoint };
+export { iconWhiteFlag, iconPylone };
