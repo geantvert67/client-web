@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Marker, Popup } from 'react-leaflet';
-import { iconWhiteFlag, iconPoint } from './FlagIcons';
+import { Marker, Popup, Circle } from 'react-leaflet';
+import { iconWhiteFlag, iconPylone } from './Icons';
+import FlagsButtons from './FlagsButtons';
 
 function Markers({
     polygonPosition,
@@ -11,39 +12,68 @@ function Markers({
     moveForbiddenZone,
     deletePolygonPosition,
     deleteFlagPosition,
-    deleteForbiddenZonePoint
+    deleteForbiddenZonePoint,
+    action,
+    setAction,
+    setSleepingAction
 }) {
     const [movedPoint, setMovedPoint] = useState([]);
+
+    const startDragging = () => {
+        setAction('moveElement');
+        setSleepingAction(action);
+    };
+
+    const stopDragging = () => {
+        setAction('moveElementStop');
+    };
+
     return (
         <>
             {flagsPositions.map(flag => (
-                <Marker
-                    key={flag}
-                    position={flag}
-                    icon={iconWhiteFlag}
-                    draggable
-                    onClick={e => console.log(e)}
-                    onDragend={e => moveFlag(e, flag, movedPoint)}
-                    onDragStart={e => setMovedPoint(e.target.getLatLng())}
-                >
-                    <Popup>
-                        <button onClick={e => deleteFlagPosition(flag)}>
-                            Supprimer
-                        </button>
-                    </Popup>
-                </Marker>
+                <>
+                    <Marker
+                        key={flag}
+                        position={flag}
+                        icon={iconWhiteFlag}
+                        draggable
+                        onClick={e => console.log(e)}
+                        onDragend={e => {
+                            moveFlag(e, flag, movedPoint);
+                            stopDragging();
+                        }}
+                        onDragStart={e => {
+                            setMovedPoint(e.target.getLatLng());
+                            startDragging();
+                        }}
+                    >
+                        <Popup>
+                            <button onClick={e => deleteFlagPosition(flag)}>
+                                Supprimer
+                            </button>
+                        </Popup>
+                    </Marker>
+
+                    <Circle center={flag} radius={50} />
+                </>
             ))}
 
             {polygonPosition.map(point => (
                 <Marker
                     key={point}
                     position={point}
-                    icon={iconPoint}
+                    icon={iconPylone}
                     draggable
                     autoPan
                     onClick={e => console.log(e)}
-                    onDragend={e => movePolygon(e, point, movedPoint)}
-                    onDragStart={e => setMovedPoint(e.target.getLatLng())}
+                    onDragend={e => {
+                        movePolygon(e, point, movedPoint);
+                        stopDragging();
+                    }}
+                    onDragStart={e => {
+                        setMovedPoint(e.target.getLatLng());
+                        startDragging();
+                    }}
                 >
                     <Popup>
                         <button onClick={e => deletePolygonPosition(point)}>
@@ -61,8 +91,14 @@ function Markers({
                         draggable
                         autoPan
                         onClick={e => console.log(e)}
-                        onDragend={e => moveForbiddenZone(e, point)}
-                        onDragStart={e => setMovedPoint(e.target.getLatLng())}
+                        onDragend={e => {
+                            moveForbiddenZone(e, point);
+                            stopDragging();
+                        }}
+                        onDragStart={e => {
+                            setMovedPoint(e.target.getLatLng());
+                            startDragging();
+                        }}
                     >
                         <Popup>
                             <button

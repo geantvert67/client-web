@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import ZoneButtons from './ZoneButtons';
-import { Map, TileLayer, Polygon, Marker } from 'react-leaflet';
+import { Map, TileLayer, Polygon } from 'react-leaflet';
 import FlagsButtons from './FlagsButtons';
 import { isInZone } from '../../utils/utils';
 import Markers from './Markers';
 import ForbiddenZonesList from './ForbiddenZonesList';
 
-function GameMap({ defaultPosition, action }) {
+function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
     const [zoom, setZoom] = useState(17);
     const [polygonPosition, setPolygonPosition] = useState([]);
     const [flagsPositions, setFlagsPositions] = useState([]);
@@ -14,8 +14,13 @@ function GameMap({ defaultPosition, action }) {
     const [forbiddenZoneIndex, setForbiddenZoneIndex] = useState(null);
 
     useEffect(() => {
+        checkFlags();
+        checkForbiddenZones();
+    }, [polygonPosition, forbiddenZones]);
+
+    const checkFlags = () => {
         let conflict = false;
-        let othersFlags = [];
+        let otherFlags = [];
         flagsPositions.filter(flag => {
             let valid = true;
             forbiddenZones.map(zone => {
@@ -24,16 +29,37 @@ function GameMap({ defaultPosition, action }) {
             });
             let validZone = isInZone(flag[0], flag[1], polygonPosition);
             conflict = conflict || !validZone;
-            valid && validZone && othersFlags.push(flag);
+            valid && validZone && otherFlags.push(flag);
         });
 
         if (conflict) {
             alert(
-                'Attention, certains drapeaux ne se situent plus dans la nouvelle zone. Ceux-ci ont été supprimés.'
+                'Attention, certains cristaux ne se situent plus dans la nouvelle zone. Ceux-ci ont été supprimés.'
             );
-            setFlagsPositions(othersFlags);
+            setFlagsPositions(otherFlags);
         }
-    }, [polygonPosition, forbiddenZones]);
+    };
+
+    const checkForbiddenZones = () => {
+        let conflict = false;
+        let otherZones = [];
+        forbiddenZones.filter(zone => {
+            let valid = true;
+            zone.map(point => {
+                valid =
+                    valid && isInZone(point.lat, point.lng, polygonPosition);
+                conflict = conflict || !valid;
+            });
+            valid && otherZones.push(zone);
+        });
+
+        if (conflict) {
+            alert(
+                'Attention, certaines zones interdites ne se trouvent plus entièrement dans la zone de jeu. Celles-ci ont été supprimés.'
+            );
+            setForbiddenZones(otherZones);
+        }
+    };
 
     const handleClick = e => {
         return action === 'flags'
@@ -89,7 +115,6 @@ function GameMap({ defaultPosition, action }) {
               );
     };
 
-    console.log(flagsPositions);
     const moveFlag = (e, flag, movedPoint) => {
         let otherFlags = flagsPositions.filter(f => f !== flag);
         const newPositon = [e.target.getLatLng().lat, e.target.getLatLng().lng];
@@ -140,19 +165,13 @@ function GameMap({ defaultPosition, action }) {
             zone: point.zone
         };
 
-        otherPoints[point.zone].splice(
-            forbiddenZones[point.zone].indexOf(point),
-            0,
-            newPositon
-        );
-
-        !isInZone(newPositon.lat, newPositon.lng, polygonPosition) &&
+        isInZone(newPositon.lat, newPositon.lng, polygonPosition) &&
             otherPoints[point.zone].splice(
                 forbiddenZones[point.zone].indexOf(point),
-                1,
-                point
+                0,
+                newPositon
             );
-        console.log(otherPoints);
+
         setForbiddenZones(otherPoints);
     };
 
@@ -208,6 +227,9 @@ function GameMap({ defaultPosition, action }) {
                             deletePolygonPosition={deletePolygonPosition}
                             deleteFlagPosition={deleteFlagPosition}
                             deleteForbiddenZonePoint={deleteForbiddenZonePoint}
+                            action={action}
+                            setAction={setAction}
+                            setSleepingAction={setSleepingAction}
                         />
                     </Map>
 

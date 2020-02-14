@@ -3,6 +3,7 @@ import GameMap from './GameMap';
 
 function MapCreator() {
     const [action, setAction] = useState('mainZone');
+    const [sleepingAction, setSleepingAction] = useState('');
 
     const [devicePosition, setDevicePosition] = useState([]);
 
@@ -11,6 +12,12 @@ function MapCreator() {
             setDevicePosition([e.coords.latitude, e.coords.longitude]);
         }) || setDevicePosition([48.529918, 7.737041]);
     }, []);
+
+    useEffect(() => {
+        action === 'moveElementStop' &&
+            setAction(sleepingAction) &&
+            setSleepingAction('');
+    }, [action]);
 
     return (
         <>
@@ -36,7 +43,12 @@ function MapCreator() {
                             Gérer les zones interdites
                         </button>
                     </div>
-                    <GameMap defaultPosition={devicePosition} action={action} />
+                    <GameMap
+                        defaultPosition={devicePosition}
+                        action={action}
+                        setAction={setAction}
+                        setSleepingAction={setSleepingAction}
+                    />
                 </>
             )}
         </>
