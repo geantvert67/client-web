@@ -3,6 +3,7 @@ import React from 'react';
 function ForbiddenZoneButtons({
     indexZone,
     forbiddenZones,
+    forbiddenZoneIndex,
     setForbiddenZones,
     setForbiddenZoneIndex
 }) {
@@ -12,6 +13,7 @@ function ForbiddenZoneButtons({
                 zone => forbiddenZones.indexOf(zone) != indexZone
             )
         );
+        setForbiddenZoneIndex(forbiddenZoneIndex - 1);
     };
     return (
         <>

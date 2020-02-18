@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Marker, Popup, Circle } from 'react-leaflet';
 import { iconWhiteFlag, iconPylone } from './Icons';
-import FlagsButtons from './FlagsButtons';
 
 function Markers({
     polygonPosition,
@@ -17,8 +16,6 @@ function Markers({
     setAction,
     setSleepingAction
 }) {
-    const [movedPoint, setMovedPoint] = useState([]);
-
     const startDragging = () => {
         setAction('moveElement');
         setSleepingAction(action);
@@ -39,11 +36,10 @@ function Markers({
                         draggable
                         onClick={e => console.log(e)}
                         onDragend={e => {
-                            moveFlag(e, flag, movedPoint);
+                            moveFlag(e, flag);
                             stopDragging();
                         }}
                         onDragStart={e => {
-                            setMovedPoint(e.target.getLatLng());
                             startDragging();
                         }}
                     >
@@ -65,13 +61,11 @@ function Markers({
                     icon={iconPylone}
                     draggable
                     autoPan
-                    onClick={e => console.log(e)}
                     onDragend={e => {
-                        movePolygon(e, point, movedPoint);
+                        movePolygon(e, point);
                         stopDragging();
                     }}
                     onDragStart={e => {
-                        setMovedPoint(e.target.getLatLng());
                         startDragging();
                     }}
                 >
@@ -90,13 +84,11 @@ function Markers({
                         position={point}
                         draggable
                         autoPan
-                        onClick={e => console.log(e)}
                         onDragend={e => {
                             moveForbiddenZone(e, point);
                             stopDragging();
                         }}
                         onDragStart={e => {
-                            setMovedPoint(e.target.getLatLng());
                             startDragging();
                         }}
                     >

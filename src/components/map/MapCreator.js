@@ -9,8 +9,11 @@ function MapCreator() {
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(e => {
-            setDevicePosition([e.coords.latitude, e.coords.longitude]);
-        }) || setDevicePosition([48.529918, 7.737041]);
+            setDevicePosition({
+                lat: e.coords.latitude,
+                lng: e.coords.longitude
+            });
+        }) || setDevicePosition({ lat: 48.529918, lng: 7.737041 });
     }, []);
 
     useEffect(() => {

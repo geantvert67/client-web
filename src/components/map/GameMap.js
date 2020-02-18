@@ -1,17 +1,49 @@
 import React, { useState, useEffect } from 'react';
 import ZoneButtons from './ZoneButtons';
-import { Map, TileLayer, Polygon } from 'react-leaflet';
+import { Map, TileLayer, Polygon, GeoJSON } from 'react-leaflet';
 import FlagsButtons from './FlagsButtons';
-import { isInZone } from '../../utils/utils';
+import { isInZone, getDistance } from '../../utils/utils';
 import Markers from './Markers';
 import ForbiddenZonesList from './ForbiddenZonesList';
+import {
+    updateConfig,
+    formatMainZone,
+    formatForbiddenZone,
+    formatFlags
+} from '../../utils/config';
+import { getAreas, getFlags } from '../../service/configuration';
+import { loadavg } from 'os';
+import { useParams } from 'react-router-dom';
+import DownloadButton from '../DownloadButton';
 
 function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
     const [zoom, setZoom] = useState(17);
     const [polygonPosition, setPolygonPosition] = useState([]);
     const [flagsPositions, setFlagsPositions] = useState([]);
     const [forbiddenZones, setForbiddenZones] = useState([]);
-    const [forbiddenZoneIndex, setForbiddenZoneIndex] = useState(null);
+    const [forbiddenZoneIndex, setForbiddenZoneIndex] = useState(-1);
+    const { idconfiguration } = useParams();
+
+    console.log(forbiddenZones);
+    useEffect(() => {
+        let forbZones = [];
+        let zoneIndex = 0;
+        getAreas(idconfiguration).then(zones =>
+            zones.data.map(zone =>
+                !zone.forbidden
+                    ? setPolygonPosition(formatMainZone(zone))
+                    : (forbZones.push(formatForbiddenZone(zoneIndex, zone)),
+                      zoneIndex++)
+            )
+        );
+
+        setForbiddenZoneIndex(zoneIndex);
+        setForbiddenZones(forbZones);
+
+        getFlags(idconfiguration).then(flags =>
+            setFlagsPositions(formatFlags(flags))
+        );
+    }, []);
 
     useEffect(() => {
         checkFlags();
@@ -24,10 +56,10 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
         flagsPositions.filter(flag => {
             let valid = true;
             forbiddenZones.map(zone => {
-                valid = !isInZone(flag[0], flag[1], zone);
+                valid = !isInZone(flag.lat, flag.lng, zone);
                 conflict = conflict || !valid;
             });
-            let validZone = isInZone(flag[0], flag[1], polygonPosition);
+            let validZone = isInZone(flag.lat, flag.lng, polygonPosition);
             conflict = conflict || !validZone;
             valid && validZone && otherFlags.push(flag);
         });
@@ -67,7 +99,7 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
             : action === 'mainZone'
             ? createMainZone(e)
             : action === 'forbiddenZone'
-            ? forbiddenZoneIndex !== null
+            ? forbiddenZoneIndex !== -1
                 ? createForbiddenZone(e)
                 : alert('Veuillez créer une première zone interdite.')
             : '';
@@ -99,7 +131,7 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
     };
 
     const addFlag = point => {
-        const newPositon = [[point.latlng.lat, point.latlng.lng]];
+        const newPositon = { lat: point.latlng.lat, lng: point.latlng.lng };
         let conflict = false;
 
         forbiddenZones.map(zone => {
@@ -115,10 +147,12 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
               );
     };
 
-    const moveFlag = (e, flag, movedPoint) => {
+    const moveFlag = (e, flag) => {
         let otherFlags = flagsPositions.filter(f => f !== flag);
-        const newPositon = [e.target.getLatLng().lat, e.target.getLatLng().lng];
-        const oldPosition = [movedPoint.lat, movedPoint.lng];
+        const newPositon = {
+            lat: e.target.getLatLng().lat,
+            lng: e.target.getLatLng().lng
+        };
         let conflict = false;
 
         forbiddenZones.map(zone => {
@@ -130,13 +164,12 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
         });
 
         !conflict &&
-        isInZone(
-            e.target.getLatLng().lat,
-            e.target.getLatLng().lng,
-            polygonPosition
-        )
-            ? otherFlags.push(newPositon)
-            : otherFlags.push(oldPosition);
+            isInZone(
+                e.target.getLatLng().lat,
+                e.target.getLatLng().lng,
+                polygonPosition
+            ) &&
+            otherFlags.push(newPositon);
 
         setFlagsPositions(otherFlags);
     };
@@ -208,6 +241,7 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
                     >
                         <TileLayer url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png" />
                         <Polygon color="green" positions={polygonPosition} />
+
                         {forbiddenZones.map(zone => (
                             <Polygon
                                 color="red"
@@ -247,6 +281,20 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
                     ) : (
                         ''
                     )}
+                    <button
+                        onClick={() =>
+                            updateConfig(
+                                idconfiguration,
+                                polygonPosition,
+                                forbiddenZones,
+                                flagsPositions
+                            )
+                        }
+                    >
+                        {' '}
+                        Enregistrer la carte{' '}
+                    </button>
+                    <DownloadButton />
                 </>
             )}
         </>
