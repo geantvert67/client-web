@@ -33,6 +33,7 @@ function ForbiddenZonesList({
                         <ForbiddenZoneButtons
                             indexZone={forbiddenZones.indexOf(f)}
                             forbiddenZones={forbiddenZones}
+                            forbiddenZoneIndex={forbiddenZoneIndex}
                             setForbiddenZones={setForbiddenZones}
                             setForbiddenZoneIndex={setForbiddenZoneIndex}
                         />
