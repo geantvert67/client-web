@@ -9,6 +9,7 @@ import Signin from './authentification/Signin';
 import Signup from './authentification/Signup';
 import MapCreator from './map/MapCreator';
 import Configuration from './configuration/Configuration';
+import ModifConfig from './configuration/ModifConfig';
 import Games from './Games';
 import Profil from './user/Profil';
 
@@ -36,6 +37,9 @@ const App = () => {
                 </Route>
                 <Route exact path="/games">
                     <Games />
+                </Route>
+                <Route exact path="/:configurationId/modifconfig">
+                    <ModifConfig />
                 </Route>
                 <Route exact path="/profil">
                     <Profil />

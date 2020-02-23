@@ -19,26 +19,34 @@ const rows = [
 
 const Games = () => {
     const { data: configurations, setData: setConfigurations } = useDataFromUrl(
-        `/configs`
+        `/user/configs`
     );
     return (
         <>
-            <h1>Parties en attentes de joueurs</h1>
+            <h1>Configuration de parties</h1>
             <table>
                 <tr>
                     <td>Nom de partie</td>
                     <td>Mode de jeu</td>
-                    <td>Nombre de joueurs</td>
-                    <td>Rejoindre</td>
+                    <td>Accès</td>
+                    <td>Modifier</td>
+                    <td>Copier</td>
                 </tr>
                 {configurations !== null &&
                     configurations.map(configuration => (
                         <tr key={configuration.id}>
                             <td>{configuration.name}</td>
                             <td>{configuration.gameMode}</td>
-                            <td>{configuration.maxPlayers}</td>
                             <td>
-                                <Link to="/">Rejoindre</Link>
+                                {configuration.isPrivate ? 'Privé' : 'Publique'}
+                            </td>
+                            <td>
+                                <Link to={`/${configuration.id}/modifconfig`}>
+                                    Modifier
+                                </Link>
+                            </td>
+                            <td>
+                                <Link to="/">Copier</Link>
                             </td>
                         </tr>
                     ))}

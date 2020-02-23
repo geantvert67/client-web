@@ -1,35 +1,27 @@
-import React, { useState } from 'react';
-import history from '../../utils/history';
-import { create } from '../../service/configuration';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useDataFromUrl } from '../../utils/data';
 
-const Configuration = () => {
-    const [name, setName] = useState('');
-    const [isPrivate, setIsPrivate] = useState('');
-    const [maxPlayer, setMaxPlayer] = useState('');
+const ModifConfig = () => {
+    const { configurationId } = useParams();
+
+    const { data: configuration, setData: setConfiguration } = useDataFromUrl(
+        `/configs/${configurationId}`
+    );
+
+    const [name, setName] = useState(configuration.name);
+    const [isPrivate, setIsPrivate] = useState(configuration.isPrivate);
+    const [maxPlayer, setMaxPlayer] = useState(configuration.maxPlayers);
     const [nbrTeam, setNbrTeam] = useState('');
-    const [gameMode, setGameMode] = useState('');
-    const [duration, setDuration] = useState('');
+    const [gameMode, setGameMode] = useState(configuration.gameMode);
+    const [duration, setDuration] = useState(configuration.duration);
     const mode = ['SUPREMACY', 'FLAG', 'TIME'];
-
-    const handleSubmit = e => {
-        e.preventDefault();
-        create({ name, isPrivate, maxPlayer, nbrTeam, gameMode })
-            .then(res => {
-                history.push(`/${res.data.id}/mapcreator`);
-            })
-            .catch(err => {
-                setName('');
-                setIsPrivate('');
-                setMaxPlayer('');
-                setNbrTeam('');
-                setGameMode('');
-            });
-    };
 
     return (
         <>
             <h1>Choix des paramètres</h1>
-            <form onSubmit={handleSubmit}>
+            <form>
                 <>
                     <label for="name">Choix du nom de la partie :</label>
                     <input
@@ -113,4 +105,4 @@ const Configuration = () => {
     );
 };
 
-export default Configuration;
+export default ModifConfig;
