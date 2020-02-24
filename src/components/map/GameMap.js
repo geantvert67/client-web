@@ -24,18 +24,18 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
     const [forbiddenZoneIndex, setForbiddenZoneIndex] = useState(-1);
     const { idconfiguration } = useParams();
 
-    console.log(forbiddenZones);
+    console.log(flagsPositions);
     useEffect(() => {
         let forbZones = [];
-        let zoneIndex = 0;
-        getAreas(idconfiguration).then(zones =>
+        let zoneIndex = -1;
+        getAreas(idconfiguration).then(zones => {
+            zoneIndex++;
             zones.data.map(zone =>
                 !zone.forbidden
                     ? setPolygonPosition(formatMainZone(zone))
-                    : (forbZones.push(formatForbiddenZone(zoneIndex, zone)),
-                      zoneIndex++)
-            )
-        );
+                    : forbZones.push(formatForbiddenZone(zoneIndex, zone))
+            );
+        });
 
         setForbiddenZoneIndex(zoneIndex);
         setForbiddenZones(forbZones);
@@ -139,6 +139,15 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
                 (conflict = true);
         });
 
+        !conflict &&
+            flagsPositions.map(
+                flag =>
+                    getDistance(flag, {
+                        lat: newPositon.lat,
+                        lng: newPositon.lng
+                    }) < 40 && (conflict = true)
+            );
+
         return !conflict &&
             isInZone(point.latlng.lat, point.latlng.lng, polygonPosition)
             ? setFlagsPositions(flagsPositions.concat(newPositon))
@@ -162,6 +171,15 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
                 zone
             ) && (conflict = true);
         });
+
+        !conflict &&
+            flagsPositions.map(
+                flag =>
+                    getDistance(flag, {
+                        lat: newPositon.lat,
+                        lng: newPositon.lng
+                    }) < 40 && (conflict = true)
+            );
 
         !conflict &&
             isInZone(
@@ -270,7 +288,11 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
                     {action === 'mainZone' ? (
                         <ZoneButtons setPolygonPosition={setPolygonPosition} />
                     ) : action === 'flags' ? (
-                        <FlagsButtons setFlagsPositions={setFlagsPositions} />
+                        <FlagsButtons
+                            setFlagsPositions={setFlagsPositions}
+                            polygonPosition={polygonPosition}
+                            forbiddenZones={forbiddenZones}
+                        />
                     ) : action === 'forbiddenZone' ? (
                         <ForbiddenZonesList
                             forbiddenZones={forbiddenZones}

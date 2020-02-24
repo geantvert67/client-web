@@ -46,3 +46,47 @@ export const getDistance = (origin, destination) => {
 const toRadian = degree => {
     return (degree * Math.PI) / 180;
 };
+
+export const getZoneBox = polygonPosition => {
+    let x_max = -180,
+        y_max = -90;
+    let x_min = 180,
+        y_min = 90;
+
+    polygonPosition.map(point => {
+        point.lng > x_max && (x_max = point.lng);
+        point.lng < x_min && (x_min = point.lng);
+        point.lat > y_max && (y_max = point.lat);
+        point.lat < y_min && (y_min = point.lat);
+    });
+
+    return { x_max, x_min, y_max, y_min };
+};
+
+export const addRandomFlags = (polygonPosition, forbiddenZone) => {
+    const { x_max, y_max, x_min, y_min } = getZoneBox(polygonPosition);
+
+    let randomFlags = [];
+
+    while (randomFlags.length < 10) {
+        let lat = y_min + Math.random() * (y_max - y_min);
+        let lng = x_min + Math.random() * (x_max - x_min);
+
+        let conflict = false;
+        forbiddenZone.map(
+            zone => isInZone(lat, lng, zone) && (conflict = true)
+        );
+
+        !conflict &&
+            randomFlags.map(
+                flag =>
+                    getDistance(flag, { lat, lng }) < 40 && (conflict = true)
+            );
+
+        !conflict &&
+            isInZone(lat, lng, polygonPosition) &&
+            randomFlags.push({ lat, lng });
+    }
+
+    return randomFlags;
+};
