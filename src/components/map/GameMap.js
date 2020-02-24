@@ -24,7 +24,7 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
     const [forbiddenZoneIndex, setForbiddenZoneIndex] = useState(-1);
     const { idconfiguration } = useParams();
 
-    console.log(forbiddenZoneIndex);
+    console.log(flagsPositions);
     useEffect(() => {
         let forbZones = [];
         let zoneIndex = -1;

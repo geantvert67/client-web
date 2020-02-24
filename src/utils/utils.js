@@ -47,7 +47,7 @@ const toRadian = degree => {
     return (degree * Math.PI) / 180;
 };
 
-const getZoneBox = polygonPosition => {
+export const getZoneBox = polygonPosition => {
     let x_max = -180,
         y_max = -90;
     let x_min = 180,
