@@ -11,6 +11,7 @@ import MapCreator from './map/MapCreator';
 import Configuration from './configuration/Configuration';
 import ModifConfig from './configuration/ModifConfig';
 import Games from './Games';
+import PublicGames from './PublicGames';
 import Profil from './user/Profil';
 
 const Home = () => <h3>You're at home</h3>;
@@ -37,6 +38,9 @@ const App = () => {
                 </Route>
                 <Route exact path="/games">
                     <Games />
+                </Route>
+                <Route exact path="/publicgames">
+                    <PublicGames />
                 </Route>
                 <Route exact path="/:configurationId/modifconfig">
                     <ModifConfig />

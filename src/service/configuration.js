@@ -32,3 +32,7 @@ export const removeFlags = idConfig => {
 export const removeZones = idConfig => {
     return request.delete(`/configs/${idConfig}/areas`);
 };
+
+export const removeConfiguration = idConfig => {
+    return request.delete(`/configs/${idConfig}`);
+};

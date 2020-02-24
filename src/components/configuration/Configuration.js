@@ -4,7 +4,7 @@ import { create } from '../../service/configuration';
 
 const Configuration = () => {
     const [name, setName] = useState('');
-    const [isPrivate, setIsPrivate] = useState('');
+    const [isPrivate, setIsPrivate] = useState(true);
     const [maxPlayer, setMaxPlayer] = useState('');
     const [nbrTeam, setNbrTeam] = useState('');
     const [gameMode, setGameMode] = useState('');
@@ -47,6 +47,7 @@ const Configuration = () => {
                         type="radio"
                         name="isPrivate"
                         id="private"
+                        checked={isPrivate}
                         onChange={e => setIsPrivate(true)}
                     />
                     <label for="public">Partie publique:</label>
