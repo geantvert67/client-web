@@ -50,7 +50,7 @@ function Markers({
                         </Popup>
                     </Marker>
 
-                    <Circle center={flag} radius={50} />
+                    <Circle center={flag} radius={20} />
                 </>
             ))}
 

@@ -28,19 +28,27 @@ function MapCreator() {
                 <>
                     <div className="center">
                         <button
-                            className={action === 'mainZone' && 'selected'}
+                            className={
+                                action === 'mainZone' ? 'selected' : undefined
+                            }
                             onClick={e => setAction('mainZone')}
                         >
                             Créer une zone de jeu
                         </button>
                         <button
-                            className={action === 'flags' && 'selected'}
+                            className={
+                                action === 'flags' ? 'selected' : undefined
+                            }
                             onClick={e => setAction('flags')}
                         >
                             Placer des drapeaux
                         </button>
                         <button
-                            className={action === 'forbiddenZone' && 'selected'}
+                            className={
+                                action === 'forbiddenZone'
+                                    ? 'selected'
+                                    : undefined
+                            }
                             onClick={e => setAction('forbiddenZone')}
                         >
                             Gérer les zones interdites
