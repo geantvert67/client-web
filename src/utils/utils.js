@@ -76,6 +76,7 @@ export const addRandomFlags = (polygonPosition, forbiddenZone) => {
         forbiddenZone.map(
             zone => isInZone(lat, lng, zone) && (conflict = true)
         );
+
         !conflict &&
             randomFlags.map(
                 flag =>

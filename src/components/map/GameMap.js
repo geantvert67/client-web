@@ -24,18 +24,18 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
     const [forbiddenZoneIndex, setForbiddenZoneIndex] = useState(-1);
     const { idconfiguration } = useParams();
 
-    console.log(forbiddenZones);
+    console.log(forbiddenZoneIndex);
     useEffect(() => {
         let forbZones = [];
-        let zoneIndex = 0;
-        getAreas(idconfiguration).then(zones =>
+        let zoneIndex = -1;
+        getAreas(idconfiguration).then(zones => {
+            zoneIndex++;
             zones.data.map(zone =>
                 !zone.forbidden
                     ? setPolygonPosition(formatMainZone(zone))
-                    : (forbZones.push(formatForbiddenZone(zoneIndex, zone)),
-                      zoneIndex++)
-            )
-        );
+                    : forbZones.push(formatForbiddenZone(zoneIndex, zone))
+            );
+        });
 
         setForbiddenZoneIndex(zoneIndex);
         setForbiddenZones(forbZones);
