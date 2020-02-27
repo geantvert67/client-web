@@ -31,7 +31,7 @@ const Games = () => {
                     <td>Mode de jeu</td>
                     <td>Accès</td>
                     <td>Modifier</td>
-                    <td>Copier</td>
+                    <td>Cloner</td>
                     <td>Télécharger</td>
                 </tr>
                 {configurations !== null &&
@@ -48,7 +48,7 @@ const Games = () => {
                                 </Link>
                             </td>
                             <td>
-                                <Link to="/">Copier</Link>
+                                <Link to="/">Cloner</Link>
                             </td>
                             <td>
                                 <DownloadButton />

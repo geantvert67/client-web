@@ -30,7 +30,7 @@ const PublicGames = () => {
                     <td>Nom de partie</td>
                     <td>Mode de jeu</td>
                     <td>Accès</td>
-                    <td>Copier</td>
+                    <td>Cloner</td>
                     <td>Télécharger</td>
                 </tr>
                 {configurations !== null &&
@@ -42,7 +42,7 @@ const PublicGames = () => {
                                 {configuration.isPrivate ? 'Privé' : 'Publique'}
                             </td>
                             <td>
-                                <Link to="/">Copier</Link>
+                                <Link to="/">Cloner</Link>
                             </td>
                             <td>
                                 <DownloadButton />

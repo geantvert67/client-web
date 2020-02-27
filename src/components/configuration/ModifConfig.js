@@ -214,9 +214,6 @@ const ModifConfig = () => {
                         </>
                         <>
                             <br />
-                            <button type="submit">Valider</button>
-                        </>
-                        <>
                             <button type="submit">Modifier</button>
                         </>
                     </form>
