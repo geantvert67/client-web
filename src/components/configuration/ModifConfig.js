@@ -15,14 +15,15 @@ const ModifConfig = () => {
     } = useDataFromUrl(`/configs/${configurationId}`);
 
     const [name, setName] = useState('');
-    const [isPrivate, setIsPrivate] = useState('');
-    const [maxPlayer, setMaxPlayer] = useState('');
-    const [nbrTeam, setNbrTeam] = useState('');
-    const [gameMode, setGameMode] = useState('');
-    const [duration, setDuration] = useState('');
-
+    const [isPrivate, setIsPrivate] = useState(true);
+    const [maxPlayer, setMaxPlayer] = useState(0);
+    const [inventorySize, setInventorySize] = useState(0);
+    const [gameMode, setGameMode] = useState('SUPREMACY');
+    const [duration, setDuration] = useState(null);
+    const [flagVisibilityRadius, setFlagVisibilityRadius] = useState(0);
+    const [flagActionRadius, setFlagActionRadius] = useState(0);
+    const [flagCaptureDuration, setFlagCaptureDuration] = useState(60);
     const mode = ['SUPREMACY', 'FLAG', 'TIME'];
-
     const removeConf = () => {
         removeConfiguration(configurationId)
             .then(res => {
@@ -93,13 +94,20 @@ const ModifConfig = () => {
                         </>
                         <br />
                         <>
-                            <label for="nbrTeam">Nombre d'équipes?</label>
+                            <label for="nbrTeam">Taille de l'inventaire</label>
                             <input
                                 type="number"
-                                name="nbrTeam"
-                                id="nbrTeam"
-                                defaultValue={nbrTeam}
-                                onChange={e => setNbrTeam(e.target.value)}
+                                name="inventorySize"
+                                id="inventorySize"
+                                defaultValue={
+                                    configuration.inventorySize === undefined
+                                        ? parseInt(inventorySize, 10)
+                                        : parseInt(
+                                              configuration.inventorySize,
+                                              10
+                                          )
+                                }
+                                onChange={e => setInventorySize(e.target.value)}
                             />
                         </>
                         <br />
@@ -136,6 +144,78 @@ const ModifConfig = () => {
                             </>
                         )}
                         <br />
+                        <>
+                            <label for="flagVisibilityRadius">
+                                Rayon de visibilité des cristaux
+                            </label>
+                            <input
+                                type="number"
+                                name="flagVisibilityRadius"
+                                id="flagVisibilityRadius"
+                                defaultValue={
+                                    configuration.flagVisibilityRadius ===
+                                    undefined
+                                        ? parseInt(flagVisibilityRadius, 10)
+                                        : parseInt(
+                                              configuration.flagVisibilityRadius,
+                                              10
+                                          )
+                                }
+                                onChange={e =>
+                                    setFlagVisibilityRadius(e.target.value)
+                                }
+                            />
+                        </>
+                        <br />
+                        <br />
+                        <>
+                            <label for="flagActionRadius">
+                                Rayon d'action des cristaux
+                            </label>
+                            <input
+                                type="number"
+                                name="flagActionRadius"
+                                id="flagActionRadius"
+                                defaultValue={
+                                    configuration.flagActionRadius === undefined
+                                        ? parseInt(flagActionRadius, 10)
+                                        : parseInt(
+                                              configuration.flagActionRadius,
+                                              10
+                                          )
+                                }
+                                onChange={e =>
+                                    setFlagActionRadius(e.target.value)
+                                }
+                            />
+                        </>
+                        <br />
+                        <>
+                            <label for="flagCaptureDuration">
+                                Temps de capture des cristaux
+                            </label>
+                            <input
+                                type="number"
+                                name="flagCaptureDuration"
+                                id="flagCaptureDuration"
+                                defaultValue={
+                                    configuration.flagCaptureDuration ===
+                                    undefined
+                                        ? parseInt(flagCaptureDuration, 10)
+                                        : parseInt(
+                                              configuration.flagCaptureDuration,
+                                              10
+                                          )
+                                }
+                                onChange={e =>
+                                    setFlagCaptureDuration(e.target.value)
+                                }
+                            />
+                        </>
+                        <>
+                            <br />
+                            <button type="submit">Valider</button>
+                        </>
                         <>
                             <button type="submit">Modifier</button>
                         </>

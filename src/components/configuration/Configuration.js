@@ -5,24 +5,41 @@ import { create } from '../../service/configuration';
 const Configuration = () => {
     const [name, setName] = useState('');
     const [isPrivate, setIsPrivate] = useState(true);
-    const [maxPlayer, setMaxPlayer] = useState('');
-    const [nbrTeam, setNbrTeam] = useState('');
-    const [gameMode, setGameMode] = useState('');
-    const [duration, setDuration] = useState('');
+    const [maxPlayer, setMaxPlayer] = useState(0);
+    const [inventorySize, setInventorySize] = useState(0);
+    const [gameMode, setGameMode] = useState('SUPREMACY');
+    const [duration, setDuration] = useState(null);
+    const [flagVisibilityRadius, setFlagVisibilityRadius] = useState(0);
+    const [flagActionRadius, setFlagActionRadius] = useState(0);
+    const [flagCaptureDuration, setFlagCaptureDuration] = useState(60);
     const mode = ['SUPREMACY', 'FLAG', 'TIME'];
 
     const handleSubmit = e => {
         e.preventDefault();
-        create({ name, isPrivate, maxPlayer, nbrTeam, gameMode, duration })
+        create({
+            name,
+            isPrivate,
+            maxPlayer,
+            inventorySize,
+            gameMode,
+            duration,
+            flagVisibilityRadius,
+            flagActionRadius,
+            flagCaptureDuration
+        })
             .then(res => {
                 history.push(`/${res.data.id}/mapcreator`);
             })
             .catch(err => {
                 setName('');
-                setIsPrivate('');
-                setMaxPlayer('');
-                setNbrTeam('');
-                setGameMode('');
+                setIsPrivate(true);
+                setMaxPlayer(0);
+                setInventorySize('');
+                setGameMode('SUPREMACY');
+                setDuration(null);
+                setFlagVisibilityRadius(0);
+                setFlagActionRadius(0);
+                setFlagCaptureDuration(0);
             });
     };
 
@@ -71,13 +88,13 @@ const Configuration = () => {
                 </>
                 <br />
                 <>
-                    <label for="nbrTeam">Nombre d'équipes?</label>
+                    <label for="nbrTeam">Taille de l'inventaire</label>
                     <input
                         type="number"
-                        name="nbrTeam"
-                        id="nbrTeam"
-                        value={nbrTeam}
-                        onChange={e => setNbrTeam(e.target.value)}
+                        name="inventorySize"
+                        id="inventorySize"
+                        value={inventorySize}
+                        onChange={e => setInventorySize(e.target.value)}
                     />
                 </>
                 <br />
@@ -87,7 +104,6 @@ const Configuration = () => {
                         type="text"
                         name="mode"
                         id="mode"
-                        value={gameMode}
                         onChange={e => setGameMode(e.target.value)}
                     >
                         {mode.map(m => (
@@ -109,6 +125,46 @@ const Configuration = () => {
                         />
                     </>
                 )}
+                <br />
+                <>
+                    <label for="flagVisibilityRadius">
+                        Rayon de visibilité des cristaux
+                    </label>
+                    <input
+                        type="number"
+                        name="flagVisibilityRadius"
+                        id="flagVisibilityRadius"
+                        value={flagVisibilityRadius}
+                        onChange={e => setFlagVisibilityRadius(e.target.value)}
+                    />
+                </>
+                <br />
+                <br />
+                <>
+                    <label for="flagActionRadius">
+                        Rayon d'action des cristaux
+                    </label>
+                    <input
+                        type="number"
+                        name="flagActionRadius"
+                        id="flagActionRadius"
+                        value={flagActionRadius}
+                        onChange={e => setFlagActionRadius(e.target.value)}
+                    />
+                </>
+                <br />
+                <>
+                    <label for="flagCaptureDuration">
+                        Temps de capture des cristaux
+                    </label>
+                    <input
+                        type="number"
+                        name="flagCaptureDuration"
+                        id="flagCaptureDuration"
+                        value={flagCaptureDuration}
+                        onChange={e => setFlagCaptureDuration(e.target.value)}
+                    />
+                </>
                 <br />
                 <>
                     <button type="submit">Valider</button>
