@@ -13,7 +13,7 @@ const Configuration = () => {
 
     const handleSubmit = e => {
         e.preventDefault();
-        create({ name, isPrivate, maxPlayer, nbrTeam, gameMode })
+        create({ name, isPrivate, maxPlayer, nbrTeam, gameMode, duration })
             .then(res => {
                 history.push(`/${res.data.id}/mapcreator`);
             })
@@ -83,13 +83,17 @@ const Configuration = () => {
                 <br />
                 <>
                     <label for="mode">Choix du mode de jeu:</label>
-                    <input
+                    <select
                         type="text"
                         name="mode"
                         id="mode"
                         value={gameMode}
                         onChange={e => setGameMode(e.target.value)}
-                    />
+                    >
+                        {mode.map(m => (
+                            <option value={m}> {m} </option>
+                        ))}
+                    </select>
                 </>
                 <br />
                 <br />

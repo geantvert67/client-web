@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDataFromUrl } from '../utils/data';
+import DownloadButton from './DownloadButton';
 
 /*
 function createData(name, mode, nbrPlayeur) {
@@ -30,6 +31,7 @@ const PublicGames = () => {
                     <td>Mode de jeu</td>
                     <td>Accès</td>
                     <td>Copier</td>
+                    <td>Télécharger</td>
                 </tr>
                 {configurations !== null &&
                     configurations.map(configuration => (
@@ -41,6 +43,9 @@ const PublicGames = () => {
                             </td>
                             <td>
                                 <Link to="/">Copier</Link>
+                            </td>
+                            <td>
+                                <DownloadButton />
                             </td>
                         </tr>
                     ))}

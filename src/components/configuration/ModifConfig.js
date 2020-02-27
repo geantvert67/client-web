@@ -85,8 +85,8 @@ const ModifConfig = () => {
                                 id="nbrMaxPlayer"
                                 defaultValue={
                                     configuration.maxPlayer === undefined
-                                        ? maxPlayer
-                                        : configuration.maxPlayer
+                                        ? parseInt(maxPlayer, 10)
+                                        : parseInt(configuration.maxPlayer, 10)
                                 }
                                 onChange={e => setMaxPlayer(e.target.value)}
                             />
@@ -105,17 +105,17 @@ const ModifConfig = () => {
                         <br />
                         <>
                             <label for="mode">Choix du mode de jeu:</label>
-                            <input
+                            <select
                                 type="text"
                                 name="mode"
                                 id="mode"
-                                defaultValue={
-                                    configuration.gameMode === undefined
-                                        ? gameMode
-                                        : configuration.gameMode
-                                }
+                                defaultValue={configuration.gameMode}
                                 onChange={e => setGameMode(e.target.value)}
-                            />
+                            >
+                                {mode.map(m => (
+                                    <option value={m}> {m} </option>
+                                ))}
+                            </select>
                         </>
                         <br />
                         <br />
@@ -147,6 +147,13 @@ const ModifConfig = () => {
                             }}
                         >
                             Supprimer
+                        </button>
+                        <button
+                            onClick={e => {
+                                history.push(`/${configurationId}/mapcreator`);
+                            }}
+                        >
+                            Modifier la carte
                         </button>
                     </>
                 </>
