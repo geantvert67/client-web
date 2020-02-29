@@ -27,7 +27,7 @@ const ModifConfig = () => {
     const removeConf = () => {
         removeConfiguration(configurationId)
             .then(res => {
-                history.push(`/`);
+                history.push(`/games`);
             })
             .catch(err => {});
     };

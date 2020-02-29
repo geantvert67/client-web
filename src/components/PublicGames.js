@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { useDataFromUrl } from '../utils/data';
 import DownloadButton from './DownloadButton';
+import { cloneConfiguration } from '../service/configuration';
 
 /*
 function createData(name, mode, nbrPlayeur) {
@@ -42,7 +42,13 @@ const PublicGames = () => {
                                 {configuration.isPrivate ? 'Privé' : 'Publique'}
                             </td>
                             <td>
-                                <Link to="/">Cloner</Link>
+                                <button
+                                    onClick={e => {
+                                        cloneConfiguration(configuration.id);
+                                    }}
+                                >
+                                    Cloner
+                                </button>
                             </td>
                             <td>
                                 <DownloadButton />
