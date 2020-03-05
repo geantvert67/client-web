@@ -63,6 +63,20 @@ export const getZoneBox = polygonPosition => {
     return { x_max, x_min, y_max, y_min };
 };
 
+export const getCenterZoneBox = polygonPosition => {
+    const { x_max, x_min, y_max, y_min } = getZoneBox(polygonPosition);
+
+    return { lng: (x_max + x_min) / 2, lat: (y_max + y_min) / 2 };
+};
+
+export const getActionZoneAuto = polygonPosition => {
+    const { x_max, x_min, y_max, y_min } = getZoneBox(polygonPosition);
+    const origin = { lng: x_max, lat: y_max };
+    const dest = { lng: x_min, lat: y_min };
+
+    return (5 / 100) * getDistance(origin, dest);
+};
+
 export const addRandomFlags = (polygonPosition, forbiddenZone) => {
     const { x_max, y_max, x_min, y_min } = getZoneBox(polygonPosition);
 
@@ -85,7 +99,8 @@ export const addRandomFlags = (polygonPosition, forbiddenZone) => {
             !conflict &&
                 randomFlags.map(
                     flag =>
-                        getDistance(flag, { lat, lng }) < 40 &&
+                        getDistance(flag, { lat, lng }) <
+                            getActionZoneAuto(polygonPosition) * 2 &&
                         (conflict = true)
                 );
 
