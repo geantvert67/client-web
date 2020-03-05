@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ZoneButtons from './ZoneButtons';
 import { Map, TileLayer, Polygon } from 'react-leaflet';
 import FlagsButtons from './FlagsButtons';
-import { isInZone, getDistance } from '../../utils/utils';
+import { isInZone, getDistance, getCenterZoneBox } from '../../utils/utils';
 import Markers from './Markers';
 import ForbiddenZonesList from './ForbiddenZonesList';
 import {
@@ -16,6 +16,7 @@ import { useParams } from 'react-router-dom';
 import DownloadButton from '../DownloadButton';
 
 function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
+    const [position, setPosition] = useState(defaultPosition);
     const [zoom, setZoom] = useState(17);
     const [polygonPosition, setPolygonPosition] = useState([]);
     const [flagsPositions, setFlagsPositions] = useState([]);
@@ -30,7 +31,8 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
             zoneIndex++;
             zones.data.map(zone =>
                 !zone.forbidden
-                    ? setPolygonPosition(formatMainZone(zone))
+                    ? (setPolygonPosition(formatMainZone(zone)),
+                      setPosition(getCenterZoneBox(formatMainZone(zone))))
                     : forbZones.push(formatForbiddenZone(zoneIndex, zone))
             );
         });
@@ -214,6 +216,24 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
         );
     };
 
+    const handleUpdate = (
+        idconfiguration,
+        polygonPosition,
+        forbiddenZones,
+        flagsPositions
+    ) => {
+        polygonPosition.length === 0
+            ? alert(
+                  'Veuillez créer une zone de jeu avant de sauvegarder la carte.'
+              )
+            : updateConfig(
+                  idconfiguration,
+                  polygonPosition,
+                  forbiddenZones,
+                  flagsPositions
+              );
+    };
+
     return (
         <>
             <link
@@ -226,11 +246,7 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
             />
             {defaultPosition.length !== 0 && (
                 <>
-                    <Map
-                        center={defaultPosition}
-                        zoom={zoom}
-                        onClick={handleClick}
-                    >
+                    <Map center={position} zoom={zoom} onClick={handleClick}>
                         <TileLayer url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png" />
                         <Polygon color="green" positions={polygonPosition} />
 
@@ -279,7 +295,7 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
                     )}
                     <button
                         onClick={() =>
-                            updateConfig(
+                            handleUpdate(
                                 idconfiguration,
                                 polygonPosition,
                                 forbiddenZones,

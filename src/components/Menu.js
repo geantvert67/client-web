@@ -4,7 +4,7 @@ import { useAuth } from '../utils/auth';
 
 const Menu = () => {
     const { user, signout } = useAuth();
-
+    console.log(user);
     const items = [
         <li key="home">
             <Link to="/">Home</Link>
