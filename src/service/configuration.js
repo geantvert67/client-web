@@ -33,8 +33,8 @@ export const removeZones = idConfig => {
     return request.delete(`/configs/${idConfig}/areas`);
 };
 
-export const updateConfiguration = credentials => {
-    return request.put(`/configs`);
+export const updateConfiguration = (idConfig, credentials) => {
+    return request.put(`/configs/${idConfig}`, credentials);
 };
 
 export const removeConfiguration = idConfig => {
