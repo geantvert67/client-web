@@ -2,7 +2,12 @@ import React, { useState, useEffect } from 'react';
 import ZoneButtons from './ZoneButtons';
 import { Map, TileLayer, Polygon } from 'react-leaflet';
 import FlagsButtons from './FlagsButtons';
-import { isInZone, getDistance, getCenterZoneBox } from '../../utils/utils';
+import {
+    isInZone,
+    getDistance,
+    getCenterZoneBox,
+    getActionZoneAuto
+} from '../../utils/utils';
 import Markers from './Markers';
 import ForbiddenZonesList from './ForbiddenZonesList';
 import {
@@ -122,7 +127,9 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
                     getDistance(flag, {
                         lat: newPositon.lat,
                         lng: newPositon.lng
-                    }) < 40 && (conflict = true)
+                    }) <
+                        getActionZoneAuto(polygonPosition) * 2 &&
+                    (conflict = true)
             );
 
         return !conflict &&
@@ -155,7 +162,9 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
                     getDistance(flag, {
                         lat: newPositon.lat,
                         lng: newPositon.lng
-                    }) < 40 && (conflict = true)
+                    }) <
+                        getActionZoneAuto(polygonPosition) * 2 &&
+                    (conflict = true)
             );
 
         !conflict &&
