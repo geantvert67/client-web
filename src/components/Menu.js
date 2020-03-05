@@ -7,7 +7,7 @@ const Menu = () => {
     console.log(user);
     const items = [
         <li key="home">
-            <Link to="/">Home</Link>
+            <Link to="/">Menu</Link>
         </li>
     ];
     if (!user) {
@@ -15,10 +15,10 @@ const Menu = () => {
             <nav>
                 <ul>
                     <li key="signin">
-                        <Link to="/signin">Signin</Link>
+                        <Link to="/signin">Connexion</Link>
                     </li>
                     <li key="signup">
-                        <Link to="/signup">Signup</Link>
+                        <Link to="/signup">Inscription</Link>
                     </li>
                 </ul>
             </nav>
@@ -27,21 +27,23 @@ const Menu = () => {
         items.push(
             <nav>
                 <ul>
-                    <li>Connected as {user.username}</li>
+                    <li>Bonjour {user.username} !</li>
                     <li>
-                        <Link to="/profil">Changement du profil</Link>
+                        <Link to="/profil">Modifier le profil</Link>
                     </li>
                     <li key="config">
-                        <Link to="/configuration">Configuration</Link>
+                        <Link to="/configuration">
+                            Créer une nouvelle configuration
+                        </Link>
                     </li>
                     <li key="publicgames">
-                        <Link to="/publicgames">Partie Publique</Link>
+                        <Link to="/publicgames">Configurations publiques</Link>
                     </li>
                     <li key="games">
-                        <Link to="/games">Games</Link>
+                        <Link to="/games">Configurations personnelles</Link>
                     </li>
                     <li key="signout">
-                        <button onClick={signout}>Signout</button>
+                        <button onClick={signout}>Déconnexion</button>
                     </li>
                 </ul>
             </nav>
