@@ -7,7 +7,7 @@ import {
     updateConfiguration
 } from '../../service/configuration';
 
-const FormModifConfig = (configuration, setConfiguration) => {
+const FormModifConfig = configuration => {
     const { configurationId } = useParams();
 
     const [name, setName] = useState(configuration.configuration.name);
@@ -43,6 +43,11 @@ const FormModifConfig = (configuration, setConfiguration) => {
                 history.push(`/games`);
             })
             .catch(err => {});
+    };
+
+    const handleChangeGameMode = value => {
+        setGameMode(value);
+        value === 'SUPREMACY' && setDuration(null);
     };
 
     const updateConf = () => {
@@ -125,7 +130,7 @@ const FormModifConfig = (configuration, setConfiguration) => {
                         name="mode"
                         id="mode"
                         defaultValue={gameMode}
-                        onChange={e => setGameMode(e.target.value)}
+                        onChange={e => handleChangeGameMode(e.target.value)}
                     >
                         {mode.map(m => (
                             <option value={m}> {m} </option>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import history from '../utils/history';
 import { useDataFromUrl } from '../utils/data';
 import DownloadButton from './DownloadButton';
 import { cloneConfiguration } from '../service/configuration';
@@ -23,6 +24,14 @@ const Games = () => {
     const { data: configurations, setData: setConfigurations } = useDataFromUrl(
         `/user/configs`
     );
+
+    const handleClone = value => {
+        cloneConfiguration(value)
+            .then(res => {
+                history.push(`/${value}/modifconfig`);
+            })
+            .catch(err => {});
+    };
     return (
         <>
             <h1>Configuration de parties</h1>
@@ -51,7 +60,7 @@ const Games = () => {
                             <td>
                                 <button
                                     onClick={e => {
-                                        cloneConfiguration(configuration.id);
+                                        handleClone(configuration.id);
                                     }}
                                 >
                                     Cloner

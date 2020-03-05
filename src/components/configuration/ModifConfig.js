@@ -19,10 +19,7 @@ const ModifConfig = () => {
             ) : (
                 <>
                     <h1>Choix des paramètres</h1>
-                    <FormModifConfig
-                        configuration={configuration}
-                        setConfiguration={setConfiguration}
-                    />
+                    <FormModifConfig configuration={configuration} />
                 </>
             )}
         </>
