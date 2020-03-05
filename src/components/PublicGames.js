@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDataFromUrl } from '../utils/data';
+import history from '../utils/history';
 import DownloadButton from './DownloadButton';
 import { cloneConfiguration } from '../service/configuration';
 
@@ -22,6 +23,14 @@ const PublicGames = () => {
     const { data: configurations, setData: setConfigurations } = useDataFromUrl(
         `/configs`
     );
+
+    const handleClone = value => {
+        cloneConfiguration(value)
+            .then(res => {
+                history.push(`/${value}/modifconfig`);
+            })
+            .catch(err => {});
+    };
     return (
         <>
             <h1>Configuration de parties</h1>
@@ -44,7 +53,7 @@ const PublicGames = () => {
                             <td>
                                 <button
                                     onClick={e => {
-                                        cloneConfiguration(configuration.id);
+                                        handleClone(configuration.id);
                                     }}
                                 >
                                     Cloner
