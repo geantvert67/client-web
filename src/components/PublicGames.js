@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import history from '../utils/history';
 import { useDataFromUrl } from '../utils/data';
+import history from '../utils/history';
 import DownloadButton from './DownloadButton';
 import { cloneConfiguration } from '../service/configuration';
 
@@ -20,9 +19,9 @@ const rows = [
 ];
 */
 
-const Games = () => {
+const PublicGames = () => {
     const { data: configurations, setData: setConfigurations } = useDataFromUrl(
-        `/user/configs`
+        `/configs`
     );
 
     const handleClone = value => {
@@ -40,7 +39,6 @@ const Games = () => {
                     <td>Nom de partie</td>
                     <td>Mode de jeu</td>
                     <td>Accès</td>
-                    <td>Modifier</td>
                     <td>Cloner</td>
                     <td>Télécharger</td>
                 </tr>
@@ -51,11 +49,6 @@ const Games = () => {
                             <td>{configuration.gameMode}</td>
                             <td>
                                 {configuration.isPrivate ? 'Privé' : 'Publique'}
-                            </td>
-                            <td>
-                                <Link to={`/${configuration.id}/modifconfig`}>
-                                    Modifier
-                                </Link>
                             </td>
                             <td>
                                 <button
@@ -76,4 +69,4 @@ const Games = () => {
     );
 };
 
-export default Games;
+export default PublicGames;

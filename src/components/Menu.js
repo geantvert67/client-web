@@ -34,6 +34,9 @@ const Menu = () => {
                     <li key="config">
                         <Link to="/configuration">Configuration</Link>
                     </li>
+                    <li key="publicgames">
+                        <Link to="/publicgames">Partie Publique</Link>
+                    </li>
                     <li key="games">
                         <Link to="/games">Games</Link>
                     </li>

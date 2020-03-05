@@ -1,25 +1,60 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import history from '../../utils/history';
-import { create } from '../../service/configuration';
+import {
+    removeConfiguration,
+    updateConfiguration
+} from '../../service/configuration';
 
-const Configuration = () => {
-    const [name, setName] = useState('');
-    const [isPrivate, setIsPrivate] = useState(true);
-    const [maxPlayer, setMaxPlayer] = useState(0);
-    const [inventorySize, setInventorySize] = useState(0);
-    const [gameMode, setGameMode] = useState('SUPREMACY');
-    const [duration, setDuration] = useState(null);
-    const [flagVisibilityRadius, setFlagVisibilityRadius] = useState(0);
-    const [flagActionRadius, setFlagActionRadius] = useState(0);
-    const [flagCaptureDuration, setFlagCaptureDuration] = useState(60);
+const FormModifConfig = configuration => {
+    const { configurationId } = useParams();
+
+    const [name, setName] = useState(configuration.configuration.name);
+    const [isPrivate, setIsPrivate] = useState(
+        configuration.configuration.isPrivate
+    );
+    const [maxPlayers, setMaxPlayers] = useState(
+        configuration.configuration.maxPlayers
+    );
+    const [inventorySize, setInventorySize] = useState(
+        configuration.configuration.inventorySize
+    );
+    const [gameMode, setGameMode] = useState(
+        configuration.configuration.gameMode
+    );
+    const [duration, setDuration] = useState(
+        configuration.configuration.duration
+    );
+    const [flagVisibilityRadius, setFlagVisibilityRadius] = useState(
+        configuration.configuration.flagVisibilityRadius
+    );
+    const [flagActionRadius, setFlagActionRadius] = useState(
+        configuration.configuration.flagActionRadius
+    );
+    const [flagCaptureDuration, setFlagCaptureDuration] = useState(
+        configuration.configuration.flagCaptureDuration
+    );
     const mode = ['SUPREMACY', 'FLAG', 'TIME'];
 
-    const handleSubmit = e => {
-        e.preventDefault();
-        create({
+    const removeConf = () => {
+        removeConfiguration(configurationId)
+            .then(res => {
+                history.push(`/games`);
+            })
+            .catch(err => {});
+    };
+
+    const handleChangeGameMode = value => {
+        setGameMode(value);
+        value === 'SUPREMACY' && setDuration(null);
+    };
+
+    const updateConf = () => {
+        updateConfiguration(configurationId, {
             name,
             isPrivate,
-            maxPlayer,
+            maxPlayers,
             inventorySize,
             gameMode,
             duration,
@@ -28,32 +63,21 @@ const Configuration = () => {
             flagCaptureDuration
         })
             .then(res => {
-                history.push(`/${res.data.id}/mapcreator`);
+                history.push(`/games`);
             })
-            .catch(err => {
-                setName('');
-                setIsPrivate(true);
-                setMaxPlayer(0);
-                setInventorySize('');
-                setGameMode('SUPREMACY');
-                setDuration(null);
-                setFlagVisibilityRadius(0);
-                setFlagActionRadius(0);
-                setFlagCaptureDuration(0);
-            });
+            .catch(err => {});
     };
-
+    console.log(configuration.configuration);
     return (
         <>
-            <h1>Choix des paramètres</h1>
-            <form onSubmit={handleSubmit}>
+            <form>
                 <>
                     <label for="name">Choix du nom de la partie :</label>
                     <input
                         type="text"
                         name="name"
                         id="name"
-                        value={name}
+                        defaultValue={name}
                         onChange={e => setName(e.target.value)}
                     />
                 </>
@@ -64,7 +88,7 @@ const Configuration = () => {
                         type="radio"
                         name="isPrivate"
                         id="private"
-                        checked={isPrivate}
+                        checked={isPrivate ? true : false}
                         onChange={e => setIsPrivate(true)}
                     />
                     <label for="public">Partie publique:</label>
@@ -72,6 +96,7 @@ const Configuration = () => {
                         type="radio"
                         name="isPrivate"
                         id="public"
+                        checked={isPrivate ? false : true}
                         onChange={e => setIsPrivate(false)}
                     />
                 </>
@@ -82,8 +107,8 @@ const Configuration = () => {
                         type="number"
                         name="nbrMaxPlayer"
                         id="nbrMaxPlayer"
-                        value={maxPlayer}
-                        onChange={e => setMaxPlayer(e.target.value)}
+                        defaultValue={maxPlayers}
+                        onChange={e => setMaxPlayers(e.target.value)}
                     />
                 </>
                 <br />
@@ -93,7 +118,7 @@ const Configuration = () => {
                         type="number"
                         name="inventorySize"
                         id="inventorySize"
-                        value={inventorySize}
+                        defaultValue={inventorySize}
                         onChange={e => setInventorySize(e.target.value)}
                     />
                 </>
@@ -104,7 +129,8 @@ const Configuration = () => {
                         type="text"
                         name="mode"
                         id="mode"
-                        onChange={e => setGameMode(e.target.value)}
+                        defaultValue={gameMode}
+                        onChange={e => handleChangeGameMode(e.target.value)}
                     >
                         {mode.map(m => (
                             <option value={m}> {m} </option>
@@ -120,7 +146,7 @@ const Configuration = () => {
                             type="number"
                             name="duration"
                             id="duration"
-                            value={duration}
+                            defaultValue={duration}
                             onChange={e => setDuration(e.target.value)}
                         />
                     </>
@@ -134,7 +160,7 @@ const Configuration = () => {
                         type="number"
                         name="flagVisibilityRadius"
                         id="flagVisibilityRadius"
-                        value={flagVisibilityRadius}
+                        defaultValue={flagVisibilityRadius}
                         onChange={e => setFlagVisibilityRadius(e.target.value)}
                     />
                 </>
@@ -148,7 +174,7 @@ const Configuration = () => {
                         type="number"
                         name="flagActionRadius"
                         id="flagActionRadius"
-                        value={flagActionRadius}
+                        defaultValue={flagActionRadius}
                         onChange={e => setFlagActionRadius(e.target.value)}
                     />
                 </>
@@ -161,17 +187,39 @@ const Configuration = () => {
                         type="number"
                         name="flagCaptureDuration"
                         id="flagCaptureDuration"
-                        value={flagCaptureDuration}
+                        defaultValue={flagCaptureDuration}
                         onChange={e => setFlagCaptureDuration(e.target.value)}
                     />
                 </>
-                <br />
-                <>
-                    <button type="submit">Valider</button>
-                </>
             </form>
+            <>
+                <br />
+                <button
+                    onClick={e => {
+                        updateConf();
+                    }}
+                >
+                    Modifier
+                </button>
+            </>
+            <>
+                <button
+                    onClick={e => {
+                        removeConf();
+                    }}
+                >
+                    Supprimer
+                </button>
+                <button
+                    onClick={e => {
+                        history.push(`/${configurationId}/mapcreator`);
+                    }}
+                >
+                    Modifier la carte
+                </button>
+            </>
         </>
     );
 };
 
-export default Configuration;
+export default FormModifConfig;
