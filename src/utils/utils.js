@@ -67,25 +67,37 @@ export const addRandomFlags = (polygonPosition, forbiddenZone) => {
     const { x_max, y_max, x_min, y_min } = getZoneBox(polygonPosition);
 
     let randomFlags = [];
+    let nbFlags = 10;
 
-    while (randomFlags.length < 10) {
-        let lat = y_min + Math.random() * (y_max - y_min);
-        let lng = x_min + Math.random() * (x_max - x_min);
+    while (randomFlags.length < nbFlags) {
+        let newFlag = false;
+        let iteration = 0;
 
-        let conflict = false;
-        forbiddenZone.map(
-            zone => isInZone(lat, lng, zone) && (conflict = true)
-        );
+        while (!newFlag && iteration < 1000) {
+            let lat = y_min + Math.random() * (y_max - y_min);
+            let lng = x_min + Math.random() * (x_max - x_min);
 
-        !conflict &&
-            randomFlags.map(
-                flag =>
-                    getDistance(flag, { lat, lng }) < 40 && (conflict = true)
+            let conflict = false;
+            forbiddenZone.map(
+                zone => isInZone(lat, lng, zone) && (conflict = true)
             );
 
-        !conflict &&
-            isInZone(lat, lng, polygonPosition) &&
-            randomFlags.push({ lat, lng });
+            !conflict &&
+                randomFlags.map(
+                    flag =>
+                        getDistance(flag, { lat, lng }) < 40 &&
+                        (conflict = true)
+                );
+
+            !conflict &&
+                isInZone(lat, lng, polygonPosition) &&
+                randomFlags.push({ lat, lng }) &&
+                (newFlag = true);
+
+            iteration++;
+        }
+
+        iteration === 1000 && nbFlags--;
     }
 
     return randomFlags;

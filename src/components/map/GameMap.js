@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ZoneButtons from './ZoneButtons';
-import { Map, TileLayer, Polygon, GeoJSON } from 'react-leaflet';
+import { Map, TileLayer, Polygon } from 'react-leaflet';
 import FlagsButtons from './FlagsButtons';
 import { isInZone, getDistance } from '../../utils/utils';
 import Markers from './Markers';
@@ -12,7 +12,6 @@ import {
     formatFlags
 } from '../../utils/config';
 import { getAreas, getFlags } from '../../service/configuration';
-import { loadavg } from 'os';
 import { useParams } from 'react-router-dom';
 import DownloadButton from '../DownloadButton';
 
@@ -24,7 +23,6 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
     const [forbiddenZoneIndex, setForbiddenZoneIndex] = useState(-1);
     const { idconfiguration } = useParams();
 
-    console.log(flagsPositions);
     useEffect(() => {
         let forbZones = [];
         let zoneIndex = -1;
@@ -47,7 +45,6 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
 
     useEffect(() => {
         checkFlags();
-        checkForbiddenZones();
     }, [polygonPosition, forbiddenZones]);
 
     const checkFlags = () => {
@@ -69,27 +66,6 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
                 'Attention, certains cristaux ne se situent plus dans la nouvelle zone. Ceux-ci ont été supprimés.'
             );
             setFlagsPositions(otherFlags);
-        }
-    };
-
-    const checkForbiddenZones = () => {
-        let conflict = false;
-        let otherZones = [];
-        forbiddenZones.filter(zone => {
-            let valid = true;
-            zone.map(point => {
-                valid =
-                    valid && isInZone(point.lat, point.lng, polygonPosition);
-                conflict = conflict || !valid;
-            });
-            valid && otherZones.push(zone);
-        });
-
-        if (conflict) {
-            alert(
-                'Attention, certaines zones interdites ne se trouvent plus entièrement dans la zone de jeu. Celles-ci ont été supprimés.'
-            );
-            setForbiddenZones(otherZones);
         }
     };
 
@@ -126,8 +102,7 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
             newPositon
         );
         actualZones.splice(forbiddenZoneIndex, 0, forbiddenZone);
-        isInZone(newPositon.lat, newPositon.lng, polygonPosition) &&
-            setForbiddenZones(actualZones);
+        setForbiddenZones(actualZones);
     };
 
     const addFlag = point => {
@@ -216,12 +191,11 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
             zone: point.zone
         };
 
-        isInZone(newPositon.lat, newPositon.lng, polygonPosition) &&
-            otherPoints[point.zone].splice(
-                forbiddenZones[point.zone].indexOf(point),
-                0,
-                newPositon
-            );
+        otherPoints[point.zone].splice(
+            forbiddenZones[point.zone].indexOf(point),
+            0,
+            newPositon
+        );
 
         setForbiddenZones(otherPoints);
     };
