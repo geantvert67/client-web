@@ -8,6 +8,9 @@ function ForbiddenZoneButtons({
     setForbiddenZoneIndex
 }) {
     const deleteZone = indexZone => {
+        forbiddenZones.map(zone =>
+            zone.map(point => point.zone > indexZone && point.zone--)
+        );
         setForbiddenZones(
             forbiddenZones.filter(
                 zone => forbiddenZones.indexOf(zone) != indexZone

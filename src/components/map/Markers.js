@@ -1,6 +1,7 @@
 import React from 'react';
 import { Marker, Popup, Circle } from 'react-leaflet';
 import { iconWhiteFlag, iconPylone } from './Icons';
+import { getActionZoneAuto } from '../../utils/utils';
 
 function Markers({
     polygonPosition,
@@ -50,7 +51,10 @@ function Markers({
                         </Popup>
                     </Marker>
 
-                    <Circle center={flag} radius={20} />
+                    <Circle
+                        center={flag}
+                        radius={getActionZoneAuto(polygonPosition)}
+                    />
                 </>
             ))}
 
