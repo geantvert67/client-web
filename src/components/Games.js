@@ -13,7 +13,7 @@ const Games = () => {
     const handleClone = value => {
         cloneConfiguration(value)
             .then(res => {
-                history.push(`/${value}/modifconfig`);
+                history.push(`/${res.data.id}/modifconfig`);
             })
             .catch(err => {});
     };
