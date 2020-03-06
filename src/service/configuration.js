@@ -44,3 +44,7 @@ export const removeConfiguration = idConfig => {
 export const cloneConfiguration = idConfig => {
     return request.post(`/configs/${idConfig}/clone`);
 };
+
+export const exportConfiguration = idConfig => {
+    return request.get(`/configs/${idConfig}/export`, { responseType: 'blob' });
+};
