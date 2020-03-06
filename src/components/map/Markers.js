@@ -31,11 +31,10 @@ function Markers({
             {flagsPositions.map(flag => (
                 <>
                     <Marker
-                        key={flag}
+                        key={flag.id}
                         position={flag}
                         icon={iconWhiteFlag}
                         draggable
-                        onClick={e => console.log(e)}
                         onDragend={e => {
                             moveFlag(e, flag);
                             stopDragging();
@@ -60,7 +59,7 @@ function Markers({
 
             {polygonPosition.map(point => (
                 <Marker
-                    key={point}
+                    key={point.id}
                     position={point}
                     icon={iconPylone}
                     draggable
@@ -84,7 +83,7 @@ function Markers({
             {forbiddenZones.map(zone =>
                 zone.map(point => (
                     <Marker
-                        key={point}
+                        key={point.id}
                         position={point}
                         draggable
                         autoPan

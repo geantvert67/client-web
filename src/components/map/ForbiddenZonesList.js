@@ -24,8 +24,9 @@ function ForbiddenZonesList({
                     <li
                         key={forbiddenZones.indexOf(f)}
                         className={
-                            forbiddenZones.indexOf(f) === forbiddenZoneIndex &&
-                            'selected'
+                            forbiddenZones.indexOf(f) === forbiddenZoneIndex
+                                ? 'selected'
+                                : ''
                         }
                     >
                         {' '}

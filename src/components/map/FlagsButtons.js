@@ -14,7 +14,7 @@ function FlagsButtons({ setFlagsPositions, polygonPosition, forbiddenZones }) {
                             polygonPosition,
                             forbiddenZones
                         );
-                        flags.length != 10 &&
+                        flags.length !== 10 &&
                             alert(
                                 'Nous ne pouvons pas vous afficher plus de ' +
                                     flags.length +

@@ -15,13 +15,9 @@ export const AuthProvider = ({ children }) => {
         request
             .get('/user')
             .then(res => {
-                setUser(res.data.user);
-                setLoading(false);
+                setUser(res.data);
             })
-            .catch(() => {
-                setUser(null);
-                setLoading(false);
-            });
+            .finally(() => setLoading(false));
     }, []);
 
     if (loading) {

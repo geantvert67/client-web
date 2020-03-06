@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { Map, TileLayer, Polygon } from 'react-leaflet';
 
 import { AuthProvider } from '../utils/auth';
-
 import Menu from './Menu';
 import Signin from './authentification/Signin';
 import Signup from './authentification/Signup';

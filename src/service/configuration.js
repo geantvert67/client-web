@@ -1,9 +1,4 @@
-import { useDataFromUrl } from '../utils/data';
 import request from '../utils/request';
-
-/*export const getAll = () => {
-    return useDataFromUrl(`/configs`);
-};*/
 
 export const create = credentials => {
     return request.post('/configs', credentials);
@@ -43,4 +38,8 @@ export const removeConfiguration = idConfig => {
 
 export const cloneConfiguration = idConfig => {
     return request.post(`/configs/${idConfig}/clone`);
+};
+
+export const exportConfiguration = idConfig => {
+    return request.get(`/configs/${idConfig}/export`, { responseType: 'blob' });
 };

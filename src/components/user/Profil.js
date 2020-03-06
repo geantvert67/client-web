@@ -11,14 +11,14 @@ const Profil = () => {
 
     const handleSubmit = e => {
         e.preventDefault();
-        if (username != '') {
+        if (username !== '') {
             update({ username }).catch(err => {
                 setUsername('');
                 setMessage(err.message);
             });
         }
 
-        if (password != '') {
+        if (password !== '') {
             updatePassword({ password }).catch(err => {
                 setPassword('');
                 setPasswordCheck('');
