@@ -48,7 +48,7 @@ const Configuration = () => {
             <h1>Choix des paramètres</h1>
             <form onSubmit={handleSubmit}>
                 <>
-                    <label for="name">Choix du nom de la partie :</label>
+                    <label htmlFor="name">Choix du nom de la partie :</label>
                     <input
                         type="text"
                         name="name"
@@ -59,7 +59,7 @@ const Configuration = () => {
                 </>
                 <br />
                 <>
-                    <label for="private">Partie privée:</label>
+                    <label htmlFor="private">Partie privée:</label>
                     <input
                         type="radio"
                         name="isPrivate"
@@ -67,7 +67,7 @@ const Configuration = () => {
                         checked={isPrivate}
                         onChange={e => setIsPrivate(true)}
                     />
-                    <label for="public">Partie publique:</label>
+                    <label htmlFor="public">Partie publique:</label>
                     <input
                         type="radio"
                         name="isPrivate"
@@ -77,7 +77,9 @@ const Configuration = () => {
                 </>
                 <br />
                 <>
-                    <label for="nbrMaxPlayer">Nombre maximum de joueurs?</label>
+                    <label htmlFor="nbrMaxPlayer">
+                        Nombre maximum de joueurs?
+                    </label>
                     <input
                         type="number"
                         name="nbrMaxPlayer"
@@ -88,7 +90,7 @@ const Configuration = () => {
                 </>
                 <br />
                 <>
-                    <label for="nbrTeam">Taille de l'inventaire</label>
+                    <label htmlFor="nbrTeam">Taille de l'inventaire</label>
                     <input
                         type="number"
                         name="inventorySize"
@@ -99,7 +101,7 @@ const Configuration = () => {
                 </>
                 <br />
                 <>
-                    <label for="mode">Choix du mode de jeu:</label>
+                    <label htmlFor="mode">Choix du mode de jeu:</label>
                     <select
                         type="text"
                         name="mode"
@@ -107,7 +109,9 @@ const Configuration = () => {
                         onChange={e => setGameMode(e.target.value)}
                     >
                         {mode.map(m => (
-                            <option value={m}> {m} </option>
+                            <option key={m} value={m}>
+                                {m}
+                            </option>
                         ))}
                     </select>
                 </>
@@ -115,7 +119,7 @@ const Configuration = () => {
                 <br />
                 {(gameMode === 'FLAG' || gameMode === 'TIME') && (
                     <>
-                        <label for="mode">Durée de la partie:</label>
+                        <label htmlFor="mode">Durée de la partie:</label>
                         <input
                             type="number"
                             name="duration"
@@ -127,7 +131,7 @@ const Configuration = () => {
                 )}
                 <br />
                 <>
-                    <label for="flagVisibilityRadius">
+                    <label htmlFor="flagVisibilityRadius">
                         Rayon de visibilité des cristaux
                     </label>
                     <input
@@ -141,7 +145,7 @@ const Configuration = () => {
                 <br />
                 <br />
                 <>
-                    <label for="flagActionRadius">
+                    <label htmlFor="flagActionRadius">
                         Rayon d'action des cristaux
                     </label>
                     <input
@@ -154,7 +158,7 @@ const Configuration = () => {
                 </>
                 <br />
                 <>
-                    <label for="flagCaptureDuration">
+                    <label htmlFor="flagCaptureDuration">
                         Temps de capture des cristaux
                     </label>
                     <input

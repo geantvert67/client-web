@@ -1,5 +1,3 @@
-import { useState, useEffect } from 'react';
-import request from './request';
 import {
     addZone,
     addFlag,

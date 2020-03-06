@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import history from '../../utils/history';
 import {
     removeConfiguration,
@@ -67,12 +66,12 @@ const FormModifConfig = configuration => {
             })
             .catch(err => {});
     };
-    console.log(configuration.configuration);
+
     return (
         <>
             <form>
                 <>
-                    <label for="name">Choix du nom de la partie :</label>
+                    <label htmlFor="name">Choix du nom de la partie :</label>
                     <input
                         type="text"
                         name="name"
@@ -83,7 +82,7 @@ const FormModifConfig = configuration => {
                 </>
                 <br />
                 <>
-                    <label for="private">Partie privée:</label>
+                    <label htmlFor="private">Partie privée:</label>
                     <input
                         type="radio"
                         name="isPrivate"
@@ -91,7 +90,7 @@ const FormModifConfig = configuration => {
                         checked={isPrivate ? true : false}
                         onChange={e => setIsPrivate(true)}
                     />
-                    <label for="public">Partie publique:</label>
+                    <label htmlFor="public">Partie publique:</label>
                     <input
                         type="radio"
                         name="isPrivate"
@@ -102,7 +101,9 @@ const FormModifConfig = configuration => {
                 </>
                 <br />
                 <>
-                    <label for="nbrMaxPlayer">Nombre maximum de joueurs?</label>
+                    <label htmlFor="nbrMaxPlayer">
+                        Nombre maximum de joueurs?
+                    </label>
                     <input
                         type="number"
                         name="nbrMaxPlayer"
@@ -113,7 +114,7 @@ const FormModifConfig = configuration => {
                 </>
                 <br />
                 <>
-                    <label for="nbrTeam">Taille de l'inventaire</label>
+                    <label htmlFor="nbrTeam">Taille de l'inventaire</label>
                     <input
                         type="number"
                         name="inventorySize"
@@ -124,7 +125,7 @@ const FormModifConfig = configuration => {
                 </>
                 <br />
                 <>
-                    <label for="mode">Choix du mode de jeu:</label>
+                    <label htmlFor="mode">Choix du mode de jeu:</label>
                     <select
                         type="text"
                         name="mode"
@@ -133,7 +134,9 @@ const FormModifConfig = configuration => {
                         onChange={e => handleChangeGameMode(e.target.value)}
                     >
                         {mode.map(m => (
-                            <option value={m}> {m} </option>
+                            <option key={m} value={m}>
+                                {m}
+                            </option>
                         ))}
                     </select>
                 </>
@@ -141,7 +144,7 @@ const FormModifConfig = configuration => {
                 <br />
                 {(gameMode === 'FLAG' || gameMode === 'TIME') && (
                     <>
-                        <label for="mode">Durée de la partie:</label>
+                        <label htmlFor="mode">Durée de la partie:</label>
                         <input
                             type="number"
                             name="duration"
@@ -153,7 +156,7 @@ const FormModifConfig = configuration => {
                 )}
                 <br />
                 <>
-                    <label for="flagVisibilityRadius">
+                    <label htmlFor="flagVisibilityRadius">
                         Rayon de visibilité des cristaux
                     </label>
                     <input
@@ -167,7 +170,7 @@ const FormModifConfig = configuration => {
                 <br />
                 <br />
                 <>
-                    <label for="flagActionRadius">
+                    <label htmlFor="flagActionRadius">
                         Rayon d'action des cristaux
                     </label>
                     <input
@@ -180,7 +183,7 @@ const FormModifConfig = configuration => {
                 </>
                 <br />
                 <>
-                    <label for="flagCaptureDuration">
+                    <label htmlFor="flagCaptureDuration">
                         Temps de capture des cristaux
                     </label>
                     <input

@@ -261,6 +261,7 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
 
                         {forbiddenZones.map(zone => (
                             <Polygon
+                                key={zone.id}
                                 color="red"
                                 positions={
                                     forbiddenZones[forbiddenZones.indexOf(zone)]
@@ -315,7 +316,7 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
                         {' '}
                         Enregistrer la carte{' '}
                     </button>
-                    <DownloadButton />
+                    <DownloadButton configId={idconfiguration} />
                 </>
             )}
         </>

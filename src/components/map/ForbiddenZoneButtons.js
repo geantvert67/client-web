@@ -13,7 +13,7 @@ function ForbiddenZoneButtons({
         );
         setForbiddenZones(
             forbiddenZones.filter(
-                zone => forbiddenZones.indexOf(zone) != indexZone
+                zone => forbiddenZones.indexOf(zone) !== indexZone
             )
         );
         setForbiddenZoneIndex(forbiddenZoneIndex - 1);

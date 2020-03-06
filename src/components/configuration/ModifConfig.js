@@ -6,11 +6,9 @@ import FormModifConfig from './FormModifConfig';
 const ModifConfig = () => {
     const { configurationId } = useParams();
 
-    const {
-        loading: loading,
-        data: configuration,
-        setData: setConfiguration
-    } = useDataFromUrl(`/configs/${configurationId}`);
+    const { loading: loading, data: configuration } = useDataFromUrl(
+        `/configs/${configurationId}`
+    );
 
     return (
         <>
