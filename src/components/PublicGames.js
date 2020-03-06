@@ -24,6 +24,7 @@ const PublicGames = () => {
                     <tr>
                         <td>Nom de partie</td>
                         <td>Mode de jeu</td>
+                        <td>Créateur</td>
                         <td>Accès</td>
                         <td>Cloner</td>
                         <td>Télécharger</td>
@@ -35,6 +36,7 @@ const PublicGames = () => {
                             <tr key={configuration.id}>
                                 <td>{configuration.name}</td>
                                 <td>{configuration.gameMode}</td>
+                                <td>{configuration.Owner.username}</td>
                                 <td>
                                     {configuration.isPrivate
                                         ? 'Privé'
