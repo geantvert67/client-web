@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import history from '../../utils/history';
 import { create } from '../../service/configuration';
+import { useForm } from 'react-hook-form';
 
 const Configuration = () => {
+    const { register, handleSubmit, watch, errors } = useForm();
     const [name, setName] = useState('');
     const [isPrivate, setIsPrivate] = useState(true);
     const [maxPlayer, setMaxPlayer] = useState(0);
@@ -14,8 +16,9 @@ const Configuration = () => {
     const [flagCaptureDuration, setFlagCaptureDuration] = useState(60);
     const mode = ['SUPREMACY', 'FLAG', 'TIME'];
 
-    const handleSubmit = e => {
-        e.preventDefault();
+    const createConfig = e => {
+        //e.preventDefault();
+        setDuration(duration * 60);
         create({
             name,
             isPrivate,
@@ -46,7 +49,7 @@ const Configuration = () => {
     return (
         <>
             <h1>Choix des paramètres</h1>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit(createConfig)}>
                 <>
                     <label htmlFor="name">Choix du nom de la partie :</label>
                     <input
@@ -54,12 +57,14 @@ const Configuration = () => {
                         name="name"
                         id="name"
                         value={name}
+                        ref={register({ required: true })}
                         onChange={e => setName(e.target.value)}
                     />
+                    {errors.name && 'Name is required'}
                 </>
                 <br />
                 <>
-                    <label htmlFor="private">Partie privée:</label>
+                    <label htmlFor="private">Configuration privée:</label>
                     <input
                         type="radio"
                         name="isPrivate"
@@ -67,7 +72,7 @@ const Configuration = () => {
                         checked={isPrivate}
                         onChange={e => setIsPrivate(true)}
                     />
-                    <label htmlFor="public">Partie publique:</label>
+                    <label htmlFor="public">Configuration publique:</label>
                     <input
                         type="radio"
                         name="isPrivate"
@@ -82,6 +87,7 @@ const Configuration = () => {
                     </label>
                     <input
                         type="number"
+                        min="0"
                         name="nbrMaxPlayer"
                         id="nbrMaxPlayer"
                         value={maxPlayer}
@@ -95,6 +101,7 @@ const Configuration = () => {
                         type="number"
                         name="inventorySize"
                         id="inventorySize"
+                        min="0"
                         value={inventorySize}
                         onChange={e => setInventorySize(e.target.value)}
                     />
@@ -106,6 +113,7 @@ const Configuration = () => {
                         type="text"
                         name="mode"
                         id="mode"
+                        ref={register({ required: true })}
                         onChange={e => setGameMode(e.target.value)}
                     >
                         {mode.map(m => (
@@ -124,6 +132,7 @@ const Configuration = () => {
                             type="number"
                             name="duration"
                             id="duration"
+                            min="0"
                             value={duration}
                             onChange={e => setDuration(e.target.value)}
                         />
@@ -138,7 +147,9 @@ const Configuration = () => {
                         type="number"
                         name="flagVisibilityRadius"
                         id="flagVisibilityRadius"
+                        min="0"
                         value={flagVisibilityRadius}
+                        ref={register({ required: true })}
                         onChange={e => setFlagVisibilityRadius(e.target.value)}
                     />
                 </>
@@ -152,7 +163,10 @@ const Configuration = () => {
                         type="number"
                         name="flagActionRadius"
                         id="flagActionRadius"
+                        min="0"
+                        max={flagVisibilityRadius}
                         value={flagActionRadius}
+                        ref={register({ required: true })}
                         onChange={e => setFlagActionRadius(e.target.value)}
                     />
                 </>
@@ -166,7 +180,10 @@ const Configuration = () => {
                         name="flagCaptureDuration"
                         id="flagCaptureDuration"
                         value={flagCaptureDuration}
-                        onChange={e => setFlagCaptureDuration(e.target.value)}
+                        ref={register({ required: true })}
+                        onChange={e =>
+                            setFlagCaptureDuration(e.target.value * 60)
+                        }
                     />
                 </>
                 <br />
