@@ -19,16 +19,26 @@ import {
 import { getAreas, getFlags } from '../../service/configuration';
 import { useParams } from 'react-router-dom';
 import DownloadButton from '../DownloadButton';
+import ItemsButtons from './ItemsButtons';
 
-function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
+function GameMap({
+    defaultPosition,
+    action,
+    setAction,
+    setSleepingAction,
+    modelItems
+}) {
     const [position, setPosition] = useState(defaultPosition);
     const [zoom, setZoom] = useState(17);
     const [polygonPosition, setPolygonPosition] = useState([]);
     const [flagsPositions, setFlagsPositions] = useState([]);
     const [forbiddenZones, setForbiddenZones] = useState([]);
+    const [items, setItems] = useState([]);
+    const [selectedModelItem, setSelectedModelItem] = useState();
     const [forbiddenZoneIndex, setForbiddenZoneIndex] = useState(-1);
     const { idconfiguration } = useParams();
 
+    modelItems = [{ name: 'Canon' }, { name: 'Sentinelle' }];
     useEffect(() => {
         let forbZones = [];
         let zoneIndex = -1;
@@ -85,7 +95,31 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
             ? forbiddenZoneIndex !== -1
                 ? createForbiddenZone(e)
                 : alert('Veuillez créer une première zone interdite.')
+            : action === 'items'
+            ? addItem(e)
             : '';
+    };
+
+    const addItem = point => {
+        const position = { lat: point.latlng.lat, lng: point.latlng.lng };
+
+        let conflict = false;
+
+        forbiddenZones.map(zone => {
+            isInZone(point.latlng.lat, point.latlng.lng, zone) &&
+                (conflict = true);
+        });
+
+        return !conflict &&
+            isInZone(point.latlng.lat, point.latlng.lng, polygonPosition)
+            ? setItems(
+                  items.concat({
+                      modelItem: modelItems[selectedModelItem],
+                      position,
+                      quantity: 1
+                  })
+              )
+            : alert('Veuillez placer les items dans une zone de jeu valide.');
     };
 
     const createMainZone = e => {
@@ -178,6 +212,38 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
         setFlagsPositions(otherFlags);
     };
 
+    const moveItem = (e, item) => {
+        console.log(item);
+        let otherItems = items.filter(i => i !== item);
+        const newPosition = {
+            lat: e.target.getLatLng().lat,
+            lng: e.target.getLatLng().lng
+        };
+        let conflict = false;
+
+        forbiddenZones.map(zone => {
+            isInZone(
+                e.target.getLatLng().lat,
+                e.target.getLatLng().lng,
+                zone
+            ) && (conflict = true);
+        });
+
+        !conflict &&
+            isInZone(
+                e.target.getLatLng().lat,
+                e.target.getLatLng().lng,
+                polygonPosition
+            ) &&
+            otherItems.push({
+                modelItem: item.modelItem,
+                newPosition,
+                quantity: item.quantity
+            });
+
+        setItems(otherItems);
+    };
+
     const movePolygon = (e, point) => {
         const otherPoints = polygonPosition.filter(f => f !== point);
         const newPositon = {
@@ -223,6 +289,10 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
         setForbiddenZones(
             forbiddenZones.map(zone => zone.filter(p => p !== point))
         );
+    };
+
+    const deleteItem = point => {
+        setItems(items.filter(p => p !== point));
     };
 
     const handleUpdate = (
@@ -282,6 +352,9 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
                             action={action}
                             setAction={setAction}
                             setSleepingAction={setSleepingAction}
+                            items={items}
+                            moveItem={moveItem}
+                            deleteItem={deleteItem}
                         />
                     </Map>
 
@@ -299,6 +372,14 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
                             forbiddenZoneIndex={forbiddenZoneIndex}
                             setForbiddenZones={setForbiddenZones}
                             setForbiddenZoneIndex={setForbiddenZoneIndex}
+                        />
+                    ) : action === 'items' ? (
+                        <ItemsButtons
+                            items={items}
+                            setItems={setItems}
+                            modelItems={modelItems}
+                            selectedModelItem={selectedModelItem}
+                            setSelectedModelItem={setSelectedModelItem}
                         />
                     ) : (
                         ''

@@ -53,6 +53,14 @@ function MapCreator() {
                         >
                             Gérer les zones interdites
                         </button>
+                        <button
+                            className={
+                                action === 'items' ? 'selected' : undefined
+                            }
+                            onClick={e => setAction('items')}
+                        >
+                            Gérer les items
+                        </button>
                     </div>
                     <GameMap
                         defaultPosition={devicePosition}
