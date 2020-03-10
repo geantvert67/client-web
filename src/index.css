@@ -43,3 +43,11 @@ body {
 .btn-dark {
     background-color: #1b1e22 !important;
 }
+
+.danger {
+    color: #eb4646 !important;
+}
+
+.priority {
+    font-weight: bold;
+}

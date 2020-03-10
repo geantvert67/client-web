@@ -16,11 +16,14 @@ const PublicGames = () => {
         <>
             <Row>
                 <Col md={{ span: 6, offset: 3 }}>
-                    <GamesButtons type="public" />
+                    <GamesButtons privateConfig={false} />
 
                     {configurations !== null &&
                         configurations.map(config => (
-                            <GamesListItem configuration={config} />
+                            <GamesListItem
+                                configuration={config}
+                                privateConfig={false}
+                            />
                         ))}
                 </Col>
             </Row>

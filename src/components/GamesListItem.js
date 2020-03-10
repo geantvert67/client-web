@@ -5,11 +5,11 @@ import { cloneConfiguration } from '../service/configuration';
 
 import { Card, Row, Col } from 'react-bootstrap';
 import moment from 'moment';
-
+import { removeConfiguration } from '../service/configuration';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCopy } from '@fortawesome/free-solid-svg-icons';
+import { faCopy, faTrash } from '@fortawesome/free-solid-svg-icons';
 
-const GamesListItem = ({ configuration }) => {
+const GamesListItem = ({ configuration, privateConfig }) => {
     const handleClone = value => {
         cloneConfiguration(value)
             .then(res => {
@@ -18,28 +18,47 @@ const GamesListItem = ({ configuration }) => {
             .catch(err => {});
     };
 
-    console.log(configuration);
+    const removeConf = configurationId => {
+        removeConfiguration(configurationId)
+            .then(res => {
+                history.push(`/games`);
+            })
+            .catch(err => {});
+    };
+
     return (
         <>
             <Card className="dark-back">
                 <Card.Body>
                     <Row>
-                        <Col md={10}>
+                        <Col md={privateConfig ? 9 : 10}>
                             <Card.Title>
-                                {configuration.name}
+                                <span className="priority">
+                                    {configuration.name}
+                                </span>
                                 {' - '}
                                 <span className="redirect">
                                     {configuration.gameMode}
                                 </span>
                             </Card.Title>
-                            <Card.Subtitle className="mb-2 text-muted subtitle">
-                                Créée le{' '}
-                                {moment(
-                                    configuration.createdAt,
-                                    'yyyy-MM-DDThh:mm:ssZ[UTC]'
-                                ).format('DD/MM/YYYY')}{' '}
-                                par {configuration.Owner.username}
-                            </Card.Subtitle>
+                            {!privateConfig ? (
+                                <Card.Subtitle className="mb-2 text-muted">
+                                    Créée le{' '}
+                                    {moment(
+                                        configuration.createdAt,
+                                        'yyyy-MM-DDThh:mm:ssZ[UTC]'
+                                    ).format('DD/MM/YYYY')}{' '}
+                                    par {configuration.Owner.username}
+                                </Card.Subtitle>
+                            ) : configuration.isPrivate ? (
+                                <Card.Subtitle className="mb-2 text-muted subtitle">
+                                    Configuration privée
+                                </Card.Subtitle>
+                            ) : (
+                                <Card.Subtitle className="mb-2 text-muted subtitle">
+                                    Configuration visible par la communauté
+                                </Card.Subtitle>
+                            )}
                         </Col>
                         <Col>
                             <Row>
@@ -57,6 +76,18 @@ const GamesListItem = ({ configuration }) => {
                                         configId={configuration.id}
                                     />
                                 </Col>
+                                {privateConfig && (
+                                    <Col>
+                                        <FontAwesomeIcon
+                                            icon={faTrash}
+                                            className="danger"
+                                            size="lg"
+                                            onClick={() =>
+                                                removeConf(configuration.id)
+                                            }
+                                        />
+                                    </Col>
+                                )}
                             </Row>
                         </Col>
                     </Row>

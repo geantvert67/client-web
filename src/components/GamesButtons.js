@@ -7,24 +7,24 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
-const GamesButtons = ({ type }) => {
+const GamesButtons = ({ privateConfig }) => {
     return (
         <>
             <Row>
-                <Col md={2}>
+                <Col md="auto">
                     <Button
                         variant="success"
-                        className={type === 'private' ? 'btn-auth' : 'btn-dark'}
+                        className={privateConfig ? 'btn-auth' : 'btn-dark'}
                         onClick={() => history.push('/games')}
                     >
                         {' '}
                         Mes configs{' '}
                     </Button>
                 </Col>
-                <Col md={8}>
+                <Col md={7}>
                     <Button
                         variant="success"
-                        className={type === 'public' ? 'btn-auth' : 'btn-dark'}
+                        className={!privateConfig ? 'btn-auth' : 'btn-dark'}
                         onClick={() => history.push('/publicgames')}
                     >
                         {' '}
