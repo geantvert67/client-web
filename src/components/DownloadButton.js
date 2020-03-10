@@ -1,6 +1,9 @@
 import React from 'react';
 import { exportConfiguration } from '../service/configuration';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faDownload } from '@fortawesome/free-solid-svg-icons';
+
 function DownloadButton({ configId }) {
     const downloadConfig = () => {
         exportConfiguration(configId)
@@ -18,7 +21,7 @@ function DownloadButton({ configId }) {
     return (
         <>
             <div className="center" onClick={downloadConfig}>
-                <button>Télécharger la configuration</button>
+                <FontAwesomeIcon icon={faDownload} size="lg" />
             </div>
         </>
     );
