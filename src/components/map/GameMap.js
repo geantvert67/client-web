@@ -16,18 +16,12 @@ import {
     formatForbiddenZone,
     formatFlags
 } from '../../utils/config';
-import { getAreas, getFlags } from '../../service/configuration';
+import { getAreas, getFlags, getItemsModel } from '../../service/configuration';
 import { useParams } from 'react-router-dom';
 import DownloadButton from '../DownloadButton';
 import ItemsButtons from './ItemsButtons';
 
-function GameMap({
-    defaultPosition,
-    action,
-    setAction,
-    setSleepingAction,
-    modelItems
-}) {
+function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
     const [position, setPosition] = useState(defaultPosition);
     const [zoom, setZoom] = useState(17);
     const [polygonPosition, setPolygonPosition] = useState([]);
@@ -38,12 +32,8 @@ function GameMap({
     const [forbiddenZoneIndex, setForbiddenZoneIndex] = useState(-1);
     const { idconfiguration } = useParams();
 
-    modelItems = [
-        { name: 'Canon' },
-        { name: 'Sentinelle' },
-        { name: 'Intercepteur' }
-    ];
-
+    const [modelItems, setModelItems] = useState([]);
+    console.log(modelItems);
     useEffect(() => {
         let forbZones = [];
         let zoneIndex = -1;
@@ -63,6 +53,8 @@ function GameMap({
         getFlags(idconfiguration).then(flags =>
             setFlagsPositions(formatFlags(flags))
         );
+
+        getItemsModel(idconfiguration).then(res => setModelItems(res.data));
     }, []);
 
     useEffect(() => {
