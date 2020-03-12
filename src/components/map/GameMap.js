@@ -38,7 +38,12 @@ function GameMap({
     const [forbiddenZoneIndex, setForbiddenZoneIndex] = useState(-1);
     const { idconfiguration } = useParams();
 
-    modelItems = [{ name: 'Canon' }, { name: 'Sentinelle' }];
+    modelItems = [
+        { name: 'Canon' },
+        { name: 'Sentinelle' },
+        { name: 'Intercepteur' }
+    ];
+
     useEffect(() => {
         let forbZones = [];
         let zoneIndex = -1;
@@ -213,7 +218,6 @@ function GameMap({
     };
 
     const moveItem = (e, item) => {
-        console.log(item);
         let otherItems = items.filter(i => i !== item);
         const newPosition = {
             lat: e.target.getLatLng().lat,
