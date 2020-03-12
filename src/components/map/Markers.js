@@ -1,6 +1,6 @@
 import React from 'react';
 import { Marker, Popup, Circle } from 'react-leaflet';
-import { iconWhiteFlag, iconPylone } from './Icons';
+import { iconWhiteFlag, iconPylone, getItemIcon } from './Icons';
 import { getActionZoneAuto } from '../../utils/utils';
 
 function Markers({
@@ -15,7 +15,10 @@ function Markers({
     deleteForbiddenZonePoint,
     action,
     setAction,
-    setSleepingAction
+    setSleepingAction,
+    items,
+    moveItem,
+    deleteItem
 }) {
     const startDragging = () => {
         setAction('moveElement');
@@ -25,7 +28,6 @@ function Markers({
     const stopDragging = () => {
         setAction('moveElementStop');
     };
-
     return (
         <>
             {flagsPositions.map(flag => (
@@ -105,6 +107,28 @@ function Markers({
                     </Marker>
                 ))
             )}
+
+            {items.map(point => (
+                <Marker
+                    key={point.id}
+                    position={point.position}
+                    icon={getItemIcon(point.modelItem)}
+                    draggable
+                    onDragend={e => {
+                        moveItem(e, point);
+                        stopDragging();
+                    }}
+                    onDragStart={e => {
+                        startDragging();
+                    }}
+                >
+                    <Popup>
+                        <button onClick={e => deleteItem(point)}>
+                            Supprimer
+                        </button>
+                    </Popup>
+                </Marker>
+            ))}
         </>
     );
 }

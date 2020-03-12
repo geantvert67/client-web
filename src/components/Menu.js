@@ -1,90 +1,62 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { useAuth } from '../utils/auth';
+
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
+import { Button, Badge } from 'react-bootstrap';
+import { NavLink, Link } from 'react-router-dom';
 
 const Menu = () => {
     const { user, signout } = useAuth();
-    const items = [
-        <li key="home">
-            <Link to="/">Menu</Link>
-        </li>
-    ];
-    if (!user) {
-        items.push(
-            <nav>
-                <ul>
-                    <li key="signin">
-                        <Link to="/signin">Connexion</Link>
-                    </li>
-                    <li key="signup">
-                        <Link to="/signup">Inscription</Link>
-                    </li>
-                </ul>
-            </nav>
-        );
-    } else {
-        items.push(
-            <nav>
-                <ul>
-                    <li>Bonjour {user.username} !</li>
-                    <li key="profil">
-                        <Link to="/profil">Modifier le profil</Link>
-                    </li>
-                    <li key="config">
-                        <Link to="/configuration">
-                            Créer une nouvelle configuration
-                        </Link>
-                    </li>
-                    <li key="publicgames">
-                        <Link to="/publicgames">Configurations publiques</Link>
-                    </li>
-                    <li key="games">
-                        <Link to="/games">Configurations personnelles</Link>
-                    </li>
-                    <li key="signout">
-                        <button onClick={signout}>Déconnexion</button>
-                    </li>
-                </ul>
-            </nav>
-        );
-    }
+
     return (
-        <ul>
-            <li key="home">
-                <Link to="/">Accueil</Link>
-            </li>
-            {user ? (
-                <>
-                    <li>Bonjour {user.username} !</li>
-                    <li key="profil">
-                        <Link to="/profil">Modifier le profil</Link>
-                    </li>
-                    <li key="config">
-                        <Link to="/configuration">
-                            Créer une nouvelle configuration
-                        </Link>
-                    </li>
-                    <li key="publicgames">
-                        <Link to="/publicgames">Configurations publiques</Link>
-                    </li>
-                    <li key="games">
-                        <Link to="/games">Configurations personnelles</Link>
-                    </li>
-                    <li key="signout">
-                        <button onClick={signout}>Déconnexion</button>
-                    </li>
-                </>
-            ) : (
-                <>
-                    <li key="signin">
-                        <Link to="/signin">Connexion</Link>
-                    </li>
-                    <li key="signup">
-                        <Link to="/signup">Inscription</Link>
-                    </li>
-                </>
-            )}
-        </ul>
+        <>
+            <Navbar bg="dark" variant="dark" expand="md">
+                <Navbar.Brand className="mb-1">CrystalZ</Navbar.Brand>
+
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Collapse id="basic-navbar-nav">
+                    {user ? (
+                        <>
+                            <Nav className="mr-auto">
+                                <NavLink className="nav-link" to="/publicgames">
+                                    Configurations
+                                </NavLink>
+
+                                <NavLink className="nav-link" to="/">
+                                    Trouver une partie
+                                </NavLink>
+                            </Nav>
+                            <Nav className="align-items-center">
+                                <NavLink
+                                    className="nav-link"
+                                    to="/"
+                                    onClick={e => signout()}
+                                >
+                                    Se déconnecter
+                                </NavLink>
+                                <NavLink className="nav-link" to="/profil">
+                                    <Button variant="success">
+                                        Mon profil
+                                    </Button>
+                                </NavLink>
+                            </Nav>
+                        </>
+                    ) : (
+                        <Nav className="align-items-center">
+                            <NavLink className="nav-link" to="/signup">
+                                S'inscrire{' '}
+                            </NavLink>
+                            <NavLink className="nav-link" to="/signin">
+                                <Button variant="success" className="btn-auth">
+                                    Se connecter
+                                </Button>
+                            </NavLink>
+                        </Nav>
+                    )}
+                </Navbar.Collapse>
+            </Navbar>
+        </>
     );
 };
 

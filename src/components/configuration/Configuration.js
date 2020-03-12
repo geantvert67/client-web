@@ -36,13 +36,13 @@ const Configuration = () => {
             .catch(err => {
                 setName('');
                 setIsPrivate(true);
-                setMaxPlayer(0);
+                setMaxPlayer(null);
                 setInventorySize('');
                 setGameMode('SUPREMACY');
                 setDuration(null);
-                setFlagVisibilityRadius(0);
-                setFlagActionRadius(0);
-                setFlagCaptureDuration(0);
+                setFlagVisibilityRadius(null);
+                setFlagActionRadius(null);
+                setFlagCaptureDuration(60);
             });
     };
 
@@ -57,10 +57,22 @@ const Configuration = () => {
                         name="name"
                         id="name"
                         value={name}
-                        ref={register({ required: true })}
+                        ref={register({
+                            required: true,
+                            minLength: 2,
+                            maxLength: 50
+                        })}
                         onChange={e => setName(e.target.value)}
                     />
-                    {errors.name && 'Name is required'}
+                    {errors.name &&
+                        errors.name.type === 'required' &&
+                        'Un nom est requis'}
+                    {errors.name &&
+                        errors.name.type === 'minLength' &&
+                        'Le nom est trop court'}
+                    {errors.name &&
+                        errors.name.type === 'maxLength' &&
+                        'Le nom est trop long'}
                 </>
                 <br />
                 <>
@@ -132,7 +144,7 @@ const Configuration = () => {
                             type="number"
                             name="duration"
                             id="duration"
-                            min="0"
+                            min="60"
                             value={duration}
                             onChange={e => setDuration(e.target.value)}
                         />
@@ -149,7 +161,7 @@ const Configuration = () => {
                         id="flagVisibilityRadius"
                         min="0"
                         value={flagVisibilityRadius}
-                        ref={register({ required: true })}
+                        ref={register({ required: false })}
                         onChange={e => setFlagVisibilityRadius(e.target.value)}
                     />
                 </>
@@ -166,7 +178,7 @@ const Configuration = () => {
                         min="0"
                         max={flagVisibilityRadius}
                         value={flagActionRadius}
-                        ref={register({ required: true })}
+                        ref={register({ required: false })}
                         onChange={e => setFlagActionRadius(e.target.value)}
                     />
                 </>
@@ -179,11 +191,10 @@ const Configuration = () => {
                         type="number"
                         name="flagCaptureDuration"
                         id="flagCaptureDuration"
+                        min="60"
                         value={flagCaptureDuration}
-                        ref={register({ required: true })}
-                        onChange={e =>
-                            setFlagCaptureDuration(e.target.value * 60)
-                        }
+                        ref={register({ required: false })}
+                        onChange={e => setFlagCaptureDuration(e.target.value)}
                     />
                 </>
                 <br />
