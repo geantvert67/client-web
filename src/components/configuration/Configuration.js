@@ -31,7 +31,7 @@ const Configuration = () => {
             flagCaptureDuration
         })
             .then(res => {
-                history.push(`/${res.data.id}/mapcreator`);
+                history.push(`/${res.data.id}/itemModelCreator`);
             })
             .catch(err => {
                 setName('');

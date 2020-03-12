@@ -43,3 +43,11 @@ export const cloneConfiguration = idConfig => {
 export const exportConfiguration = idConfig => {
     return request.get(`/configs/${idConfig}/export`, { responseType: 'blob' });
 };
+
+export const addItemsModel = (idConfig, model) => {
+    return request.post(`/configs/${idConfig}/item-models`, model);
+};
+
+export const getItemsModel = idConfig => {
+    return request.get(`/configs/${idConfig}/item-models`);
+};

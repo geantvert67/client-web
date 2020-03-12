@@ -18,6 +18,14 @@ const GamesListItem = ({ configuration, privateConfig }) => {
             .catch(err => {});
     };
 
+    // const handleClone = value => {
+    //     cloneConfiguration(value)
+    //         .then(res => {
+    //             history.push(`/${res.data.id}/modifconfig`);
+    //         })
+    //         .catch(err => {});
+    // };
+
     const removeConf = configurationId => {
         removeConfiguration(configurationId)
             .then(res => {
@@ -31,7 +39,7 @@ const GamesListItem = ({ configuration, privateConfig }) => {
             <Card className="dark-back">
                 <Card.Body>
                     <Row>
-                        <Col md={privateConfig ? 9 : 10}>
+                        <Col md={privateConfig ? 9 : 11}>
                             <Card.Title>
                                 <span className="priority">
                                     {configuration.name}
@@ -71,22 +79,25 @@ const GamesListItem = ({ configuration, privateConfig }) => {
                                         }
                                     />
                                 </Col>
-                                <Col>
-                                    <DownloadButton
-                                        configId={configuration.id}
-                                    />
-                                </Col>
                                 {privateConfig && (
-                                    <Col>
-                                        <FontAwesomeIcon
-                                            icon={faTrash}
-                                            className="danger"
-                                            size="lg"
-                                            onClick={() =>
-                                                removeConf(configuration.id)
-                                            }
-                                        />
-                                    </Col>
+                                    <>
+                                        <Col>
+                                            <DownloadButton
+                                                configId={configuration.id}
+                                            />
+                                        </Col>
+
+                                        <Col>
+                                            <FontAwesomeIcon
+                                                icon={faTrash}
+                                                className="danger"
+                                                size="lg"
+                                                onClick={() =>
+                                                    removeConf(configuration.id)
+                                                }
+                                            />
+                                        </Col>
+                                    </>
                                 )}
                             </Row>
                         </Col>
