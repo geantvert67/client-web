@@ -1,12 +1,12 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
-import { useDataFromUrl } from '../../utils/data';
-import { Card, Row, Col, Accordion } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Form, Card, Row, Col, Accordion } from 'react-bootstrap';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
 const ItemModelConfig = ({ model, rang }) => {
+    const [checked, setChecked] = useState(false);
+
     return (
         <>
             <Accordion>
@@ -30,7 +30,40 @@ const ItemModelConfig = ({ model, rang }) => {
                         </Row>
                     </Accordion.Toggle>
                     <Accordion.Collapse className="btn-dark" eventKey={rang}>
-                        <Card.Body>Hello! I'm the body</Card.Body>
+                        <Card.Body>
+                            {' '}
+                            <Form.Group as={Row} controlId="visibilityZone">
+                                <Form.Label column sm={6}>
+                                    Rayon de visibilité
+                                </Form.Label>
+                                <Col sm={6}>
+                                    <Form.Control type="number" value={null} />
+                                </Col>
+                            </Form.Group>
+                            <Form.Group as={Row} controlId="actionZone">
+                                <Form.Label column sm={6}>
+                                    Rayon d'action
+                                </Form.Label>
+                                <Col sm={6}>
+                                    <Form.Control type="number" value={null} />
+                                </Col>
+                            </Form.Group>
+                            <Form.Group as={Row} controlId="waitingPeriod">
+                                <Form.Label column sm={6}>
+                                    Période de carence
+                                </Form.Label>
+                                <Col sm={6}>
+                                    <Form.Control type="number" value={null} />
+                                </Col>
+                            </Form.Group>
+                            <Form.Check
+                                inline
+                                type="checkBox"
+                                id={model}
+                                label="Déplacement automatique des items"
+                                onClick={() => setChecked(!checked)}
+                            />
+                        </Card.Body>
                     </Accordion.Collapse>
                 </Card>
             </Accordion>

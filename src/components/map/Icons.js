@@ -22,8 +22,16 @@ const getItemIcon = modelItem => {
     let iconUrl =
         modelItem.name === 'Sentinelle'
             ? require('../../img/sentinelle.png')
-            : modelItem.name === 'Canon'
+            : modelItem.name === 'Canon à photons'
             ? require('../../img/turret.png')
+            : modelItem.name === 'Antenne'
+            ? require('../../img/antenne.png')
+            : modelItem.name === 'Sonde'
+            ? require('../../img/sonde.png')
+            : modelItem.name === 'Intercepteur'
+            ? require('../../img/intercepteur.png')
+            : modelItem.name === 'Portail'
+            ? require('../../img/portail.png')
             : require('../../img/pylone.gif');
 
     return new L.Icon({
