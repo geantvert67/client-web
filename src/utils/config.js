@@ -3,20 +3,25 @@ import {
     addFlag,
     removeZones,
     removeFlags,
-    addItemsModel
+    removeItems,
+    addItemsModel,
+    addItem
 } from '../service/configuration';
 
 export const removeElements = idConfig => {
     removeZones(idConfig);
     removeFlags(idConfig);
+    removeItems(idConfig);
 };
 
 export const updateConfig = (
     idConfig,
     polygonPosition,
     forbiddenZones,
-    flagsPositions
+    flagsPositions,
+    items
 ) => {
+    console.log(items);
     removeElements(idConfig);
     let coordMainZone = [];
     polygonPosition.map(point => coordMainZone.push([point.lat, point.lng]));
@@ -32,6 +37,8 @@ export const updateConfig = (
     flagsPositions.map(flag =>
         addFlag(idConfig, { coordinates: [flag.lat, flag.lng] })
     );
+
+    items.map(item => addItem(idConfig, item));
 
     addZone(idConfig, { coordinates: coordMainZone, forbidden: false });
 };
@@ -67,4 +74,19 @@ export const formatFlags = f => {
 
 export const addItemsModels = (idConfig, models) => {
     models.map(model => addItemsModel(idConfig, model));
+};
+
+export const formatItems = i => {
+    let items = [];
+    i.data.map(item =>
+        items.push({
+            quantity: item.quantity,
+            position: {
+                lat: item.position.coordinates[0],
+                lng: item.position.coordinates[1]
+            },
+            modelItem: item.ItemModel
+        })
+    );
+    return items;
 };
