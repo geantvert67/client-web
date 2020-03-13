@@ -41,7 +41,15 @@ const GamesListItem = ({ configuration, privateConfig }) => {
                     <Row>
                         <Col md={privateConfig ? 9 : 11}>
                             <Card.Title>
-                                <span className="priority">
+                                <span
+                                    className="priority"
+                                    onClick={() =>
+                                        privateConfig &&
+                                        history.push(
+                                            `${configuration.id}/modifconfig`
+                                        )
+                                    }
+                                >
                                     {configuration.name}
                                 </span>
                                 {' - '}
