@@ -54,7 +54,11 @@ const Signup = () => {
                             </Form.Group>
                             <Row className="justify-content-md-center">
                                 <Col md="auto">
-                                    <Button variant="success" type="submit">
+                                    <Button
+                                        variant="success"
+                                        type="submit"
+                                        disabled={!formValid}
+                                    >
                                         S'inscrire
                                     </Button>
                                 </Col>

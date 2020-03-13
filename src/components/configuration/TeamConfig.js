@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Card, Row, Col } from 'react-bootstrap';
 import { useDataFromUrl } from '../../utils/data';
 import TeamConfigItem from './TeamConfigItem';
+import history from '../../utils/history';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 
@@ -25,19 +26,16 @@ const TeamConfig = () => {
                             <Card className="dark-back">
                                 <Card.Body>
                                     <Row>
-                                        <Col md={10}>
-                                            <Col>
-                                                <FontAwesomeIcon
-                                                    icon={faPlusSquare}
-                                                    size="lg"
-                                                    onClick={() =>
-                                                        console.log(
-                                                            'configuration.id'
-                                                        )
-                                                    }
-                                                />
-                                            </Col>
-                                            <br />
+                                        <Col xs="auto">
+                                            <FontAwesomeIcon
+                                                icon={faPlusSquare}
+                                                size="lg"
+                                                onClick={history.push(
+                                                    `/${configurationId}/createteam`
+                                                )}
+                                            />
+                                        </Col>
+                                        <Col>
                                             <Card.Title>
                                                 <span className="redirect">
                                                     Créer une équipe

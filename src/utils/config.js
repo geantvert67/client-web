@@ -2,7 +2,8 @@ import {
     addZone,
     addFlag,
     removeZones,
-    removeFlags
+    removeFlags,
+    addItemsModel
 } from '../service/configuration';
 
 export const removeElements = idConfig => {
@@ -62,4 +63,8 @@ export const formatFlags = f => {
         })
     );
     return flags;
+};
+
+export const addItemsModels = (idConfig, models) => {
+    return Promise.all(models.map(model => addItemsModel(idConfig, model)));
 };
