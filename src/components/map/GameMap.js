@@ -14,9 +14,15 @@ import {
     updateConfig,
     formatMainZone,
     formatForbiddenZone,
-    formatFlags
+    formatFlags,
+    formatItems
 } from '../../utils/config';
-import { getAreas, getFlags, getItemsModel } from '../../service/configuration';
+import {
+    getAreas,
+    getFlags,
+    getItemsModel,
+    getItems
+} from '../../service/configuration';
 import { useParams } from 'react-router-dom';
 import DownloadButton from '../DownloadButton';
 import ItemsButtons from './ItemsButtons';
@@ -33,7 +39,7 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
     const { idconfiguration } = useParams();
 
     const [modelItems, setModelItems] = useState([]);
-    console.log(modelItems);
+    console.log(items);
     useEffect(() => {
         let forbZones = [];
         let zoneIndex = -1;
@@ -55,6 +61,8 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
         );
 
         getItemsModel(idconfiguration).then(res => setModelItems(res.data));
+
+        getItems(idconfiguration).then(items => setItems(formatItems(items)));
     }, []);
 
     useEffect(() => {
@@ -295,8 +303,10 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
         idconfiguration,
         polygonPosition,
         forbiddenZones,
-        flagsPositions
+        flagsPositions,
+        items
     ) => {
+        console.log(items);
         polygonPosition.length === 0
             ? alert(
                   'Veuillez créer une zone de jeu avant de sauvegarder la carte.'
@@ -305,7 +315,8 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
                   idconfiguration,
                   polygonPosition,
                   forbiddenZones,
-                  flagsPositions
+                  flagsPositions,
+                  items
               );
     };
 
@@ -386,7 +397,8 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
                                 idconfiguration,
                                 polygonPosition,
                                 forbiddenZones,
-                                flagsPositions
+                                flagsPositions,
+                                items
                             )
                         }
                     >

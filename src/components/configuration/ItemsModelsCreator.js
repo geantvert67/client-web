@@ -26,6 +26,8 @@ function ItemsModelsCreator({}) {
         { name: 'Antenne' }
     ];
 
+    console.log(selectedModels);
+
     const handleClick = () => {
         addItemsModels(configurationId, selectedModels);
     };
@@ -50,7 +52,8 @@ function ItemsModelsCreator({}) {
                         {selectedModels.map(model => (
                             <ItemModelConfig
                                 model={model}
-                                rang={selectedModels.indexOf(model)}
+                                selectedModels={selectedModels}
+                                setSelectedModels={setSelectedModels}
                             />
                         ))}
                     </Col>

@@ -8,7 +8,15 @@ function ItemModelCheck({ model, selectedModels, setSelectedModels }) {
 
     useEffect(() => {
         checked
-            ? setSelectedModels(selectedModels.concat(model))
+            ? setSelectedModels(
+                  selectedModels.concat({
+                      name: model.name,
+                      visibilityRadius: null,
+                      actionRadius: null,
+                      waitingPeriod: null,
+                      autoMove: false
+                  })
+              )
             : setSelectedModels(
                   selectedModels.filter(m => m.name !== model.name)
               );
