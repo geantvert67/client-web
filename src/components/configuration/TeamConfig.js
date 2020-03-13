@@ -30,9 +30,11 @@ const TeamConfig = () => {
                                             <FontAwesomeIcon
                                                 icon={faPlusSquare}
                                                 size="lg"
-                                                onClick={history.push(
-                                                    `/${configurationId}/createteam`
-                                                )}
+                                                onClick={() =>
+                                                    history.push(
+                                                        `/${configurationId}/createteam`
+                                                    )
+                                                }
                                             />
                                         </Col>
                                         <Col>

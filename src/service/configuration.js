@@ -51,3 +51,7 @@ export const addItemsModel = (idConfig, model) => {
 export const getItemsModel = idConfig => {
     return request.get(`/configs/${idConfig}/item-models`);
 };
+
+export const createTeam = (idConfig, credentials) => {
+    return request.post(`/configs/${idConfig}/teams`, credentials);
+};
