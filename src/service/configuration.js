@@ -55,3 +55,7 @@ export const getItemsModel = idConfig => {
 export const createTeam = (idConfig, credentials) => {
     return request.post(`/configs/${idConfig}/teams`, credentials);
 };
+
+export const removeTeam = (idConfig, idTeam) => {
+    return request.delete(`/configs/${idConfig}/teams/${idTeam}`);
+};

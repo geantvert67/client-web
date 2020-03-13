@@ -50,7 +50,10 @@ const TeamConfig = () => {
 
                             {teams !== null &&
                                 teams.map(team => (
-                                    <TeamConfigItem team={team} />
+                                    <TeamConfigItem
+                                        configurationId={configurationId}
+                                        team={team}
+                                    />
                                 ))}
                         </Col>
                     </Row>

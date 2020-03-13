@@ -1,32 +1,39 @@
 import React from 'react';
-
 import { Card, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCopy, faTrash } from '@fortawesome/free-solid-svg-icons';
+import Color from './Color';
+import { removeTeam } from '../../service/configuration';
 
-const TeamConfigItem = ({ team }) => {
+const TeamConfigItem = ({ configurationId, team }) => {
+    const deleteTeam = () => {
+        removeTeam(configurationId, team.id)
+            .then(res => {})
+            .catch(err => {});
+    };
+
     return (
         <>
             <Card className="dark-back">
                 <Card.Body>
                     <Row>
-                        <Col md={10}>
-                            <Card.Title>
-                                <span className="priority">{team.color}</span>
-                                {' - '}
-                                <span className="redirect">{team.name}</span>
-                            </Card.Title>
-
+                        <Col xs="auto">
+                            <Color c={team.color} />
+                        </Col>
+                        {' - '}
+                        <Card.Title>
                             <Col>
-                                <FontAwesomeIcon
-                                    icon={faTrash}
-                                    className="danger"
-                                    size="lg"
-                                    onClick={() =>
-                                        console.log('configuration.id')
-                                    }
-                                />
+                                <span className="redirect">{team.name}</span>
                             </Col>
+                        </Card.Title>
+
+                        <Col>
+                            <FontAwesomeIcon
+                                icon={faTrash}
+                                className="danger"
+                                size="lg"
+                                onClick={() => deleteTeam()}
+                            />
                         </Col>
                     </Row>
                 </Card.Body>
