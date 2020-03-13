@@ -243,6 +243,20 @@ const FormModifConfig = configuration => {
                 >
                     Modifier la carte
                 </button>
+                <button
+                    onClick={e => {
+                        history.push(`/${configurationId}/itemModelCreator`);
+                    }}
+                >
+                    Modifier les items
+                </button>
+                <button
+                    onClick={e => {
+                        history.push(`/${configurationId}/teamconfig`);
+                    }}
+                >
+                    Modifier la équipes
+                </button>
             </>
         </>
     );

@@ -59,3 +59,20 @@ export const createTeam = (idConfig, credentials) => {
 export const removeTeam = (idConfig, idTeam) => {
     return request.delete(`/configs/${idConfig}/teams/${idTeam}`);
 };
+export const addItem = (idConfig, item) => {
+    return request.post(
+        `/configs/${idConfig}/item-models/${item.modelItem.id}/items`,
+        {
+            quantity: item.quantity,
+            coordinates: [item.position.lat, item.position.lng]
+        }
+    );
+};
+
+export const getItems = idConfig => {
+    return request.get(`/configs/${idConfig}/items`);
+};
+
+export const removeItems = idConfig => {
+    return request.delete(`/configs/${idConfig}/items`);
+};

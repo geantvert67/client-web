@@ -21,12 +21,11 @@ const TeamConfigItem = ({ configurationId, team }) => {
                             <Color c={team.color} />
                         </Col>
                         {' - '}
-                        <Card.Title>
-                            <Col>
+                        <Col md="9">
+                            <Card.Title>
                                 <span className="redirect">{team.name}</span>
-                            </Col>
-                        </Card.Title>
-
+                            </Card.Title>
+                        </Col>
                         <Col>
                             <FontAwesomeIcon
                                 icon={faTrash}
