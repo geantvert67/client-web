@@ -1,32 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import ItemModelCheck from './ItemModelCheck';
 import ItemModelConfig from './ItemModelConfig';
 import { addItemsModels } from '../../utils/config';
 import { useParams } from 'react-router-dom';
+import { getItemsModel } from '../../service/configuration';
 
 function ItemsModelsCreator({}) {
     const { configurationId } = useParams();
 
     const [selectedModels, setSelectedModels] = useState([]);
+    useEffect(() => {
+        getItemsModel(configurationId).then(res => setSelectedModels(res.data));
+    }, []);
 
     const modelItems = [
-        { name: 'Sonde' },
-        { name: 'Noyau protecteur' },
-        { name: 'Prisme de transfert' },
-        { name: 'Intercepteur' },
-        { name: 'Tempête' },
-        { name: 'Canon à photons' },
-        { name: 'Sentinelle' },
-        { name: 'Portail' },
-        { name: 'Oracle' },
-        { name: 'Disloqueur' },
-        { name: 'Transducteur' },
-        { name: 'Antenne' }
+        { name: 'Sonde', tipKey: 'sonde' },
+        { name: 'Noyau protecteur', tipKey: 'noyau' },
+        { name: 'Prisme de transfert', tipKey: 'prisme' },
+        { name: 'Intercepteur', tipKey: 'transducteur' },
+        { name: 'Tempête', tipKey: 'tempete' },
+        { name: 'Canon à photons', tipKey: 'canon' },
+        { name: 'Sentinelle', tipKey: 'sentinelle' },
+        { name: 'Portail', tipKey: 'portail' },
+        { name: 'Oracle', tipKey: 'oracle' },
+        { name: 'Disloqueur', tipKey: 'disloqueur' },
+        { name: 'Transducteur', tipKey: 'transducteur' },
+        { name: 'Antenne', tipKey: 'antenne' }
     ];
-
-    console.log(selectedModels);
 
     const handleClick = () => {
         addItemsModels(configurationId, selectedModels);

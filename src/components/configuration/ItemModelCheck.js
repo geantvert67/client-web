@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Typeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import { Form } from 'react-bootstrap';
+import { ItemModelName } from '../OverlayTip';
 
 function ItemModelCheck({ model, selectedModels, setSelectedModels }) {
     const [checked, setChecked] = useState(false);
@@ -22,13 +22,20 @@ function ItemModelCheck({ model, selectedModels, setSelectedModels }) {
               );
     }, [checked]);
 
+    const checkItemModel = () => {
+        let checked = false;
+        selectedModels.map(m => m.name === model.name && (checked = true));
+        return checked;
+    };
+
     return (
         <Form>
             <Form.Check
                 inline
                 type="checkBox"
-                id={model}
-                label={model.name}
+                id={model.name}
+                label={<ItemModelName model={model} />}
+                checked={checkItemModel()}
                 onClick={() => setChecked(!checked)}
             />
         </Form>

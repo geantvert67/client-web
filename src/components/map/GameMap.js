@@ -39,7 +39,7 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
     const { idconfiguration } = useParams();
 
     const [modelItems, setModelItems] = useState([]);
-    console.log(items);
+
     useEffect(() => {
         let forbZones = [];
         let zoneIndex = -1;
@@ -299,6 +299,13 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
         setItems(items.filter(p => p !== point));
     };
 
+    const updateItemQuantity = (item, quantity) => {
+        const otherItems = items.filter(i => i !== item);
+        item.quantity = quantity;
+        otherItems.splice(items.indexOf(item), 0, item);
+        setItems(otherItems);
+    };
+
     const handleUpdate = (
         idconfiguration,
         polygonPosition,
@@ -362,6 +369,7 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
                             items={items}
                             moveItem={moveItem}
                             deleteItem={deleteItem}
+                            updateItemQuantity={updateItemQuantity}
                         />
                     </Map>
 
