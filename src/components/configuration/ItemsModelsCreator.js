@@ -15,19 +15,61 @@ function ItemsModelsCreator({}) {
         getItemsModel(configurationId).then(res => setSelectedModels(res.data));
     }, []);
 
+    const checkItemModel = nom => {
+        let checked = false;
+        selectedModels.map(m => m.name === nom && (checked = true));
+        return checked;
+    };
+
     const modelItems = [
-        { name: 'Sonde', tipKey: 'sonde' },
-        { name: 'Noyau protecteur', tipKey: 'noyau' },
-        { name: 'Prisme de transfert', tipKey: 'prisme' },
-        { name: 'Intercepteur', tipKey: 'transducteur' },
+        { name: 'Sonde', tipKey: 'sonde', checked: checkItemModel('Sonde') },
+        {
+            name: 'Noyau protecteur',
+            tipKey: 'noyau',
+            checked: checkItemModel('Noyau protecteur')
+        },
+        {
+            name: 'Prisme de transfert',
+            tipKey: 'prisme',
+            checked: checkItemModel('Prisme de transfert')
+        },
+        {
+            name: 'Intercepteur',
+            tipKey: 'intercepteur',
+            checked: checkItemModel('Intercepteur')
+        },
         { name: 'Tempête', tipKey: 'tempete' },
-        { name: 'Canon à photons', tipKey: 'canon' },
-        { name: 'Sentinelle', tipKey: 'sentinelle' },
-        { name: 'Portail', tipKey: 'portail' },
-        { name: 'Oracle', tipKey: 'oracle' },
-        { name: 'Disloqueur', tipKey: 'disloqueur' },
-        { name: 'Transducteur', tipKey: 'transducteur' },
-        { name: 'Antenne', tipKey: 'antenne' }
+        {
+            name: 'Canon à photons',
+            tipKey: 'canon',
+            checked: checkItemModel('Tempête')
+        },
+        {
+            name: 'Sentinelle',
+            tipKey: 'sentinelle',
+            checked: checkItemModel('Sentinelle')
+        },
+        {
+            name: 'Portail',
+            tipKey: 'portail',
+            checked: checkItemModel('Portail')
+        },
+        { name: 'Oracle', tipKey: 'oracle', checked: checkItemModel('Oracle') },
+        {
+            name: 'Disloqueur',
+            tipKey: 'disloqueur',
+            checked: checkItemModel('Disloqueur')
+        },
+        {
+            name: 'Transducteur',
+            tipKey: 'transducteur',
+            checked: checkItemModel('Transducteur')
+        },
+        {
+            name: 'Antenne',
+            tipKey: 'antenne',
+            checked: checkItemModel('Antenne')
+        }
     ];
 
     const handleClick = () => {
@@ -39,13 +81,11 @@ function ItemsModelsCreator({}) {
             <Form>
                 <Row className="justify-content-md-center">
                     {modelItems.map(model => (
-                        <div key={model.name}>
-                            <ItemModelCheck
-                                model={model}
-                                selectedModels={selectedModels}
-                                setSelectedModels={setSelectedModels}
-                            />
-                        </div>
+                        <ItemModelCheck
+                            model={model}
+                            selectedModels={selectedModels}
+                            setSelectedModels={setSelectedModels}
+                        />
                     ))}
                 </Row>
 

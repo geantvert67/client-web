@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
-import { Form } from 'react-bootstrap';
+import { Form, Col, Row, Container } from 'react-bootstrap';
 import { ItemModelName } from '../OverlayTip';
 
 function ItemModelCheck({ model, selectedModels, setSelectedModels }) {
-    const [checked, setChecked] = useState(false);
+    const [isChecked, setChecked] = useState(model.checked);
 
     useEffect(() => {
-        checked
+        isChecked
             ? setSelectedModels(
                   selectedModels.concat({
                       name: model.name,
@@ -20,25 +20,23 @@ function ItemModelCheck({ model, selectedModels, setSelectedModels }) {
             : setSelectedModels(
                   selectedModels.filter(m => m.name !== model.name)
               );
-    }, [checked]);
+    }, [isChecked]);
 
-    const checkItemModel = () => {
-        let checked = false;
-        selectedModels.map(m => m.name === model.name && (checked = true));
-        return checked;
+    const handleClick = () => {
+        setChecked(!isChecked);
     };
 
     return (
-        <Form>
+        <Col>
             <Form.Check
                 inline
                 type="checkBox"
                 id={model.name}
                 label={<ItemModelName model={model} />}
-                checked={checkItemModel()}
-                onClick={() => setChecked(!checked)}
+                checked={isChecked}
+                onClick={() => handleClick()}
             />
-        </Form>
+        </Col>
     );
 }
 

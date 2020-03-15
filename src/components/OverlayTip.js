@@ -1,5 +1,5 @@
 import React from 'react';
-import { OverlayTrigger, Tooltip, Image } from 'react-bootstrap';
+import { OverlayTrigger, Tooltip, Image, Row, Col } from 'react-bootstrap';
 import { TIPS } from '../utils/tips';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -22,7 +22,7 @@ export function HelpButton({ tipKey }) {
 
 export function ItemModelName({ model }) {
     const tip = TIPS[model.tipKey];
-    const src = '../img/' + tip.image;
+    const src = require('../img/' + tip.image);
 
     return (
         <>
@@ -30,8 +30,12 @@ export function ItemModelName({ model }) {
                 placement={tip.placement}
                 overlay={
                     <Tooltip>
-                        <Image src={src} rounded />
-                        {tip.tip}
+                        <Row className="justify-content-md-center">
+                            <Image src={src} rounded />
+                        </Row>
+                        <Row>
+                            <Col md={{ offset: 1, span: 10 }}>{tip.tip}</Col>
+                        </Row>
                     </Tooltip>
                 }
             >
