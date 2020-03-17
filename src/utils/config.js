@@ -5,7 +5,8 @@ import {
     removeFlags,
     removeItems,
     addItemsModel,
-    addItem
+    addItem,
+    updateItemsModel
 } from '../service/configuration';
 
 export const removeElements = idConfig => {
@@ -21,7 +22,6 @@ export const updateConfig = (
     flagsPositions,
     items
 ) => {
-    console.log(items);
     removeElements(idConfig);
     let coordMainZone = [];
     polygonPosition.map(point => coordMainZone.push([point.lat, point.lng]));
@@ -73,7 +73,11 @@ export const formatFlags = f => {
 };
 
 export const addItemsModels = (idConfig, models) => {
-    models.map(model => addItemsModel(idConfig, model));
+    models.map(model =>
+        model.id
+            ? delete model.name && updateItemsModel(idConfig, model.id, model)
+            : addItemsModel(idConfig, model)
+    );
 };
 
 export const formatItems = i => {
