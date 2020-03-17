@@ -48,6 +48,13 @@ export const addItemsModel = (idConfig, model) => {
     return request.post(`/configs/${idConfig}/item-models`, model);
 };
 
+export const updateItemsModel = (idConfig, idModelItem, modelItem) => {
+    return request.put(
+        `/configs/${idConfig}/item-models/${idModelItem}`,
+        modelItem
+    );
+};
+
 export const getItemsModel = idConfig => {
     return request.get(`/configs/${idConfig}/item-models`);
 };

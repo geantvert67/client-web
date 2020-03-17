@@ -3,6 +3,7 @@ import { Form, Card, Row, Col, Accordion } from 'react-bootstrap';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { HelpButton } from '../OverlayTip';
 
 const ItemModelConfig = ({ model, selectedModels, setSelectedModels }) => {
     const rang = selectedModels.indexOf(model);
@@ -61,13 +62,14 @@ const ItemModelConfig = ({ model, selectedModels, setSelectedModels }) => {
                         <Card.Body>
                             {' '}
                             <Form.Group as={Row} controlId="visibilityZone">
-                                <Form.Label column sm={6}>
-                                    Rayon de visibilité
+                                <Form.Label column sm={7}>
+                                    Rayon de visibilité (en mètres){' '}
+                                    <HelpButton tipKey="visibilityRadius" />
                                 </Form.Label>
-                                <Col sm={6}>
+                                <Col sm={5}>
                                     <Form.Control
                                         type="number"
-                                        value={null}
+                                        value={model.visibilityRadius}
                                         onChange={e =>
                                             handleChangeVisibility(e)
                                         }
@@ -75,25 +77,27 @@ const ItemModelConfig = ({ model, selectedModels, setSelectedModels }) => {
                                 </Col>
                             </Form.Group>
                             <Form.Group as={Row} controlId="actionZone">
-                                <Form.Label column sm={6}>
-                                    Rayon d'action
+                                <Form.Label column sm={7}>
+                                    Rayon d'action (en mètres){' '}
+                                    <HelpButton tipKey="actionRadius" />
                                 </Form.Label>
-                                <Col sm={6}>
+                                <Col sm={5}>
                                     <Form.Control
                                         type="number"
-                                        value={null}
+                                        value={model.actionRadius}
                                         onChange={e => handleChangeAction(e)}
                                     />
                                 </Col>
                             </Form.Group>
                             <Form.Group as={Row} controlId="waitingPeriod">
-                                <Form.Label column sm={6}>
-                                    Période de carence
+                                <Form.Label column sm={7}>
+                                    Période de carence{' '}
+                                    <HelpButton tipKey="waitingPeriod" />
                                 </Form.Label>
-                                <Col sm={6}>
+                                <Col sm={5}>
                                     <Form.Control
                                         type="number"
-                                        value={null}
+                                        value={model.waitingPeriod}
                                         onChange={e => handleChangePeriod(e)}
                                     />
                                 </Col>
@@ -102,6 +106,7 @@ const ItemModelConfig = ({ model, selectedModels, setSelectedModels }) => {
                                 inline
                                 type="checkBox"
                                 id={model}
+                                checked={model.autoMove}
                                 label="Déplacement automatique des items"
                                 onClick={() => handleChangeAutoMove()}
                             />

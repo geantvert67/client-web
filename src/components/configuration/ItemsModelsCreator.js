@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import history from '../../utils/history';
 import { Form, Row, Col, Button } from 'react-bootstrap';
@@ -6,28 +6,72 @@ import ItemModelCheck from './ItemModelCheck';
 import ItemModelConfig from './ItemModelConfig';
 import { addItemsModels } from '../../utils/config';
 import { useParams } from 'react-router-dom';
+import { getItemsModel } from '../../service/configuration';
 
 function ItemsModelsCreator({}) {
     const { configurationId } = useParams();
 
     const [selectedModels, setSelectedModels] = useState([]);
+    useEffect(() => {
+        getItemsModel(configurationId).then(res => setSelectedModels(res.data));
+    }, []);
+
+    const checkItemModel = nom => {
+        let checked = false;
+        selectedModels.map(m => m.name === nom && (checked = true));
+        return checked;
+    };
 
     const modelItems = [
-        { name: 'Sonde' },
-        { name: 'Noyau protecteur' },
-        { name: 'Prisme de transfert' },
-        { name: 'Intercepteur' },
-        { name: 'Tempête' },
-        { name: 'Canon à photons' },
-        { name: 'Sentinelle' },
-        { name: 'Portail' },
-        { name: 'Oracle' },
-        { name: 'Disloqueur' },
-        { name: 'Transducteur' },
-        { name: 'Antenne' }
+        { name: 'Sonde', tipKey: 'sonde', checked: checkItemModel('Sonde') },
+        {
+            name: 'Noyau protecteur',
+            tipKey: 'noyau',
+            checked: checkItemModel('Noyau protecteur')
+        },
+        {
+            name: 'Prisme de transfert',
+            tipKey: 'prisme',
+            checked: checkItemModel('Prisme de transfert')
+        },
+        {
+            name: 'Intercepteur',
+            tipKey: 'intercepteur',
+            checked: checkItemModel('Intercepteur')
+        },
+        { name: 'Tempête', tipKey: 'tempete' },
+        {
+            name: 'Canon à photons',
+            tipKey: 'canon',
+            checked: checkItemModel('Tempête')
+        },
+        {
+            name: 'Sentinelle',
+            tipKey: 'sentinelle',
+            checked: checkItemModel('Sentinelle')
+        },
+        {
+            name: 'Portail',
+            tipKey: 'portail',
+            checked: checkItemModel('Portail')
+        },
+        { name: 'Oracle', tipKey: 'oracle', checked: checkItemModel('Oracle') },
+        {
+            name: 'Disloqueur',
+            tipKey: 'disloqueur',
+            checked: checkItemModel('Disloqueur')
+        },
+        {
+            name: 'Transducteur',
+            tipKey: 'transducteur',
+            checked: checkItemModel('Transducteur')
+        },
+        {
+            name: 'Antenne',
+            tipKey: 'antenne',
+            checked: checkItemModel('Antenne')
+        }
     ];
-
-    console.log(selectedModels);
 
     const handleClick = () => {
         addItemsModels(configurationId, selectedModels)
@@ -40,13 +84,11 @@ function ItemsModelsCreator({}) {
             <Form>
                 <Row className="justify-content-md-center">
                     {modelItems.map(model => (
-                        <div key={model.name}>
-                            <ItemModelCheck
-                                model={model}
-                                selectedModels={selectedModels}
-                                setSelectedModels={setSelectedModels}
-                            />
-                        </div>
+                        <ItemModelCheck
+                            model={model}
+                            selectedModels={selectedModels}
+                            setSelectedModels={setSelectedModels}
+                        />
                     ))}
                 </Row>
 

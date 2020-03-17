@@ -1,8 +1,6 @@
 import React from 'react';
 import { useDataFromUrl } from '../utils/data';
-import history from '../utils/history';
-import DownloadButton from './DownloadButton';
-import { cloneConfiguration } from '../service/configuration';
+
 import GamesListItem from './GamesListItem';
 import { Row, Col } from 'react-bootstrap';
 import GamesButtons from './GamesButtons';

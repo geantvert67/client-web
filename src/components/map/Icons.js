@@ -33,7 +33,7 @@ const getItemIcon = modelItem => {
                 ? require('../../img/portail.png')
                 : modelItem.name === 'Disloqueur'
                 ? require('../../img/disloqueur.gif')
-                : modelItem.name === 'Portail'
+                : modelItem.name === 'Intercepteur'
                 ? require('../../img/intercepteur.gif')
                 : require('../../img/pylone.gif')
             : require('../../img/pylone.gif');

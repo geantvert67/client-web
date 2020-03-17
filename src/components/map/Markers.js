@@ -2,6 +2,7 @@ import React from 'react';
 import { Marker, Popup, Circle } from 'react-leaflet';
 import { iconWhiteFlag, iconPylone, getItemIcon } from './Icons';
 import { getActionZoneAuto } from '../../utils/utils';
+import { addItem } from '../../service/configuration';
 
 function Markers({
     polygonPosition,
@@ -18,7 +19,8 @@ function Markers({
     setSleepingAction,
     items,
     moveItem,
-    deleteItem
+    deleteItem,
+    updateItemQuantity
 }) {
     const startDragging = () => {
         setAction('moveElement');
@@ -27,6 +29,10 @@ function Markers({
 
     const stopDragging = () => {
         setAction('moveElementStop');
+    };
+
+    const changeQuantity = (e, point) => {
+        updateItemQuantity(point, e.target.value);
     };
     return (
         <>
@@ -123,6 +129,16 @@ function Markers({
                     }}
                 >
                     <Popup>
+                        <p>
+                            {' '}
+                            Quantité :{' '}
+                            <input
+                                type="number"
+                                defaultValue={point.quantity}
+                                onChange={e => changeQuantity(e, point)}
+                            />{' '}
+                        </p>
+
                         <button onClick={e => deleteItem(point)}>
                             Supprimer
                         </button>
