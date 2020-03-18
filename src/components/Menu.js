@@ -11,7 +11,7 @@ const Menu = () => {
 
     return (
         <>
-            <Navbar bg="dark" variant="dark" expand="md">
+            <Navbar expand="md">
                 <Navbar.Brand className="mb-1">
                     <Link to="/">CrystalZ</Link>
                 </Navbar.Brand>
