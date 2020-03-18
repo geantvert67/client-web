@@ -2,9 +2,14 @@ import React from 'react';
 import { Card, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinus } from '@fortawesome/free-solid-svg-icons';
+import { removeMember } from '../../service/configuration';
 
 const TeamMembers = ({ configurationId, teamId, member }) => {
-    const deleteMember = () => {};
+    const deleteMember = () => {
+        removeMember(configurationId, teamId, member.id)
+            .then(res => {})
+            .catch(err => {});
+    };
 
     return (
         <>

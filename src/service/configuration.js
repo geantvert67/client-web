@@ -90,6 +90,12 @@ export const addMember = (idConfig, idTeam, username) => {
     });
 };
 
+export const removeMember = (idConfig, idTeam, idUser) => {
+    return request.delete(
+        `/configs/${idConfig}/teams/${idTeam}/users/${idUser}`
+    );
+};
+
 export const getUsers = username => {
     return request.get(`/users?username=${username}`);
 };

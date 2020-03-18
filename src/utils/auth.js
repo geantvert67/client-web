@@ -40,13 +40,13 @@ export const AuthProvider = ({ children }) => {
         });
     };
 
-    const update = credentials => {
-        return request.put('/user', credentials).then(res => {
+    const changeUsername = username => {
+        return request.put('/user', username).then(res => {
             setUser(res.data.user);
         });
     };
 
-    const updatePassword = credentials => {
+    const changePassword = credentials => {
         return request.put('/user/password', credentials);
     };
 
@@ -58,7 +58,14 @@ export const AuthProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider
-            value={{ user, signup, signin, update, updatePassword, signout }}
+            value={{
+                user,
+                signup,
+                signin,
+                changeUsername,
+                changePassword,
+                signout
+            }}
         >
             {children}
         </AuthContext.Provider>
