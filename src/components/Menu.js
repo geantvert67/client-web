@@ -21,7 +21,7 @@ const Menu = () => {
                     {user ? (
                         <>
                             <Nav className="mr-auto">
-                                <NavLink className="nav-link" to="/publicgames">
+                                <NavLink className="nav-link" to="/configs">
                                     Configurations
                                 </NavLink>
                             </Nav>
