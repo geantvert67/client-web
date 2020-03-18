@@ -24,7 +24,7 @@ const Signin = () => {
             <Container className="mt-5">
                 <Row>
                     <Col md={{ span: 6, offset: 3 }}>
-                        <h3 className="mb-3">Connexion</h3>
+                        <h3 className="mb-5">Connexion</h3>
                         <Form onSubmit={handleSubmit}>
                             <Form.Group controlId="formGroupEmail">
                                 <Form.Control
@@ -40,15 +40,19 @@ const Signin = () => {
                                 />
                             </Form.Group>
 
-                            <Row className="justify-content-md-center">
+                            <Row className="justify-content-md-center mt-5">
                                 <Col md="auto">
-                                    <Button variant="success" type="submit">
+                                    <Button
+                                        variant="success"
+                                        className="btn-primary"
+                                        type="submit"
+                                    >
                                         Se connecter{' '}
                                     </Button>
                                 </Col>
                             </Row>
 
-                            <Row className="justify-content-md-center">
+                            <Row className="justify-content-md-center mt-2">
                                 <Col md="auto">
                                     <p>
                                         {' '}

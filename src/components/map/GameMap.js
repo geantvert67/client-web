@@ -24,7 +24,7 @@ import {
     getItems
 } from '../../service/configuration';
 import { useParams } from 'react-router-dom';
-import DownloadButton from '../DownloadButton';
+import DownloadButton from '../configuration/DownloadButton';
 import ItemsButtons from './ItemsButtons';
 
 function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {

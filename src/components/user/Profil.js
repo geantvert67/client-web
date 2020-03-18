@@ -1,105 +1,87 @@
 import React, { useState } from 'react';
+import { Form, Container, Button, Row, Col } from 'react-bootstrap';
 import { useAuth } from '../../utils/auth';
 
-import { Form, Container, Button, Row, Col } from 'react-bootstrap';
-
 const Profil = () => {
-    const { update, updatePassword } = useAuth();
+    const { user } = useAuth();
+    const [username, setUsername] = useState(user.username);
+    const [currentPassword, setCurrentPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
 
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [passwordCheck, setPasswordCheck] = useState('');
-    const [message, setMessage] = useState('');
-
-    const handleSubmit = e => {
-        e.preventDefault();
-        if (username !== '') {
-            update({ username }).catch(err => {
-                setUsername('');
-                setMessage(err.message);
-            });
-        }
-
-        if (password !== '') {
-            updatePassword({ password }).catch(err => {
-                setPassword('');
-                setPasswordCheck('');
-                setMessage(err.message);
-            });
-        }
+    const updateUsername = () => {
+        // TODO: update username
     };
 
-    const formValid = password === passwordCheck;
+    const updatePassword = () => {
+        // TODO: update password
+    };
 
     return (
-        <>
-            <Container className="mt-5">
-                <Row>
-                    <Col md={{ span: 6, offset: 3 }}>
-                        <h3 className="mb-3">Connexion</h3>
-                        <Form onSubmit={handleSubmit}>
-                            <Form.Group controlId="formGroupEmail">
-                                <Form.Control
-                                    placeholder="Nom d'utilisateur"
-                                    onChange={e => setUsername(e.target.value)}
-                                />
-                            </Form.Group>
-                            <Form.Group controlId="formGroupPassword">
-                                <Form.Control
-                                    type="password"
-                                    placeholder="Mot de passe"
-                                    onChange={e => setPassword(e.target.value)}
-                                />
-                            </Form.Group>
+        <Container className="mt-5">
+            <Row>
+                <Col md={{ span: 6, offset: 3 }}>
+                    <h3 className="mb-5">Profil</h3>
 
-                            <Row className="justify-content-md-center">
-                                <Col md="auto">
-                                    <Button variant="success" type="submit">
-                                        Se connecter{' '}
-                                    </Button>
-                                </Col>
-                            </Row>
+                    <Form onSubmit={updateUsername}>
+                        <Form.Group>
+                            <Form.Control
+                                placeholder="Nom d'utilisateur"
+                                value={username}
+                                onChange={e => setUsername(e.target.value)}
+                            />
+                        </Form.Group>
 
-                            <Row className="justify-content-md-center">
-                                <Col md="auto">
-                                    <p>
-                                        {' '}
-                                        Pas encore inscrit ?{' '}
-                                        <a className="redirect" href="/signup">
-                                            {' '}
-                                            S'inscrire
-                                        </a>
-                                    </p>
-                                </Col>
-                            </Row>
-                        </Form>
-                    </Col>
-                </Row>
-            </Container>
-            <h2>Change Profil</h2>
-            <form onSubmit={handleSubmit}>
-                <label>Username</label>
-                <input
-                    type="text"
-                    value={username}
-                    onChange={e => setUsername(e.target.value)}
-                />
-                <label>Password</label>
-                <input
-                    type="password"
-                    value={password}
-                    onChange={e => setPassword(e.target.value)}
-                />
-                <label>Password check</label>
-                <input
-                    type="password"
-                    value={passwordCheck}
-                    onChange={e => setPasswordCheck(e.target.value)}
-                />
-                <input disabled={formValid ? '' : 'disabled'} type="submit" />
-            </form>
-            {message && <p style={{ color: 'red' }}>{message}</p>}
-        </>
+                        <Row className="justify-content-end">
+                            <Col xs="auto">
+                                <Button
+                                    variant="success"
+                                    className="btn-primary"
+                                    type="submit"
+                                >
+                                    Modifier
+                                </Button>
+                            </Col>
+                        </Row>
+                    </Form>
+
+                    <h3 className="mb-5 mt-5">Changer de mot de passe</h3>
+
+                    <Form onSubmit={updatePassword}>
+                        <Form.Group>
+                            <Form.Control
+                                type="password"
+                                placeholder="Mot de passe actuel"
+                                value={currentPassword}
+                                onChange={e =>
+                                    setCurrentPassword(e.target.value)
+                                }
+                            />
+                        </Form.Group>
+
+                        <Form.Group>
+                            <Form.Control
+                                type="password"
+                                placeholder="Nouveau mot de passe"
+                                value={newPassword}
+                                onChange={e => setNewPassword(e.target.value)}
+                            />
+                        </Form.Group>
+
+                        <Row className="justify-content-end">
+                            <Col xs="auto">
+                                <Button
+                                    variant="success"
+                                    className="btn-primary"
+                                    type="submit"
+                                >
+                                    Modifier
+                                </Button>
+                            </Col>
+                        </Row>
+                    </Form>
+                </Col>
+            </Row>
+        </Container>
     );
 };
 

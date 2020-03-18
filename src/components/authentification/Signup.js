@@ -28,7 +28,7 @@ const Signup = () => {
             <Container className="mt-5">
                 <Row>
                     <Col md={{ span: 6, offset: 3 }}>
-                        <h3 className="mb-3">Inscription</h3>
+                        <h3 className="mb-5">Inscription</h3>
                         <Form onSubmit={handleSubmit}>
                             <Form.Group controlId="formGroupEmail">
                                 <Form.Control
@@ -46,21 +46,25 @@ const Signup = () => {
                             <Form.Group controlId="formGroupPassword">
                                 <Form.Control
                                     type="password"
-                                    placeholder="Confirmation du mot de passe"
+                                    placeholder="Confirmer le mot de passe"
                                     onChange={e =>
                                         setPasswordCheck(e.target.value)
                                     }
                                 />
                             </Form.Group>
-                            <Row className="justify-content-md-center">
+                            <Row className="justify-content-md-center mt-5">
                                 <Col md="auto">
-                                    <Button variant="success" type="submit">
+                                    <Button
+                                        variant="success"
+                                        className="btn-primary"
+                                        type="submit"
+                                    >
                                         S'inscrire
                                     </Button>
                                 </Col>
                             </Row>
 
-                            <Row className="justify-content-md-center">
+                            <Row className="justify-content-md-center mt-2">
                                 <Col md="auto">
                                     <p>
                                         {' '}
