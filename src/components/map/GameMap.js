@@ -14,11 +14,18 @@ import {
     updateConfig,
     formatMainZone,
     formatForbiddenZone,
-    formatFlags
+    formatFlags,
+    formatItems
 } from '../../utils/config';
-import { getAreas, getFlags } from '../../service/configuration';
+import {
+    getAreas,
+    getFlags,
+    getItemsModel,
+    getItems
+} from '../../service/configuration';
 import { useParams } from 'react-router-dom';
 import DownloadButton from '../DownloadButton';
+import ItemsButtons from './ItemsButtons';
 
 function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
     const [position, setPosition] = useState(defaultPosition);
@@ -26,8 +33,12 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
     const [polygonPosition, setPolygonPosition] = useState([]);
     const [flagsPositions, setFlagsPositions] = useState([]);
     const [forbiddenZones, setForbiddenZones] = useState([]);
+    const [items, setItems] = useState([]);
+    const [selectedModelItem, setSelectedModelItem] = useState();
     const [forbiddenZoneIndex, setForbiddenZoneIndex] = useState(-1);
     const { idconfiguration } = useParams();
+
+    const [modelItems, setModelItems] = useState([]);
 
     useEffect(() => {
         let forbZones = [];
@@ -48,6 +59,10 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
         getFlags(idconfiguration).then(flags =>
             setFlagsPositions(formatFlags(flags))
         );
+
+        getItemsModel(idconfiguration).then(res => setModelItems(res.data));
+
+        getItems(idconfiguration).then(items => setItems(formatItems(items)));
     }, []);
 
     useEffect(() => {
@@ -85,7 +100,31 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
             ? forbiddenZoneIndex !== -1
                 ? createForbiddenZone(e)
                 : alert('Veuillez créer une première zone interdite.')
+            : action === 'items'
+            ? addItem(e)
             : '';
+    };
+
+    const addItem = point => {
+        const position = { lat: point.latlng.lat, lng: point.latlng.lng };
+
+        let conflict = false;
+
+        forbiddenZones.map(zone => {
+            isInZone(point.latlng.lat, point.latlng.lng, zone) &&
+                (conflict = true);
+        });
+
+        return !conflict &&
+            isInZone(point.latlng.lat, point.latlng.lng, polygonPosition)
+            ? setItems(
+                  items.concat({
+                      modelItem: modelItems[selectedModelItem],
+                      position,
+                      quantity: 1
+                  })
+              )
+            : alert('Veuillez placer les items dans une zone de jeu valide.');
     };
 
     const createMainZone = e => {
@@ -178,6 +217,37 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
         setFlagsPositions(otherFlags);
     };
 
+    const moveItem = (e, item) => {
+        let otherItems = items.filter(i => i !== item);
+        const newPosition = {
+            lat: e.target.getLatLng().lat,
+            lng: e.target.getLatLng().lng
+        };
+        let conflict = false;
+
+        forbiddenZones.map(zone => {
+            isInZone(
+                e.target.getLatLng().lat,
+                e.target.getLatLng().lng,
+                zone
+            ) && (conflict = true);
+        });
+
+        !conflict &&
+            isInZone(
+                e.target.getLatLng().lat,
+                e.target.getLatLng().lng,
+                polygonPosition
+            ) &&
+            otherItems.push({
+                modelItem: item.modelItem,
+                newPosition,
+                quantity: item.quantity
+            });
+
+        setItems(otherItems);
+    };
+
     const movePolygon = (e, point) => {
         const otherPoints = polygonPosition.filter(f => f !== point);
         const newPositon = {
@@ -225,12 +295,25 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
         );
     };
 
+    const deleteItem = point => {
+        setItems(items.filter(p => p !== point));
+    };
+
+    const updateItemQuantity = (item, quantity) => {
+        const otherItems = items.filter(i => i !== item);
+        item.quantity = quantity;
+        otherItems.splice(items.indexOf(item), 0, item);
+        setItems(otherItems);
+    };
+
     const handleUpdate = (
         idconfiguration,
         polygonPosition,
         forbiddenZones,
-        flagsPositions
+        flagsPositions,
+        items
     ) => {
+        console.log(items);
         polygonPosition.length === 0
             ? alert(
                   'Veuillez créer une zone de jeu avant de sauvegarder la carte.'
@@ -239,7 +322,8 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
                   idconfiguration,
                   polygonPosition,
                   forbiddenZones,
-                  flagsPositions
+                  flagsPositions,
+                  items
               );
     };
 
@@ -282,6 +366,10 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
                             action={action}
                             setAction={setAction}
                             setSleepingAction={setSleepingAction}
+                            items={items}
+                            moveItem={moveItem}
+                            deleteItem={deleteItem}
+                            updateItemQuantity={updateItemQuantity}
                         />
                     </Map>
 
@@ -300,6 +388,14 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
                             setForbiddenZones={setForbiddenZones}
                             setForbiddenZoneIndex={setForbiddenZoneIndex}
                         />
+                    ) : action === 'items' ? (
+                        <ItemsButtons
+                            items={items}
+                            setItems={setItems}
+                            modelItems={modelItems}
+                            selectedModelItem={selectedModelItem}
+                            setSelectedModelItem={setSelectedModelItem}
+                        />
                     ) : (
                         ''
                     )}
@@ -309,7 +405,8 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
                                 idconfiguration,
                                 polygonPosition,
                                 forbiddenZones,
-                                flagsPositions
+                                flagsPositions,
+                                items
                             )
                         }
                     >

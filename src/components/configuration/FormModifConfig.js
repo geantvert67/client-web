@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import history from '../../utils/history';
+import { useForm } from 'react-hook-form';
 import {
     removeConfiguration,
     updateConfiguration
 } from '../../service/configuration';
 
 const FormModifConfig = configuration => {
+    const { register, handleSubmit, watch, errors } = useForm();
     const { configurationId } = useParams();
 
     const [name, setName] = useState(configuration.configuration.name);
@@ -50,6 +52,7 @@ const FormModifConfig = configuration => {
     };
 
     const updateConf = () => {
+        setDuration(duration * 60);
         updateConfiguration(configurationId, {
             name,
             isPrivate,
@@ -77,8 +80,22 @@ const FormModifConfig = configuration => {
                         name="name"
                         id="name"
                         defaultValue={name}
+                        ref={register({
+                            required: true,
+                            minLength: 2,
+                            maxLength: 50
+                        })}
                         onChange={e => setName(e.target.value)}
                     />
+                    {errors.name &&
+                        errors.name.type === 'required' &&
+                        'Un nom est requis'}
+                    {errors.name &&
+                        errors.name.type === 'minLength' &&
+                        'Le nom est trop court'}
+                    {errors.name &&
+                        errors.name.type === 'maxLength' &&
+                        'Le nom est trop long'}
                 </>
                 <br />
                 <>
@@ -108,6 +125,7 @@ const FormModifConfig = configuration => {
                         type="number"
                         name="nbrMaxPlayer"
                         id="nbrMaxPlayer"
+                        min="0"
                         defaultValue={maxPlayers}
                         onChange={e => setMaxPlayers(e.target.value)}
                     />
@@ -119,6 +137,7 @@ const FormModifConfig = configuration => {
                         type="number"
                         name="inventorySize"
                         id="inventorySize"
+                        min="0"
                         defaultValue={inventorySize}
                         onChange={e => setInventorySize(e.target.value)}
                     />
@@ -149,6 +168,7 @@ const FormModifConfig = configuration => {
                             type="number"
                             name="duration"
                             id="duration"
+                            min="0"
                             defaultValue={duration}
                             onChange={e => setDuration(e.target.value)}
                         />
@@ -163,6 +183,7 @@ const FormModifConfig = configuration => {
                         type="number"
                         name="flagVisibilityRadius"
                         id="flagVisibilityRadius"
+                        min="0"
                         defaultValue={flagVisibilityRadius}
                         onChange={e => setFlagVisibilityRadius(e.target.value)}
                     />
@@ -177,6 +198,8 @@ const FormModifConfig = configuration => {
                         type="number"
                         name="flagActionRadius"
                         id="flagActionRadius"
+                        min="0"
+                        max={flagVisibilityRadius}
                         defaultValue={flagActionRadius}
                         onChange={e => setFlagActionRadius(e.target.value)}
                     />
