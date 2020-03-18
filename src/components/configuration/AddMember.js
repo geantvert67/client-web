@@ -1,15 +1,32 @@
 import React, { useState } from 'react';
 import { Card, Row, Col, Button } from 'react-bootstrap';
+import history from '../../utils/history';
+import { getUsers, addMember } from '../../service/configuration';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
+import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 
 const AddMember = ({ configurationId, teamId }) => {
     const [valid, setValid] = useState(false);
+    const [name, setName] = useState('');
+    const [members, setMembers] = useState('');
     const isValid = () => {
         setValid(!valid);
     };
     const handleClick = () => {
+        addMember(configurationId, teamId, name)
+            .then(res => {
+                history.push(`/${configurationId}/teamconfig`);
+            })
+            .catch(err => {
+                setName('');
+            });
         setValid(!valid);
+    };
+
+    const handleChange = newname => {
+        setName(newname);
+        getUsers(newname).then(res => setMembers(res.data));
     };
 
     return (
@@ -34,7 +51,18 @@ const AddMember = ({ configurationId, teamId }) => {
                         {valid && (
                             <>
                                 <Col md="9">
-                                    <input></input>
+                                    <AsyncTypeahead
+                                        id="concerned_member_typehead"
+                                        multiple
+                                        labelKey={member =>
+                                            `${member.username}`
+                                        }
+                                        renderMenuItemChildren={members}
+                                        value={name}
+                                        minLength={2}
+                                        onSearch={e => handleChange(e)}
+                                        placeholder="Sélectionnez un membre à ajouter"
+                                    />
                                 </Col>
                                 <Col>
                                     <Button

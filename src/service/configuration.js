@@ -83,3 +83,13 @@ export const getItems = idConfig => {
 export const removeItems = idConfig => {
     return request.delete(`/configs/${idConfig}/items`);
 };
+
+export const addMember = (idConfig, idTeam, username) => {
+    return request.post(`/configs/${idConfig}/teams/${idTeam}/users`, {
+        username: username
+    });
+};
+
+export const getUsers = username => {
+    return request.get(`/users?username=${username}`);
+};

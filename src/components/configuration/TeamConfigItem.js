@@ -6,17 +6,18 @@ import { faCopy, faTrash } from '@fortawesome/free-solid-svg-icons';
 import Color from './Color';
 import { removeTeam } from '../../service/configuration';
 import AddMember from './AddMember';
+import TeamMembers from './TeamMembers';
 
 const TeamConfigItem = ({ configurationId, team }) => {
+    const { loading: loading, data: members } = useDataFromUrl(
+        `/configs/${configurationId}/teams/${team.id}/users`
+    );
+
     const deleteTeam = () => {
         removeTeam(configurationId, team.id)
             .then(res => {})
             .catch(err => {});
     };
-
-    const { loading: loading, data: members } = useDataFromUrl(
-        `/configs/${configurationId}/teams/${team.id}/users`
-    );
 
     return (
         <>
@@ -52,7 +53,20 @@ const TeamConfigItem = ({ configurationId, team }) => {
                             </Row>
                         </Accordion.Toggle>
                         <Accordion.Collapse className="btn-dark">
-                            <AddMember />
+                            <>
+                                <AddMember
+                                    configurationId={configurationId}
+                                    teamId={team.id}
+                                />
+                                {members !== null &&
+                                    members.map(member => (
+                                        <TeamMembers
+                                            configurationId={configurationId}
+                                            teamId={team.id}
+                                            member={member}
+                                        />
+                                    ))}
+                            </>
                         </Accordion.Collapse>
                     </Accordion>
                 </>
