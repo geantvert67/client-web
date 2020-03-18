@@ -7,6 +7,11 @@ body {
     color: white !important;
 }
 
+a {
+    color: white !important;
+    text-decoration: none !important;
+}
+
 .leaflet-container {
     height: 600px;
     width: 80%;
@@ -30,7 +35,7 @@ body {
     color: #d2d2d2 !important;
 }
 
-.btn-auth {
+.btn-primary {
     background-color: #68b684 !important;
 }
 

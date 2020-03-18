@@ -12,7 +12,9 @@ const Menu = () => {
     return (
         <>
             <Navbar bg="dark" variant="dark" expand="md">
-                <Navbar.Brand className="mb-1">CrystalZ</Navbar.Brand>
+                <Navbar.Brand className="mb-1">
+                    <Link to="/">CrystalZ</Link>
+                </Navbar.Brand>
 
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
@@ -36,23 +38,32 @@ const Menu = () => {
                                     Se déconnecter
                                 </NavLink>
                                 <NavLink className="nav-link" to="/profil">
-                                    <Button variant="success">
+                                    <Button
+                                        variant="success"
+                                        className="btn-primary"
+                                    >
                                         Mon profil
                                     </Button>
                                 </NavLink>
                             </Nav>
                         </>
                     ) : (
-                        <Nav className="align-items-center">
-                            <NavLink className="nav-link" to="/signup">
-                                S'inscrire{' '}
-                            </NavLink>
-                            <NavLink className="nav-link" to="/signin">
-                                <Button variant="success" className="btn-auth">
-                                    Se connecter
-                                </Button>
-                            </NavLink>
-                        </Nav>
+                        <>
+                            <Nav className="mr-auto"></Nav>
+                            <Nav className="align-items-center">
+                                <NavLink className="nav-link" to="/signup">
+                                    S'inscrire{' '}
+                                </NavLink>
+                                <NavLink className="nav-link" to="/signin">
+                                    <Button
+                                        variant="success"
+                                        className="btn-primary"
+                                    >
+                                        Se connecter
+                                    </Button>
+                                </NavLink>
+                            </Nav>
+                        </>
                     )}
                 </Navbar.Collapse>
             </Navbar>

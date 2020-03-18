@@ -14,7 +14,7 @@ const GamesButtons = ({ privateConfig }) => {
                 <Col md="auto">
                     <Button
                         variant="success"
-                        className={privateConfig ? 'btn-auth' : 'btn-dark'}
+                        className={privateConfig ? 'btn-primary' : 'btn-dark'}
                         onClick={() => history.push('/games')}
                     >
                         {' '}
@@ -24,7 +24,7 @@ const GamesButtons = ({ privateConfig }) => {
                 <Col md={7}>
                     <Button
                         variant="success"
-                        className={!privateConfig ? 'btn-auth' : 'btn-dark'}
+                        className={!privateConfig ? 'btn-primary' : 'btn-dark'}
                         onClick={() => history.push('/publicgames')}
                     >
                         {' '}
@@ -34,7 +34,7 @@ const GamesButtons = ({ privateConfig }) => {
                 <Col md={2}>
                     <Button
                         variant="success"
-                        className="btn-auth"
+                        className="btn-primary"
                         onClick={() => history.push('/configuration')}
                     >
                         {' '}
