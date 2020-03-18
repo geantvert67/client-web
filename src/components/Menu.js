@@ -24,10 +24,6 @@ const Menu = () => {
                                 <NavLink className="nav-link" to="/publicgames">
                                     Configurations
                                 </NavLink>
-
-                                <NavLink className="nav-link" to="/">
-                                    Trouver une partie
-                                </NavLink>
                             </Nav>
                             <Nav className="align-items-center">
                                 <NavLink
