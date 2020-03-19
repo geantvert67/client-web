@@ -59,6 +59,13 @@ export const getItemsModel = idConfig => {
     return request.get(`/configs/${idConfig}/item-models`);
 };
 
+export const createTeam = (idConfig, credentials) => {
+    return request.post(`/configs/${idConfig}/teams`, credentials);
+};
+
+export const removeTeam = (idConfig, idTeam) => {
+    return request.delete(`/configs/${idConfig}/teams/${idTeam}`);
+};
 export const addItem = (idConfig, item) => {
     return request.post(
         `/configs/${idConfig}/item-models/${item.modelItem.id}/items`,
@@ -75,4 +82,20 @@ export const getItems = idConfig => {
 
 export const removeItems = idConfig => {
     return request.delete(`/configs/${idConfig}/items`);
+};
+
+export const addMember = (idConfig, idTeam, username) => {
+    return request.post(`/configs/${idConfig}/teams/${idTeam}/users`, {
+        username: username
+    });
+};
+
+export const removeMember = (idConfig, idTeam, idUser) => {
+    return request.delete(
+        `/configs/${idConfig}/teams/${idTeam}/users/${idUser}`
+    );
+};
+
+export const getUsers = username => {
+    return request.get(`/users?username=${username}`);
 };

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
+import history from '../../utils/history';
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import ItemModelCheck from './ItemModelCheck';
 import ItemModelConfig from './ItemModelConfig';
@@ -73,7 +74,9 @@ function ItemsModelsCreator({}) {
     ];
 
     const handleClick = () => {
-        addItemsModels(configurationId, selectedModels);
+        addItemsModels(configurationId, selectedModels)
+            .then(history.push(`/${configurationId}/teamconfig`))
+            .catch(err => {});
     };
 
     return (

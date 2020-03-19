@@ -56,6 +56,8 @@ const Signup = () => {
                                 <Col md="auto">
                                     <Button
                                         variant="success"
+                                        type="submit"
+                                        disabled={!formValid}
                                         className="btn-primary"
                                         type="submit"
                                     >

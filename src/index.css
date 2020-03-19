@@ -80,3 +80,17 @@ svg:hover {
 .priority {
     font-weight: bold;
 }
+
+.div-color {
+    height: 80px;
+    width: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.div-createcolor {
+    display: flex;
+}

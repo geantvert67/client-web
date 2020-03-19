@@ -8,6 +8,8 @@ import Signup from './authentification/Signup';
 import MapCreator from './map/MapCreator';
 import Configuration from './configuration/Configuration';
 import ModifConfig from './configuration/ModifConfig';
+import TeamConfig from './configuration/TeamConfig';
+import CreateTeam from './configuration/CreateTeam';
 import ItemsModelsCreator from './configuration/ItemsModelsCreator';
 import ConfigsWrapper from './configuration/ConfigsWrapper';
 import Profil from './user/Profil';
@@ -50,6 +52,12 @@ const App = () => {
                 </Route>
                 <Route exact path="/:configurationId/itemModelCreator">
                     <ItemsModelsCreator />
+                </Route>
+                <Route exact path="/:configurationId/teamconfig">
+                    <TeamConfig />
+                </Route>
+                <Route exact path="/:configurationId/createteam">
+                    <CreateTeam />
                 </Route>
                 <Route exact path="/profil">
                     <Profil />
