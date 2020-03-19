@@ -6,27 +6,28 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 
-const AddMember = ({ configurationId, teamId }) => {
+const AddMember = ({ configurationId, teamId, members, setMembers }) => {
     const [valid, setValid] = useState(false);
     const [name, setName] = useState('');
-    const [members, setMembers] = useState('');
+    const [member, setMember] = useState([]);
+    const [loading, setLoading] = useState(false);
     const isValid = () => {
         setValid(!valid);
     };
     const handleClick = () => {
         addMember(configurationId, teamId, name)
-            .then(res => {
-                history.push(`/${configurationId}/teamconfig`);
-            })
+            .then(res => setMembers([...members, res.data]))
             .catch(err => {
                 setName('');
             });
         setValid(!valid);
     };
 
-    const handleChange = newname => {
-        setName(newname);
-        getUsers(newname).then(res => setMembers(res.data));
+    const handleSearch = username => {
+        setLoading(true);
+        getUsers(username)
+            .then(res => setMember(res.data))
+            .finally(() => setLoading(false));
     };
 
     return (
@@ -53,15 +54,19 @@ const AddMember = ({ configurationId, teamId }) => {
                                 <Col md="9">
                                     <AsyncTypeahead
                                         id="concerned_member_typehead"
-                                        multiple
-                                        labelKey={member =>
-                                            `${member.username}`
-                                        }
-                                        renderMenuItemChildren={members}
-                                        value={name}
+                                        labelKey="username"
+                                        allowNew={false}
+                                        multiple={false}
                                         minLength={2}
-                                        onSearch={e => handleChange(e)}
+                                        onSearch={handleSearch}
                                         placeholder="Sélectionnez un membre à ajouter"
+                                        isLoading={loading}
+                                        options={member}
+                                        renderMenuItemChildren={option => (
+                                            <p key={option.id}>
+                                                {option.username}
+                                            </p>
+                                        )}
                                     />
                                 </Col>
                                 <Col>

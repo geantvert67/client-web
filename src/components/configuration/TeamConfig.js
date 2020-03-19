@@ -10,7 +10,7 @@ import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 const TeamConfig = () => {
     const { configurationId } = useParams();
 
-    const { loading: loading, data: teams } = useDataFromUrl(
+    const { loading: loading, data: teams, setData: setTeams } = useDataFromUrl(
         `/configs/${configurationId}/teams`
     );
 
@@ -53,6 +53,8 @@ const TeamConfig = () => {
                                     <TeamConfigItem
                                         configurationId={configurationId}
                                         team={team}
+                                        teams={teams}
+                                        setTeams={setTeams}
                                     />
                                 ))}
                         </Col>
