@@ -4,10 +4,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinus } from '@fortawesome/free-solid-svg-icons';
 import { removeMember } from '../../service/configuration';
 
-const TeamMembers = ({ configurationId, teamId, member }) => {
+const TeamMembers = ({
+    configurationId,
+    teamId,
+    member,
+    members,
+    setMembers
+}) => {
     const deleteMember = () => {
         removeMember(configurationId, teamId, member.id)
-            .then(res => {})
+            .then(() => setMembers(members.filter(m => m.id !== member.id)))
             .catch(err => {});
     };
 

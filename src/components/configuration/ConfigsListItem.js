@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Card, Row, Col } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -24,7 +25,15 @@ const ConfigsListItem = ({ configuration, community, deleteConfig }) => {
                     <Col xs="auto">
                         <Card.Title>
                             <span className="priority">
-                                {configuration.name}
+                                {!community ? (
+                                    <Link
+                                        to={`/${configuration.id}/modifconfig`}
+                                    >
+                                        {configuration.name}
+                                    </Link>
+                                ) : (
+                                    configuration.name
+                                )}
                             </span>
                             {' - '}
                             <span className="redirect">
