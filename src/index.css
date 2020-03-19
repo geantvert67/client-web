@@ -30,6 +30,10 @@ button:disabled {
     background-color: #1b1e22;
 }
 
+.navbar-brand {
+    font-weight: 700;
+}
+
 .nav-link-active {
     color: #68b684 !important;
 }

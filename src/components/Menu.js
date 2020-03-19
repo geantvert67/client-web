@@ -13,7 +13,9 @@ const Menu = () => {
         <>
             <Navbar expand="md">
                 <Navbar.Brand className="mb-1">
-                    <Link to="/">CrystalZ</Link>
+                    <Link to="/">
+                        Crystal<span style={{ color: '#68b684' }}>Z</span>
+                    </Link>
                 </Navbar.Brand>
 
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
