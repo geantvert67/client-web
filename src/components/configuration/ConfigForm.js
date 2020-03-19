@@ -89,7 +89,7 @@ function ConfigForm() {
                                 name="isPrivate"
                                 value={true}
                                 label="moi uniquement"
-                                className="mr-3"
+                                className="radio-buttons-wrapper mr-3"
                                 validationSchema={{
                                     required: 'Ce champ est obligatoire'
                                 }}
@@ -98,6 +98,7 @@ function ConfigForm() {
                                 name="isPrivate"
                                 value={false}
                                 label="la communauté"
+                                className="radio-buttons-wrapper"
                                 validationSchema={{
                                     required: 'Ce champ est obligatoire'
                                 }}
@@ -163,7 +164,7 @@ function ConfigForm() {
                                     }}
                                 />
                             </Col>
-                            <Col xs="auto" className="mt-1">
+                            <Col xs="auto" className="subtitle mt-1">
                                 mètres
                             </Col>
                         </Row>
@@ -185,7 +186,7 @@ function ConfigForm() {
                                     }}
                                 />
                             </Col>
-                            <Col xs="auto" className="mt-1">
+                            <Col xs="auto" className="subtitle mt-1">
                                 mètres
                             </Col>
                         </Row>
@@ -209,7 +210,7 @@ function ConfigForm() {
                                     }}
                                 />
                             </Col>
-                            <Col xs="auto" className="mt-1">
+                            <Col xs="auto" className="subtitle mt-1">
                                 mètres
                             </Col>
                         </Row>
@@ -231,7 +232,7 @@ function ConfigForm() {
                                     }}
                                 />
                             </Col>
-                            <Col xs="auto" className="mt-1">
+                            <Col xs="auto" className="subtitle mt-1">
                                 mètres
                             </Col>
                         </Row>

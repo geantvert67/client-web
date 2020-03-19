@@ -7,13 +7,14 @@ function RadioButton({ name, value, label, validationSchema, ...rest }) {
 
     return (
         <label {...rest}>
+            {label}
             <input
                 type="radio"
                 name={name}
                 value={value}
                 ref={register(validationSchema)}
             />
-            {label}
+            <span class="checkmark"></span>
         </label>
     );
 }
