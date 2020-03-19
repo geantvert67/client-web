@@ -17,14 +17,14 @@ function ConfigForm({ config }) {
 
     const createConfig = config => {
         create(serializeConfig(config))
-            .then(res => history.push(`/${res.data.id}/itemModelCreator`))
+            .then(res => history.push(`/configs/${res.data.id}/items`))
             .catch(err => setError(err.response.data));
     };
 
     const updateConfig = newConfig => {
         newConfig.id = config.id;
         updateById(serializeConfig(newConfig))
-            .then(res => history.push(`/${res.data.id}/itemModelCreator`))
+            .then(res => history.push(`/configs/${res.data.id}/items`))
             .catch(err => setError(err.response.data));
     };
 
