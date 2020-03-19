@@ -8,14 +8,16 @@ import { removeTeam } from '../../service/configuration';
 import AddMember from './AddMember';
 import TeamMembers from './TeamMembers';
 
-const TeamConfigItem = ({ configurationId, team }) => {
-    const { loading: loading, data: members } = useDataFromUrl(
-        `/configs/${configurationId}/teams/${team.id}/users`
-    );
+const TeamConfigItem = ({ configurationId, team, teams, setTeams }) => {
+    const {
+        loading: loading,
+        data: members,
+        setData: setMembers
+    } = useDataFromUrl(`/configs/${configurationId}/teams/${team.id}/users`);
 
     const deleteTeam = () => {
         removeTeam(configurationId, team.id)
-            .then(res => {})
+            .then(() => setTeams(teams.filter(t => t.id !== team.id)))
             .catch(err => {});
     };
 
@@ -57,6 +59,8 @@ const TeamConfigItem = ({ configurationId, team }) => {
                                 <AddMember
                                     configurationId={configurationId}
                                     teamId={team.id}
+                                    members={members}
+                                    setMembers={setMembers}
                                 />
                                 {members !== null &&
                                     members.map(member => (
@@ -64,6 +68,8 @@ const TeamConfigItem = ({ configurationId, team }) => {
                                             configurationId={configurationId}
                                             teamId={team.id}
                                             member={member}
+                                            members={members}
+                                            setMembers={setMembers}
                                         />
                                     ))}
                             </>

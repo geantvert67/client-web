@@ -6,19 +6,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 
-const AddMember = ({ configurationId, teamId }) => {
+const AddMember = ({ configurationId, teamId, members, setMembers }) => {
     const [valid, setValid] = useState(false);
     const [name, setName] = useState('');
-    const [members, setMembers] = useState([]);
+    const [member, setMember] = useState([]);
     const [loading, setLoading] = useState(false);
     const isValid = () => {
         setValid(!valid);
     };
     const handleClick = () => {
         addMember(configurationId, teamId, name)
-            .then(res => {
-                history.push(`/${configurationId}/teamconfig`);
-            })
+            .then(res => setMembers([...members, res.data]))
             .catch(err => {
                 setName('');
             });
@@ -28,7 +26,7 @@ const AddMember = ({ configurationId, teamId }) => {
     const handleSearch = username => {
         setLoading(true);
         getUsers(username)
-            .then(res => setMembers(res.data))
+            .then(res => setMember(res.data))
             .finally(() => setLoading(false));
     };
 
@@ -63,7 +61,7 @@ const AddMember = ({ configurationId, teamId }) => {
                                         onSearch={handleSearch}
                                         placeholder="Sélectionnez un membre à ajouter"
                                         isLoading={loading}
-                                        options={members}
+                                        options={member}
                                         renderMenuItemChildren={option => (
                                             <p key={option.id}>
                                                 {option.username}
