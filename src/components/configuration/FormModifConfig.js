@@ -41,7 +41,7 @@ const FormModifConfig = configuration => {
     const removeConf = () => {
         removeConfiguration(configurationId)
             .then(res => {
-                history.push(`/games`);
+                history.push(`/configs`);
             })
             .catch(err => {});
     };
@@ -65,7 +65,7 @@ const FormModifConfig = configuration => {
             flagCaptureDuration
         })
             .then(res => {
-                history.push(`/games`);
+                history.push(`/configs`);
             })
             .catch(err => {});
     };

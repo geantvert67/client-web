@@ -1,6 +1,6 @@
 import React from 'react';
-import { exportConfiguration } from '../service/configuration';
-
+import { toast } from 'react-toastify';
+import { exportConfiguration } from '../../service/configuration';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDownload } from '@fortawesome/free-solid-svg-icons';
 
@@ -15,15 +15,18 @@ function DownloadButton({ configId }) {
                 document.body.appendChild(link);
                 link.click();
             })
-            .catch(err => console.log(err));
+            .catch(() =>
+                toast.error('Impossible de télécharger la configuration')
+            );
     };
 
     return (
-        <>
-            <div className="center" onClick={downloadConfig}>
-                <FontAwesomeIcon icon={faDownload} size="lg" />
-            </div>
-        </>
+        <FontAwesomeIcon
+            icon={faDownload}
+            size="lg"
+            onClick={downloadConfig}
+            className="mr-2 ml-2"
+        />
     );
 }
 

@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }) => {
         return request.post('/signup', credentials).then(res => {
             Cookies.set('token', res.data.token);
             setUser(res.data.user);
-            history.push('/');
+            history.push('/configs');
         });
     };
 
@@ -36,7 +36,7 @@ export const AuthProvider = ({ children }) => {
         return request.post('/signin', credentials).then(res => {
             Cookies.set('token', res.data.token);
             setUser(res.data.user);
-            history.push('/');
+            history.push('/configs');
         });
     };
 
