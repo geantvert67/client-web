@@ -1,8 +1,5 @@
 body {
     margin: 0;
-    font-family: 'Montserrat', sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
     background-color: #26292f !important;
     color: white !important;
 }
@@ -10,10 +7,6 @@ body {
 a {
     color: white !important;
     text-decoration: none !important;
-}
-
-.navbar {
-    background-color: #1b1e22;
 }
 
 input,
@@ -24,8 +17,39 @@ input,
     box-shadow: 0px 1px 3px #1b1e22;
 }
 
-input {
+input,
+.nav-link {
     color: #d2d2d2 !important;
+}
+
+button:disabled {
+    cursor: not-allowed;
+}
+
+.navbar {
+    background-color: #1b1e22;
+}
+
+.navbar-brand {
+    font-weight: 700;
+}
+
+.nav-link-active {
+    color: #68b684 !important;
+}
+
+.alert-danger {
+    background-color: #eb4646 !important;
+    color: white !important;
+    border: none !important;
+}
+
+.dropdown-menu {
+    background-color: #1b1e22 !important;
+}
+
+.dropdown-item:hover {
+    background-color: #26292f !important;
 }
 
 .leaflet-container {
@@ -49,6 +73,7 @@ input {
 
 .subtitle {
     color: #d2d2d2 !important;
+    font-weight: 400 !important;
 }
 
 svg:hover {

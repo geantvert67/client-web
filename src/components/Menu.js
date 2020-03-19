@@ -1,10 +1,11 @@
 import React from 'react';
-import { useAuth } from '../utils/auth';
-
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
-import { Button, Badge } from 'react-bootstrap';
+import { Button, Dropdown, DropdownButton } from 'react-bootstrap';
 import { NavLink, Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserCircle, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { useAuth } from '../utils/auth';
 
 const Menu = () => {
     const { user, signout } = useAuth();
@@ -13,7 +14,9 @@ const Menu = () => {
         <>
             <Navbar expand="md">
                 <Navbar.Brand className="mb-1">
-                    <Link to="/">CrystalZ</Link>
+                    <Link to="/">
+                        Crystal<span style={{ color: '#68b684' }}>Z</span>
+                    </Link>
                 </Navbar.Brand>
 
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -21,26 +24,34 @@ const Menu = () => {
                     {user ? (
                         <>
                             <Nav className="mr-auto">
-                                <NavLink className="nav-link" to="/configs">
+                                <NavLink
+                                    className="nav-link"
+                                    activeClassName="nav-link-active"
+                                    to="/configs"
+                                >
                                     Configurations
                                 </NavLink>
                             </Nav>
                             <Nav className="align-items-center">
-                                <NavLink
-                                    className="nav-link"
-                                    to="/"
-                                    onClick={e => signout()}
+                                <DropdownButton
+                                    alignRight
+                                    title={user.username}
                                 >
-                                    Se déconnecter
-                                </NavLink>
-                                <NavLink className="nav-link" to="/profil">
-                                    <Button
-                                        variant="success"
-                                        className="btn-primary"
-                                    >
-                                        Mon profil
-                                    </Button>
-                                </NavLink>
+                                    <Dropdown.Item href="/profil">
+                                        <FontAwesomeIcon
+                                            className="mr-2"
+                                            icon={faUserCircle}
+                                        />
+                                        Mon compte
+                                    </Dropdown.Item>
+                                    <Dropdown.Item onClick={e => signout()}>
+                                        <FontAwesomeIcon
+                                            className="mr-2"
+                                            icon={faSignOutAlt}
+                                        />
+                                        Se déconnecter
+                                    </Dropdown.Item>
+                                </DropdownButton>
                             </Nav>
                         </>
                     ) : (
