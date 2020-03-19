@@ -75,7 +75,7 @@ function ItemsModelsCreator({}) {
 
     const handleClick = () => {
         addItemsModels(configurationId, selectedModels)
-            .then(history.push(`/${configurationId}/teamconfig`))
+            .then(history.push(`/configs/${configurationId}/teams`))
             .catch(err => {});
     };
 
@@ -104,14 +104,26 @@ function ItemsModelsCreator({}) {
                     </Col>
                 </Row>
 
-                <Row className="justify-content-md-center">
-                    <Col md="auto">
+                <Row className="justify-content-between">
+                    <Col xs="auto">
+                        <Button
+                            variant="light"
+                            type="button"
+                            onClick={() =>
+                                history.push(`/configs/${configurationId}/edit`)
+                            }
+                        >
+                            Retour
+                        </Button>
+                    </Col>
+                    <Col xs="auto">
                         <Button
                             variant="success"
                             type="button"
+                            className="btn-primary"
                             onClick={() => handleClick()}
                         >
-                            Suivant{' '}
+                            Suivant
                         </Button>
                     </Col>
                 </Row>

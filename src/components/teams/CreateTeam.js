@@ -20,7 +20,7 @@ const CreateTeam = () => {
     const create = e => {
         createTeam(configurationId, { name, color })
             .then(res => {
-                history.push(`/${configurationId}/teamconfig`);
+                history.push(`/configs/${configurationId}/teams`);
             })
             .catch(err => {});
     };

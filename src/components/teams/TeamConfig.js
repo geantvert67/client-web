@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { Card, Row, Col } from 'react-bootstrap';
+import { Card, Row, Col, Button } from 'react-bootstrap';
 import { useDataFromUrl } from '../../utils/data';
 import TeamConfigItem from './TeamConfigItem';
 import history from '../../utils/history';
@@ -58,6 +58,36 @@ const TeamConfig = () => {
                                     />
                                 ))}
                         </Col>
+
+                        <Row className="justify-content-between">
+                            <Col xs="auto">
+                                <Button
+                                    variant="light"
+                                    type="button"
+                                    onClick={() =>
+                                        history.push(
+                                            `/configs/${configurationId}/items`
+                                        )
+                                    }
+                                >
+                                    Retour
+                                </Button>
+                            </Col>
+                            <Col xs="auto">
+                                <Button
+                                    variant="success"
+                                    type="button"
+                                    className="btn-primary"
+                                    onClick={() =>
+                                        history.push(
+                                            `/configs/${configurationId}/map`
+                                        )
+                                    }
+                                >
+                                    Suivant
+                                </Button>
+                            </Col>
+                        </Row>
                     </Row>
                 </>
             )}
