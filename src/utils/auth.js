@@ -33,12 +33,20 @@ export const AuthProvider = ({ children }) => {
         });
     };
 
-    const signin = credentials => {
-        return request.post('/signin', credentials).then(res => {
-            Cookies.set('token', res.data.token);
-            setUser(res.data.user);
-            history.push('/configs');
-        });
+    const signin = (credentials, setError) => {
+        return request
+            .post('/signin', credentials)
+            .then(res => {
+                setError('');
+                Cookies.set('token', res.data.token);
+                setUser(res.data.user);
+                history.push('/configs');
+            })
+            .catch(err => {
+                if (err.response.status === 401)
+                    setError('Mauvais identifiants');
+                else setError('Une erreur est survenue');
+            });
     };
 
     const changeUsername = (username, setError) => {
