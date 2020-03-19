@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import history from '../../utils/history';
-import { Form, Row, Col, Button } from 'react-bootstrap';
+import { Form, Row, Col, Button, Container } from 'react-bootstrap';
 import ItemModelCheck from './ItemModelCheck';
 import ItemModelConfig from './ItemModelConfig';
 import { addItemsModels } from '../../utils/config';
@@ -80,20 +80,20 @@ function ItemsModelsCreator({}) {
     };
 
     return (
-        <>
-            <Form>
-                <Row className="justify-content-md-center">
-                    {modelItems.map(model => (
-                        <ItemModelCheck
-                            model={model}
-                            selectedModels={selectedModels}
-                            setSelectedModels={setSelectedModels}
-                        />
-                    ))}
-                </Row>
+        <Container className="mt-5">
+            <Row>
+                <Col md={{ span: 6, offset: 3 }}>
+                    <h3 className="mb-5">Gestion des items</h3>
 
-                <Row className="justify-content-md-center">
-                    <Col md="6">
+                    <Form>
+                        {modelItems.map(model => (
+                            <ItemModelCheck
+                                model={model}
+                                selectedModels={selectedModels}
+                                setSelectedModels={setSelectedModels}
+                            />
+                        ))}
+
                         {selectedModels.map(model => (
                             <ItemModelConfig
                                 model={model}
@@ -101,34 +101,36 @@ function ItemsModelsCreator({}) {
                                 setSelectedModels={setSelectedModels}
                             />
                         ))}
-                    </Col>
-                </Row>
 
-                <Row className="justify-content-between">
-                    <Col xs="auto">
-                        <Button
-                            variant="light"
-                            type="button"
-                            onClick={() =>
-                                history.push(`/configs/${configurationId}/edit`)
-                            }
-                        >
-                            Retour
-                        </Button>
-                    </Col>
-                    <Col xs="auto">
-                        <Button
-                            variant="success"
-                            type="button"
-                            className="btn-primary"
-                            onClick={() => handleClick()}
-                        >
-                            Suivant
-                        </Button>
-                    </Col>
-                </Row>
-            </Form>
-        </>
+                        <Row className="justify-content-between">
+                            <Col xs="auto">
+                                <Button
+                                    variant="light"
+                                    type="button"
+                                    onClick={() =>
+                                        history.push(
+                                            `/configs/${configurationId}/edit`
+                                        )
+                                    }
+                                >
+                                    Retour
+                                </Button>
+                            </Col>
+                            <Col xs="auto">
+                                <Button
+                                    variant="success"
+                                    type="button"
+                                    className="btn-primary"
+                                    onClick={() => handleClick()}
+                                >
+                                    Suivant
+                                </Button>
+                            </Col>
+                        </Row>
+                    </Form>
+                </Col>
+            </Row>
+        </Container>
     );
 }
 
