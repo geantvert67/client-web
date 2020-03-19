@@ -38,6 +38,14 @@ button:disabled {
     border: none !important;
 }
 
+.dropdown-menu {
+    background-color: #1b1e22 !important;
+}
+
+.dropdown-item:hover {
+    background-color: #26292f !important;
+}
+
 .leaflet-container {
     height: 600px;
     width: 80%;

@@ -3,7 +3,7 @@ import { useAuth } from '../utils/auth';
 
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
-import { Button, Badge } from 'react-bootstrap';
+import { Button, Dropdown, DropdownButton } from 'react-bootstrap';
 import { NavLink, Link } from 'react-router-dom';
 
 const Menu = () => {
@@ -26,21 +26,17 @@ const Menu = () => {
                                 </NavLink>
                             </Nav>
                             <Nav className="align-items-center">
-                                <NavLink
-                                    className="nav-link"
-                                    to="/"
-                                    onClick={e => signout()}
+                                <DropdownButton
+                                    alignRight
+                                    title={user.username}
                                 >
-                                    Se déconnecter
-                                </NavLink>
-                                <NavLink className="nav-link" to="/profil">
-                                    <Button
-                                        variant="success"
-                                        className="btn-primary"
-                                    >
-                                        Mon profil
-                                    </Button>
-                                </NavLink>
+                                    <Dropdown.Item href="/profil">
+                                        Mon compte
+                                    </Dropdown.Item>
+                                    <Dropdown.Item onClick={e => signout()}>
+                                        Se déconnecter
+                                    </Dropdown.Item>
+                                </DropdownButton>
                             </Nav>
                         </>
                     ) : (
