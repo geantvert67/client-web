@@ -1,9 +1,15 @@
 import React from 'react';
 import { useFormContext } from './Form';
-import { Form } from 'react-bootstrap';
 
-function RadioButton({ name, value, label, validationSchema, ...rest }) {
-    const { register, errors } = useFormContext();
+function RadioButton({
+    name,
+    value,
+    label,
+    checked,
+    validationSchema,
+    ...rest
+}) {
+    const { register } = useFormContext();
 
     return (
         <label {...rest}>
@@ -12,9 +18,10 @@ function RadioButton({ name, value, label, validationSchema, ...rest }) {
                 type="radio"
                 name={name}
                 value={value}
+                defaultChecked={checked}
                 ref={register(validationSchema)}
             />
-            <span class="checkmark"></span>
+            <span className="checkmark"></span>
         </label>
     );
 }

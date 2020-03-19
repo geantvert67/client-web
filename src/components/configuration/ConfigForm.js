@@ -6,11 +6,13 @@ import Button from '../forms/Button';
 import RadioButton from '../forms/RadioButton';
 import RadioButtonWrapper from '../forms/RadioButtonWrapper';
 import { serializeConfig } from '../../utils/config';
-import { create } from '../../service/configuration';
+import { create, updateById } from '../../service/configuration';
 import history from '../../utils/history';
 
-function ConfigForm() {
-    const [showDuration, setShowDuration] = useState(false);
+function ConfigForm({ config }) {
+    const [showDuration, setShowDuration] = useState(
+        config ? config.gameMode != 'SUPREMACY' : false
+    );
     const [error, setError] = useState('');
 
     const createConfig = config => {
@@ -19,13 +21,22 @@ function ConfigForm() {
             .catch(err => setError(err.response.data));
     };
 
+    const updateConfig = newConfig => {
+        newConfig.id = config.id;
+        updateById(serializeConfig(newConfig))
+            .then(res => history.push(`/${res.data.id}/itemModelCreator`))
+            .catch(err => setError(err.response.data));
+    };
+
     return (
         <Container className="mt-5 mb-5">
             <Row>
                 <Col md={{ span: 6, offset: 3 }}>
-                    <h3 className="mb-5">Créer une configuration</h3>
+                    <h3 className="mb-5">
+                        {config ? 'Modifier' : 'Créer'} une configuration
+                    </h3>
 
-                    <Form onSubmit={createConfig}>
+                    <Form onSubmit={config ? updateConfig : createConfig}>
                         {error && <Alert variant="danger">{error}</Alert>}
 
                         <label>Nom *</label>
@@ -33,6 +44,7 @@ function ConfigForm() {
                             type="text"
                             name="name"
                             placeholder="Entrez un nom"
+                            defaultValue={config && config.name}
                             validationSchema={{
                                 required: 'Ce champ est obligatoire',
                                 minLength: {
@@ -52,6 +64,7 @@ function ConfigForm() {
                         <Input
                             as="select"
                             name="gameMode"
+                            defaultValue={config && config.gameMode}
                             onChange={e =>
                                 setShowDuration(e.target.value != 'SUPREMACY')
                             }
@@ -71,6 +84,7 @@ function ConfigForm() {
                                     type="number"
                                     name="duration"
                                     placeholder="Entrez un nombre"
+                                    defaultValue={config && config.duration}
                                     validationSchema={
                                         showDuration
                                             ? {
@@ -90,6 +104,7 @@ function ConfigForm() {
                                 value={true}
                                 label="moi uniquement"
                                 className="radio-buttons-wrapper mr-3"
+                                checked={config ? config.isPrivate : false}
                                 validationSchema={{
                                     required: 'Ce champ est obligatoire'
                                 }}
@@ -99,6 +114,7 @@ function ConfigForm() {
                                 value={false}
                                 label="la communauté"
                                 className="radio-buttons-wrapper"
+                                checked={config ? !config.isPrivate : false}
                                 validationSchema={{
                                     required: 'Ce champ est obligatoire'
                                 }}
@@ -112,6 +128,7 @@ function ConfigForm() {
                             type="number"
                             name="maxPlayers"
                             placeholder="Entrez un nombre"
+                            defaultValue={config && config.maxPlayers}
                             validationSchema={{
                                 min: {
                                     value: 1,
@@ -131,6 +148,7 @@ function ConfigForm() {
                             type="number"
                             name="inventorySize"
                             placeholder="Entrez un nombre"
+                            defaultValue={config && config.inventorySize}
                             validationSchema={{
                                 min: {
                                     value: 1,
@@ -155,6 +173,9 @@ function ConfigForm() {
                                     step="0.01"
                                     name="playerVisibilityRadius"
                                     placeholder="Entrez un nombre"
+                                    defaultValue={
+                                        config && config.playerVisibilityRadius
+                                    }
                                     validationSchema={{
                                         min: {
                                             value: 0.01,
@@ -177,6 +198,9 @@ function ConfigForm() {
                                     step="0.01"
                                     name="playerActionRadius"
                                     placeholder="Entrez un nombre"
+                                    defaultValue={
+                                        config && config.playerActionRadius
+                                    }
                                     validationSchema={{
                                         min: {
                                             value: 0.01,
@@ -201,6 +225,9 @@ function ConfigForm() {
                                     step="0.01"
                                     name="flagVisibilityRadius"
                                     placeholder="Entrez un nombre"
+                                    defaultValue={
+                                        config && config.flagVisibilityRadius
+                                    }
                                     validationSchema={{
                                         min: {
                                             value: 0.01,
@@ -223,6 +250,9 @@ function ConfigForm() {
                                     step="0.01"
                                     name="flagActionRadius"
                                     placeholder="Entrez un nombre"
+                                    defaultValue={
+                                        config && config.flagActionRadius
+                                    }
                                     validationSchema={{
                                         min: {
                                             value: 0.01,
@@ -242,6 +272,7 @@ function ConfigForm() {
                             type="number"
                             name="flagCaptureDuration"
                             placeholder="Entrez un nombre"
+                            defaultValue={config && config.flagCaptureDuration}
                             validationSchema={{
                                 required: 'Ce champ est obligatoire',
                                 min: {
@@ -259,7 +290,7 @@ function ConfigForm() {
                                     className="btn-primary"
                                     type="submit"
                                 >
-                                    Créer
+                                    Suivant
                                 </Button>
                             </Col>
                         </Row>

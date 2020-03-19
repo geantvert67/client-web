@@ -3,7 +3,6 @@ import { Container, Row, Col, Alert } from 'react-bootstrap';
 import Input from '../forms/Input';
 import Form from '../forms/Form';
 import Button from '../forms/Button';
-import history from '../../utils/history';
 import { useAuth } from '../../utils/auth';
 
 const Profil = () => {

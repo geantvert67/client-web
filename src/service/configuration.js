@@ -4,6 +4,14 @@ export const create = config => {
     return request.post('/configs', config);
 };
 
+export const getById = configId => {
+    return request.get(`/configs/${configId}`);
+};
+
+export const updateById = config => {
+    return request.put(`/configs/${config.id}`, config);
+};
+
 export const addZone = (idConfig, zone) => {
     return request.post(`/configs/${idConfig}/areas`, zone);
 };
@@ -26,10 +34,6 @@ export const removeFlags = idConfig => {
 
 export const removeZones = idConfig => {
     return request.delete(`/configs/${idConfig}/areas`);
-};
-
-export const updateConfiguration = (idConfig, credentials) => {
-    return request.put(`/configs/${idConfig}`, credentials);
 };
 
 export const removeConfiguration = idConfig => {

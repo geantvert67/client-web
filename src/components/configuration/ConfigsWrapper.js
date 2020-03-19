@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Row, Col, Container, Spinner } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { useDataFromUrl } from '../../utils/data';

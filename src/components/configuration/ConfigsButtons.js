@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Row, Col, Button, Form } from 'react-bootstrap';
+import { Row, Col, Button, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faPlus } from '@fortawesome/free-solid-svg-icons';
 import InputGroup from 'react-bootstrap/InputGroup';
@@ -39,7 +39,7 @@ const ConfigsButtons = ({ community, setCommunity }) => {
                     <Button
                         variant="success"
                         className="btn-primary"
-                        onClick={() => history.push('/configuration')}
+                        onClick={() => history.push('/configs/create')}
                     >
                         <FontAwesomeIcon icon={faPlus} className="mr-2" />
                         Créer
