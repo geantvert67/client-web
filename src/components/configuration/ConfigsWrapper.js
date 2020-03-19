@@ -43,6 +43,10 @@ const ConfigsWrapper = () => {
                         </Row>
                     ) : error ? (
                         <p>erreur</p>
+                    ) : configurations.length === 0 ? (
+                        <p className="text-center">
+                            Aucune configuration à afficher.
+                        </p>
                     ) : (
                         configurations.map(config => (
                             <ConfigsListItem
