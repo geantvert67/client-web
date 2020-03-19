@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import history from '../../utils/history';
 import { useAuth } from '../../utils/auth';
 
 import { Form, Container, Button, Row, Col } from 'react-bootstrap';
@@ -11,15 +12,21 @@ const Profil = () => {
     const [newPassword, setNewPassword] = useState('');
 
     const handleSubmitPassword = e => {
-        changePassword({ currentPassword, newPassword }).catch(err => {
-            setCurrentPassword('');
-            setNewPassword('');
-        });
+        e.preventDefault();
+        changePassword({ currentPassword, newPassword })
+            .then(history.push(`/signin`))
+            .catch(err => {
+                setCurrentPassword('');
+                setNewPassword('');
+            });
     };
     const handleSubmitUsername = e => {
-        changeUsername(username).catch(err => {
-            setUsername('');
-        });
+        e.preventDefault();
+        changeUsername({ username })
+            .then(history.push(`/signin`))
+            .catch(err => {
+                setUsername('');
+            });
     };
 
     return (
