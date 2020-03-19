@@ -21,7 +21,11 @@ const Menu = () => {
                     {user ? (
                         <>
                             <Nav className="mr-auto">
-                                <NavLink className="nav-link" to="/configs">
+                                <NavLink
+                                    className="nav-link"
+                                    activeClassName="nav-link-active"
+                                    to="/configs"
+                                >
                                     Configurations
                                 </NavLink>
                             </Nav>

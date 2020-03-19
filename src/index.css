@@ -12,10 +12,6 @@ a {
     text-decoration: none !important;
 }
 
-.navbar {
-    background-color: #1b1e22;
-}
-
 input,
 .input-group-text,
 .card {
@@ -24,12 +20,21 @@ input,
     box-shadow: 0px 1px 3px #1b1e22;
 }
 
-input {
+input,
+.nav-link {
     color: #d2d2d2 !important;
 }
 
 button:disabled {
     cursor: not-allowed;
+}
+
+.navbar {
+    background-color: #1b1e22;
+}
+
+.nav-link-active {
+    color: #68b684 !important;
 }
 
 .alert-danger {
