@@ -1,13 +1,10 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-
 import { AuthProvider } from '../utils/auth';
 import Menu from './Menu';
 import Signin from './authentification/Signin';
 import Signup from './authentification/Signup';
 import MapCreator from './map/MapCreator';
-import Configuration from './configuration/Configuration';
-import ModifConfig from './configuration/ModifConfig';
 import TeamConfig from './configuration/TeamConfig';
 import CreateTeam from './configuration/CreateTeam';
 import ItemsModelsCreator from './configuration/ItemsModelsCreator';
@@ -16,6 +13,8 @@ import Profil from './user/Profil';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import ConfigForm from './configuration/ConfigForm';
+import ConfigFormWrapper from './configuration/ConfigFormWrapper';
 
 toast.configure({
     hideProgressBar: true,
@@ -41,14 +40,14 @@ const App = () => {
                 <Route path="/:idconfiguration/mapcreator">
                     <MapCreator />
                 </Route>
-                <Route exact path="/configuration">
-                    <Configuration />
+                <Route exact path="/configs/create">
+                    <ConfigForm />
                 </Route>
                 <Route exact path="/configs">
                     <ConfigsWrapper />
                 </Route>
-                <Route exact path="/:configurationId/modifconfig">
-                    <ModifConfig />
+                <Route exact path="/configs/:configurationId/edit">
+                    <ConfigFormWrapper />
                 </Route>
                 <Route exact path="/:configurationId/itemModelCreator">
                     <ItemsModelsCreator />

@@ -13,7 +13,7 @@ const ConfigsListItem = ({ configuration, community, deleteConfig }) => {
     const cloneConfig = configId => {
         cloneConfiguration(configId)
             .then(res => {
-                history.push(`/${res.data.id}/modifconfig`);
+                history.push(`/configs/${res.data.id}/edit`);
             })
             .catch(() => toast.error('Impossible de cloner la configuration'));
     };
@@ -27,7 +27,7 @@ const ConfigsListItem = ({ configuration, community, deleteConfig }) => {
                             <span className="priority">
                                 {!community ? (
                                     <Link
-                                        to={`/${configuration.id}/modifconfig`}
+                                        to={`/configs/${configuration.id}/edit`}
                                     >
                                         {configuration.name}
                                     </Link>

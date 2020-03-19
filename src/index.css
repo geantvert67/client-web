@@ -10,6 +10,7 @@ a {
 }
 
 input,
+select,
 .input-group-text,
 .card {
     background-color: #1b1e22 !important;
@@ -18,12 +19,60 @@ input,
 }
 
 input,
+label,
 .nav-link {
     color: #d2d2d2 !important;
 }
 
-button:disabled {
-    cursor: not-allowed;
+option:hover {
+    background-color: #1b1e22 !important;
+    border: none !important;
+}
+
+.radio-buttons-wrapper {
+    position: relative;
+    padding-left: 30px;
+    cursor: pointer;
+}
+
+.radio-buttons-wrapper input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #1b1e22;
+    border-radius: 50%;
+}
+
+.radio-buttons-wrapper input:checked ~ .checkmark {
+    background-color: #68b684;
+}
+
+.checkmark:after {
+    content: '';
+    position: absolute;
+    display: none;
+}
+
+.radio-buttons-wrapper input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.radio-buttons-wrapper .checkmark:after {
+    top: 7px;
+    left: 6px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
 }
 
 .navbar {

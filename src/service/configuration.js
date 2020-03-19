@@ -1,7 +1,15 @@
 import request from '../utils/request';
 
-export const create = credentials => {
-    return request.post('/configs', credentials);
+export const create = config => {
+    return request.post('/configs', config);
+};
+
+export const getById = configId => {
+    return request.get(`/configs/${configId}`);
+};
+
+export const updateById = config => {
+    return request.put(`/configs/${config.id}`, config);
 };
 
 export const addZone = (idConfig, zone) => {
@@ -26,10 +34,6 @@ export const removeFlags = idConfig => {
 
 export const removeZones = idConfig => {
     return request.delete(`/configs/${idConfig}/areas`);
-};
-
-export const updateConfiguration = (idConfig, credentials) => {
-    return request.put(`/configs/${idConfig}`, credentials);
 };
 
 export const removeConfiguration = idConfig => {
