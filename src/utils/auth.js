@@ -25,12 +25,20 @@ export const AuthProvider = ({ children }) => {
         return <h4>Loading...</h4>;
     }
 
-    const signup = credentials => {
-        return request.post('/signup', credentials).then(res => {
-            Cookies.set('token', res.data.token);
-            setUser(res.data.user);
-            history.push('/configs');
-        });
+    const signup = (user, setError) => {
+        return request
+            .post('/signup', user)
+            .then(res => {
+                setError('');
+                Cookies.set('token', res.data.token);
+                setUser(res.data.user);
+                history.push('/configs');
+            })
+            .catch(err => {
+                if (err.response.status === 409)
+                    setError("Ce nom d'utilisateur est déjà utilisé");
+                else setError('Une erreur est survenue');
+            });
     };
 
     const signin = (credentials, setError) => {
