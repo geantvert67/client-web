@@ -1,10 +1,11 @@
 import React from 'react';
-import { useAuth } from '../utils/auth';
-
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import { Button, Dropdown, DropdownButton } from 'react-bootstrap';
 import { NavLink, Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserCircle, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { useAuth } from '../utils/auth';
 
 const Menu = () => {
     const { user, signout } = useAuth();
@@ -37,9 +38,17 @@ const Menu = () => {
                                     title={user.username}
                                 >
                                     <Dropdown.Item href="/profil">
+                                        <FontAwesomeIcon
+                                            className="mr-2"
+                                            icon={faUserCircle}
+                                        />
                                         Mon compte
                                     </Dropdown.Item>
                                     <Dropdown.Item onClick={e => signout()}>
+                                        <FontAwesomeIcon
+                                            className="mr-2"
+                                            icon={faSignOutAlt}
+                                        />
                                         Se déconnecter
                                     </Dropdown.Item>
                                 </DropdownButton>
