@@ -1,7 +1,7 @@
 import request from '../utils/request';
 
-export const create = credentials => {
-    return request.post('/configs', credentials);
+export const create = config => {
+    return request.post('/configs', config);
 };
 
 export const addZone = (idConfig, zone) => {

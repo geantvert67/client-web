@@ -9,7 +9,8 @@ import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 const AddMember = ({ configurationId, teamId }) => {
     const [valid, setValid] = useState(false);
     const [name, setName] = useState('');
-    const [members, setMembers] = useState('');
+    const [members, setMembers] = useState([]);
+    const [loading, setLoading] = useState(false);
     const isValid = () => {
         setValid(!valid);
     };
@@ -24,9 +25,11 @@ const AddMember = ({ configurationId, teamId }) => {
         setValid(!valid);
     };
 
-    const handleChange = newname => {
-        setName(newname);
-        getUsers(newname).then(res => setMembers(res.data));
+    const handleSearch = username => {
+        setLoading(true);
+        getUsers(username)
+            .then(res => setMembers(res.data))
+            .finally(() => setLoading(false));
     };
 
     return (
@@ -53,15 +56,19 @@ const AddMember = ({ configurationId, teamId }) => {
                                 <Col md="9">
                                     <AsyncTypeahead
                                         id="concerned_member_typehead"
-                                        multiple
-                                        labelKey={member =>
-                                            `${member.username}`
-                                        }
-                                        renderMenuItemChildren={members}
-                                        value={name}
+                                        labelKey="username"
+                                        allowNew={false}
+                                        multiple={false}
                                         minLength={2}
-                                        onSearch={e => handleChange(e)}
+                                        onSearch={handleSearch}
                                         placeholder="Sélectionnez un membre à ajouter"
+                                        isLoading={loading}
+                                        options={members}
+                                        renderMenuItemChildren={option => (
+                                            <p key={option.id}>
+                                                {option.username}
+                                            </p>
+                                        )}
                                     />
                                 </Col>
                                 <Col>

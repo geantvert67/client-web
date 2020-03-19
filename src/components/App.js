@@ -16,6 +16,7 @@ import Profil from './user/Profil';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import ConfigForm from './configuration/ConfigForm';
 
 toast.configure({
     hideProgressBar: true,
@@ -42,7 +43,7 @@ const App = () => {
                     <MapCreator />
                 </Route>
                 <Route exact path="/configuration">
-                    <Configuration />
+                    <ConfigForm />
                 </Route>
                 <Route exact path="/configs">
                     <ConfigsWrapper />
