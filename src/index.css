@@ -73,6 +73,7 @@ button:disabled {
 
 .subtitle {
     color: #d2d2d2 !important;
+    font-weight: 400 !important;
 }
 
 svg:hover {
