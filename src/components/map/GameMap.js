@@ -26,6 +26,7 @@ import {
 import { useParams } from 'react-router-dom';
 import DownloadButton from '../configuration/DownloadButton';
 import ItemsButtons from './ItemsButtons';
+import ConfigMenu from '../configuration/ConfigMenu';
 
 function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
     const [position, setPosition] = useState(defaultPosition);
@@ -339,6 +340,8 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
             />
             {defaultPosition.length !== 0 && (
                 <>
+                    <ConfigMenu level={4} configId={idconfiguration} />
+
                     <Map center={position} zoom={zoom} onClick={handleClick}>
                         <TileLayer url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png" />
                         <Polygon color="green" positions={polygonPosition} />

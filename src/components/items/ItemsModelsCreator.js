@@ -7,6 +7,7 @@ import ItemModelConfig from './ItemModelConfig';
 import { addItemsModels } from '../../utils/config';
 import { useParams } from 'react-router-dom';
 import { getItemsModel } from '../../service/configuration';
+import ConfigMenu from '../configuration/ConfigMenu';
 
 function ItemsModelsCreator({}) {
     const { configurationId } = useParams();
@@ -75,14 +76,16 @@ function ItemsModelsCreator({}) {
 
     const handleClick = () => {
         addItemsModels(configurationId, selectedModels)
-            .then(history.push(`/configs/${configurationId}/teams`))
-            .catch(err => {});
+            .then(() => history.push(`/configs/${configurationId}/teams`))
+            .catch(err => console.log(err));
     };
 
     return (
-        <Container className="mt-5">
+        <Container className="mt-5 mb-5">
             <Row>
                 <Col md={{ span: 6, offset: 3 }}>
+                    <ConfigMenu level={2} configId={configurationId} />
+
                     <h3 className="mb-5">Gestion des items</h3>
 
                     <Form>
@@ -102,20 +105,7 @@ function ItemsModelsCreator({}) {
                             />
                         ))}
 
-                        <Row className="justify-content-between">
-                            <Col xs="auto">
-                                <Button
-                                    variant="light"
-                                    type="button"
-                                    onClick={() =>
-                                        history.push(
-                                            `/configs/${configurationId}/edit`
-                                        )
-                                    }
-                                >
-                                    Retour
-                                </Button>
-                            </Col>
+                        <Row className="justify-content-end">
                             <Col xs="auto">
                                 <Button
                                     variant="success"
@@ -123,7 +113,7 @@ function ItemsModelsCreator({}) {
                                     className="btn-primary"
                                     onClick={() => handleClick()}
                                 >
-                                    Suivant
+                                    Enregistrer
                                 </Button>
                             </Col>
                         </Row>

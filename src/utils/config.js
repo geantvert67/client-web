@@ -73,10 +73,13 @@ export const formatFlags = f => {
 };
 
 export const addItemsModels = (idConfig, models) => {
-    models.map(model =>
-        model.id
-            ? delete model.name && updateItemsModel(idConfig, model.id, model)
-            : addItemsModel(idConfig, model)
+    return Promise.all(
+        models.map(model =>
+            model.id
+                ? delete model.name &&
+                  updateItemsModel(idConfig, model.id, model)
+                : addItemsModel(idConfig, model)
+        )
     );
 };
 

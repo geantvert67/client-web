@@ -8,6 +8,7 @@ import RadioButtonWrapper from '../forms/RadioButtonWrapper';
 import { serializeConfig } from '../../utils/config';
 import { create, updateById } from '../../service/configuration';
 import history from '../../utils/history';
+import ConfigMenu from './ConfigMenu';
 
 function ConfigForm({ config }) {
     const [showDuration, setShowDuration] = useState(
@@ -32,6 +33,11 @@ function ConfigForm({ config }) {
         <Container className="mt-5 mb-5">
             <Row>
                 <Col md={{ span: 6, offset: 3 }}>
+                    <ConfigMenu
+                        level={1}
+                        configId={config ? config.id : null}
+                    />
+
                     <h3 className="mb-5">
                         {config ? 'Modifier' : 'Créer'} une configuration
                     </h3>
@@ -290,7 +296,7 @@ function ConfigForm({ config }) {
                                     className="btn-primary"
                                     type="submit"
                                 >
-                                    Suivant
+                                    {config ? 'Modifier' : 'Créer'}
                                 </Button>
                             </Col>
                         </Row>

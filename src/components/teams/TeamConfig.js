@@ -6,6 +6,7 @@ import TeamConfigItem from './TeamConfigItem';
 import history from '../../utils/history';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
+import ConfigMenu from '../configuration/ConfigMenu';
 
 const TeamConfig = () => {
     const { configurationId } = useParams();
@@ -15,9 +16,11 @@ const TeamConfig = () => {
     );
 
     return (
-        <Container className="mt-5">
+        <Container className="mt-5 mb-5">
             <Row>
                 <Col md={{ span: 6, offset: 3 }}>
+                    <ConfigMenu level={3} configId={configurationId} />
+
                     <h3 className="mb-5">Gestion des équipes</h3>
 
                     <Card className="dark-back">
@@ -63,20 +66,7 @@ const TeamConfig = () => {
                         ))
                     )}
 
-                    <Row className="justify-content-between">
-                        <Col xs="auto">
-                            <Button
-                                variant="light"
-                                type="button"
-                                onClick={() =>
-                                    history.push(
-                                        `/configs/${configurationId}/items`
-                                    )
-                                }
-                            >
-                                Retour
-                            </Button>
-                        </Col>
+                    <Row className="justify-content-end">
                         <Col xs="auto">
                             <Button
                                 variant="success"
@@ -88,7 +78,7 @@ const TeamConfig = () => {
                                     )
                                 }
                             >
-                                Suivant
+                                Enregistrer
                             </Button>
                         </Col>
                     </Row>
