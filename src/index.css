@@ -125,8 +125,12 @@ option:hover {
     font-weight: 400 !important;
 }
 
-svg:hover {
+svg {
     cursor: pointer;
+}
+
+.config-menu-item-disabled svg {
+    cursor: not-allowed;
 }
 
 .btn-primary {
@@ -170,4 +174,30 @@ svg:hover {
 
 .div-createcolor {
     display: flex;
+}
+
+.config-menu-item {
+    background-color: #1b1e22;
+    padding: 1rem 1rem !important;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.config-menu-item-active {
+    background-color: #68b684;
+}
+
+.config-menu-item-disabled {
+    background-color: #999999;
+    cursor: not-allowed;
+}
+
+.config-menu-item-separator {
+    background-color: #1b1e22;
+    border: none !important;
+    height: 2px !important;
+}
+
+.config-menu-item-separator-disabled {
+    background-color: #999999;
 }
