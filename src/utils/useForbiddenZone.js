@@ -66,6 +66,11 @@ export const ForbiddenZoneProvider = ({ children }) => {
         setForbiddenZoneIndex(forbiddenZoneIndex - 1);
     };
 
+    const removeAll = () => {
+        setForbiddenZones([]);
+        setForbiddenZoneIndex(-1);
+    };
+
     return (
         <ForbiddenZoneContext.Provider
             value={{
@@ -77,7 +82,8 @@ export const ForbiddenZoneProvider = ({ children }) => {
                 createZone,
                 move,
                 remove,
-                removeZone
+                removeZone,
+                removeAll
             }}
         >
             {children}

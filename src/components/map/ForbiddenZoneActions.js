@@ -10,7 +10,7 @@ import {
 import { useForbiddenZone } from '../../utils/useForbiddenZone';
 
 function ForbiddenZoneActions({ action, setAction }) {
-    const { forbiddenZones, createZone } = useForbiddenZone();
+    const { forbiddenZones, createZone, removeAll } = useForbiddenZone();
     const [isOpen, setIsOpen] = useState(false);
 
     return (
@@ -28,16 +28,23 @@ function ForbiddenZoneActions({ action, setAction }) {
                     <Row className="mt-3 ml-1">
                         <Col
                             xs="auto"
-                            className={`mr-3 actions-item ${action ===
-                                'forbiddenZone' &&
-                                forbiddenZones.length === 0 &&
-                                'actions-item-selected'}`}
+                            className="mr-3 actions-item"
                             onClick={() => {
                                 setAction('forbiddenZone');
                                 createZone();
                             }}
                         >
                             <FontAwesomeIcon icon={faPlus} />
+                        </Col>
+                        <Col
+                            xs="auto"
+                            className={`mr-3 actions-item`}
+                            onClick={() => removeAll()}
+                        >
+                            <FontAwesomeIcon
+                                icon={faTrashAlt}
+                                className="danger"
+                            />
                         </Col>
                     </Row>
 
