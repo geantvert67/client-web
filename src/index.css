@@ -102,9 +102,8 @@ option:hover {
 }
 
 .leaflet-container {
-    height: 600px;
-    width: 80%;
-    margin: 0 auto;
+    height: calc(100vh - 4rem);
+    width: 100%;
 }
 
 .leaflet-div-icon {

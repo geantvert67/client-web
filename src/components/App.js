@@ -60,7 +60,7 @@ const App = () => {
                 <Route exact path="/:configurationId/createteam">
                     <CreateTeam />
                 </Route>
-                <Route path="/configs/:idconfiguration/map">
+                <Route path="/configs/:configurationId/map">
                     <MapCreator />
                 </Route>
             </Switch>

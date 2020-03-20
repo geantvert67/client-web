@@ -37,14 +37,14 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
     const [items, setItems] = useState([]);
     const [selectedModelItem, setSelectedModelItem] = useState();
     const [forbiddenZoneIndex, setForbiddenZoneIndex] = useState(-1);
-    const { idconfiguration } = useParams();
+    const { configurationId } = useParams();
 
     const [modelItems, setModelItems] = useState([]);
 
     useEffect(() => {
         let forbZones = [];
         let zoneIndex = -1;
-        getAreas(idconfiguration).then(zones => {
+        getAreas(configurationId).then(zones => {
             zoneIndex++;
             zones.data.map(zone =>
                 !zone.forbidden
@@ -57,13 +57,13 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
         setForbiddenZoneIndex(zoneIndex);
         setForbiddenZones(forbZones);
 
-        getFlags(idconfiguration).then(flags =>
+        getFlags(configurationId).then(flags =>
             setFlagsPositions(formatFlags(flags))
         );
 
-        getItemsModel(idconfiguration).then(res => setModelItems(res.data));
+        getItemsModel(configurationId).then(res => setModelItems(res.data));
 
-        getItems(idconfiguration).then(items => setItems(formatItems(items)));
+        getItems(configurationId).then(items => setItems(formatItems(items)));
     }, []);
 
     useEffect(() => {
@@ -308,7 +308,7 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
     };
 
     const handleUpdate = (
-        idconfiguration,
+        configurationId,
         polygonPosition,
         forbiddenZones,
         flagsPositions,
@@ -320,7 +320,7 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
                   'Veuillez créer une zone de jeu avant de sauvegarder la carte.'
               )
             : updateConfig(
-                  idconfiguration,
+                  configurationId,
                   polygonPosition,
                   forbiddenZones,
                   flagsPositions,
@@ -340,8 +340,6 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
             />
             {defaultPosition.length !== 0 && (
                 <>
-                    <ConfigMenu level={4} configId={idconfiguration} />
-
                     <Map center={position} zoom={zoom} onClick={handleClick}>
                         <TileLayer url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png" />
                         <Polygon color="green" positions={polygonPosition} />
@@ -402,21 +400,6 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
                     ) : (
                         ''
                     )}
-                    <button
-                        onClick={() =>
-                            handleUpdate(
-                                idconfiguration,
-                                polygonPosition,
-                                forbiddenZones,
-                                flagsPositions,
-                                items
-                            )
-                        }
-                    >
-                        {' '}
-                        Enregistrer la carte{' '}
-                    </button>
-                    <DownloadButton configId={idconfiguration} />
                 </>
             )}
         </>
