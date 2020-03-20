@@ -8,7 +8,6 @@ import {
     getActionZoneAuto
 } from '../../utils/utils';
 import Markers from './Markers';
-import ForbiddenZonesList from './ForbiddenZonesList';
 import {
     updateConfig,
     formatMainZone,
@@ -26,6 +25,7 @@ import DownloadButton from '../configuration/DownloadButton';
 import ItemsButtons from './ItemsButtons';
 import ConfigMenu from '../configuration/ConfigMenu';
 import { useMainZone } from '../../utils/useMainZone';
+import { useForbiddenZone } from '../../utils/useForbiddenZone';
 
 function GameMap({
     defaultPosition,
@@ -37,13 +37,27 @@ function GameMap({
     const [position, setPosition] = useState(defaultPosition);
     const [zoom, setZoom] = useState(17);
     const [flagsPositions, setFlagsPositions] = useState([]);
-    const [forbiddenZones, setForbiddenZones] = useState([]);
+
     const [items, setItems] = useState([]);
     const [selectedModelItem, setSelectedModelItem] = useState();
-    const [forbiddenZoneIndex, setForbiddenZoneIndex] = useState(-1);
+
     const [modelItems, setModelItems] = useState([]);
-    const { position: mainZone, setPosition: setMainZone } = useMainZone();
-    console.log(mainZone);
+    const {
+        position: mainZone,
+        setPosition: setMainZone,
+        create: createMainZone,
+        move: movePolygon,
+        remove: deletePolygonPosition
+    } = useMainZone();
+    const {
+        forbiddenZoneIndex,
+        setForbiddenZoneIndex,
+        forbiddenZones,
+        setForbiddenZones,
+        create: createForbiddenZone,
+        move: moveForbiddenZone,
+        remove: deleteForbiddenZonePoint
+    } = useForbiddenZone();
 
     useEffect(() => {
         let forbZones = [];
@@ -128,30 +142,6 @@ function GameMap({
                   })
               )
             : alert('Veuillez placer les items dans une zone de jeu valide.');
-    };
-
-    const createMainZone = e => {
-        const newPositon = {
-            lat: e.latlng.lat,
-            lng: e.latlng.lng
-        };
-        setMainZone(mainZone.concat(newPositon));
-    };
-
-    const createForbiddenZone = e => {
-        const newPositon = {
-            lat: e.latlng.lat,
-            lng: e.latlng.lng,
-            zone: forbiddenZoneIndex
-        };
-        const actualZones = forbiddenZones.filter(
-            zone => forbiddenZones.indexOf(zone) !== forbiddenZoneIndex
-        );
-        const forbiddenZone = forbiddenZones[forbiddenZoneIndex].concat(
-            newPositon
-        );
-        actualZones.splice(forbiddenZoneIndex, 0, forbiddenZone);
-        setForbiddenZones(actualZones);
     };
 
     const addFlag = point => {
@@ -249,51 +239,8 @@ function GameMap({
         setItems(otherItems);
     };
 
-    const movePolygon = (e, point) => {
-        const otherPoints = mainZone.filter(f => f !== point);
-        const newPositon = {
-            lat: e.target.getLatLng().lat,
-            lng: e.target.getLatLng().lng
-        };
-
-        otherPoints.splice(mainZone.indexOf(point), 0, newPositon);
-
-        setMainZone(otherPoints);
-    };
-
-    const moveForbiddenZone = (e, point) => {
-        let otherPoints = [];
-        forbiddenZones.map(zone => {
-            otherPoints.push(zone.filter(f => f !== point));
-        });
-
-        const newPositon = {
-            lat: e.target.getLatLng().lat,
-            lng: e.target.getLatLng().lng,
-            zone: point.zone
-        };
-
-        otherPoints[point.zone].splice(
-            forbiddenZones[point.zone].indexOf(point),
-            0,
-            newPositon
-        );
-
-        setForbiddenZones(otherPoints);
-    };
-
-    const deletePolygonPosition = point => {
-        setMainZone(mainZone.filter(p => p !== point));
-    };
-
     const deleteFlagPosition = point => {
         setFlagsPositions(flagsPositions.filter(p => p !== point));
-    };
-
-    const deleteForbiddenZonePoint = point => {
-        setForbiddenZones(
-            forbiddenZones.map(zone => zone.filter(p => p !== point))
-        );
     };
 
     const deleteItem = point => {
@@ -371,13 +318,6 @@ function GameMap({
                             setFlagsPositions={setFlagsPositions}
                             polygonPosition={mainZone}
                             forbiddenZones={forbiddenZones}
-                        />
-                    ) : action === 'forbiddenZone' ? (
-                        <ForbiddenZonesList
-                            forbiddenZones={forbiddenZones}
-                            forbiddenZoneIndex={forbiddenZoneIndex}
-                            setForbiddenZones={setForbiddenZones}
-                            setForbiddenZoneIndex={setForbiddenZoneIndex}
                         />
                     ) : action === 'items' ? (
                         <ItemsButtons

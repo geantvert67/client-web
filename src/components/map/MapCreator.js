@@ -5,6 +5,7 @@ import GameMap from './GameMap';
 
 import MapMenuWrapper from './MapMenuWrapper';
 import { MainZoneProvider } from '../../utils/useMainZone';
+import { ForbiddenZoneProvider } from '../../utils/useForbiddenZone';
 
 function MapCreator() {
     const [action, setAction] = useState('mainZone');
@@ -32,14 +33,16 @@ function MapCreator() {
     ) : (
         <div className="map-container">
             <MainZoneProvider>
-                <MapMenuWrapper action={action} setAction={setAction} />
-                <GameMap
-                    configId={configurationId}
-                    defaultPosition={devicePosition}
-                    action={action}
-                    setAction={setAction}
-                    setSleepingAction={setSleepingAction}
-                />
+                <ForbiddenZoneProvider>
+                    <MapMenuWrapper action={action} setAction={setAction} />
+                    <GameMap
+                        configId={configurationId}
+                        defaultPosition={devicePosition}
+                        action={action}
+                        setAction={setAction}
+                        setSleepingAction={setSleepingAction}
+                    />
+                </ForbiddenZoneProvider>
             </MainZoneProvider>
         </div>
     );
