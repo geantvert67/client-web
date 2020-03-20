@@ -1,8 +1,8 @@
 import L from 'leaflet';
 
 const iconWhiteFlag = new L.Icon({
-    iconUrl: require('../../img/crystal.gif'),
-    iconRetinaUrl: require('../../img/crystal.gif'),
+    iconUrl: require('../../img/flags.gif'),
+    iconRetinaUrl: require('../../img/flags.gif'),
     iconAnchor: [17, 37], // A modifier pour centrer le cristal
     popupAnchor: [0, -20],
     iconSize: new L.Point(40, 40),
@@ -10,8 +10,8 @@ const iconWhiteFlag = new L.Icon({
 });
 
 const iconPylone = new L.Icon({
-    iconUrl: require('../../img/pylone.gif'),
-    iconRetinaUrl: require('../../img/pylone.gif'),
+    iconUrl: require('../../img/mainZone.gif'),
+    iconRetinaUrl: require('../../img/mainZone.gif'),
     iconAnchor: [25, 58], // A modifier pour centrer les points de zone
     popupAnchor: [0, 10],
     iconSize: new L.Point(60, 60),
@@ -35,8 +35,8 @@ const getItemIcon = modelItem => {
                 ? require('../../img/disloqueur.gif')
                 : modelItem.name === 'Intercepteur'
                 ? require('../../img/intercepteur.gif')
-                : require('../../img/pylone.gif')
-            : require('../../img/pylone.gif');
+                : require('../../img/mainZone.gif')
+            : require('../../img/mainZone.gif');
 
     return new L.Icon({
         iconUrl: iconUrl,

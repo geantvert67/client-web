@@ -4,6 +4,7 @@ import { Spinner } from 'react-bootstrap';
 import GameMap from './GameMap';
 
 import MapMenuWrapper from './MapMenuWrapper';
+import { MainZoneProvider } from '../../utils/useMainZone';
 
 function MapCreator() {
     const [action, setAction] = useState('mainZone');
@@ -30,14 +31,16 @@ function MapCreator() {
         <Spinner animation="border" variant="light" />
     ) : (
         <div className="map-container">
-            <MapMenuWrapper />
-            <GameMap
-                configId={configurationId}
-                defaultPosition={devicePosition}
-                action={action}
-                setAction={setAction}
-                setSleepingAction={setSleepingAction}
-            />
+            <MainZoneProvider>
+                <MapMenuWrapper action={action} setAction={setAction} />
+                <GameMap
+                    configId={configurationId}
+                    defaultPosition={devicePosition}
+                    action={action}
+                    setAction={setAction}
+                    setSleepingAction={setSleepingAction}
+                />
+            </MainZoneProvider>
         </div>
     );
 }
