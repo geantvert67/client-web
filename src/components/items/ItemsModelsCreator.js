@@ -75,8 +75,8 @@ function ItemsModelsCreator({}) {
 
     const handleClick = () => {
         addItemsModels(configurationId, selectedModels)
-            .then(history.push(`/configs/${configurationId}/teams`))
-            .catch(err => {});
+            .then(() => history.push(`/configs/${configurationId}/teams`))
+            .catch(err => console.log(err));
     };
 
     return (
