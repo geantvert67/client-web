@@ -166,6 +166,10 @@ option:hover {
     background-color: #68b684;
 }
 
+.pointer {
+    cursor: pointer;
+}
+
 .leaflet-div-icon {
     background: transparent !important;
     border: none !important;
