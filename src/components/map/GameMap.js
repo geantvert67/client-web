@@ -23,12 +23,17 @@ import {
     getItemsModel,
     getItems
 } from '../../service/configuration';
-import { useParams } from 'react-router-dom';
 import DownloadButton from '../configuration/DownloadButton';
 import ItemsButtons from './ItemsButtons';
 import ConfigMenu from '../configuration/ConfigMenu';
 
-function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
+function GameMap({
+    defaultPosition,
+    action,
+    setAction,
+    setSleepingAction,
+    configId
+}) {
     const [position, setPosition] = useState(defaultPosition);
     const [zoom, setZoom] = useState(17);
     const [polygonPosition, setPolygonPosition] = useState([]);
@@ -37,14 +42,13 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
     const [items, setItems] = useState([]);
     const [selectedModelItem, setSelectedModelItem] = useState();
     const [forbiddenZoneIndex, setForbiddenZoneIndex] = useState(-1);
-    const { configurationId } = useParams();
 
     const [modelItems, setModelItems] = useState([]);
 
     useEffect(() => {
         let forbZones = [];
         let zoneIndex = -1;
-        getAreas(configurationId).then(zones => {
+        getAreas(configId).then(zones => {
             zoneIndex++;
             zones.data.map(zone =>
                 !zone.forbidden
@@ -57,13 +61,11 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
         setForbiddenZoneIndex(zoneIndex);
         setForbiddenZones(forbZones);
 
-        getFlags(configurationId).then(flags =>
-            setFlagsPositions(formatFlags(flags))
-        );
+        getFlags(configId).then(flags => setFlagsPositions(formatFlags(flags)));
 
-        getItemsModel(configurationId).then(res => setModelItems(res.data));
+        getItemsModel(configId).then(res => setModelItems(res.data));
 
-        getItems(configurationId).then(items => setItems(formatItems(items)));
+        getItems(configId).then(items => setItems(formatItems(items)));
     }, []);
 
     useEffect(() => {
@@ -308,7 +310,7 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
     };
 
     const handleUpdate = (
-        configurationId,
+        configId,
         polygonPosition,
         forbiddenZones,
         flagsPositions,
@@ -320,7 +322,7 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
                   'Veuillez créer une zone de jeu avant de sauvegarder la carte.'
               )
             : updateConfig(
-                  configurationId,
+                  configId,
                   polygonPosition,
                   forbiddenZones,
                   flagsPositions,
@@ -330,18 +332,10 @@ function GameMap({ defaultPosition, action, setAction, setSleepingAction }) {
 
     return (
         <>
-            <link
-                rel="stylesheet"
-                href="//cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css"
-            />
-            <link
-                rel="stylesheet"
-                href="//cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.css"
-            />
             {defaultPosition.length !== 0 && (
                 <>
                     <Map center={position} zoom={zoom} onClick={handleClick}>
-                        <TileLayer url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png" />
+                        <TileLayer url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" />
                         <Polygon color="green" positions={polygonPosition} />
 
                         {forbiddenZones.map(zone => (

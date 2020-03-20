@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import GameMap from './GameMap';
+import { useParams } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
+import GameMap from './GameMap';
+
+import MapMenuWrapper from './MapMenuWrapper';
 
 function MapCreator() {
     const [action, setAction] = useState('mainZone');
     const [sleepingAction, setSleepingAction] = useState('');
     const [devicePosition, setDevicePosition] = useState([]);
+    const { configurationId } = useParams();
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(e => {
@@ -25,12 +29,16 @@ function MapCreator() {
     return devicePosition.length === 0 ? (
         <Spinner animation="border" variant="light" />
     ) : (
-        <GameMap
-            defaultPosition={devicePosition}
-            action={action}
-            setAction={setAction}
-            setSleepingAction={setSleepingAction}
-        />
+        <div className="map-container">
+            <MapMenuWrapper />
+            <GameMap
+                configId={configurationId}
+                defaultPosition={devicePosition}
+                action={action}
+                setAction={setAction}
+                setSleepingAction={setSleepingAction}
+            />
+        </div>
     );
 }
 

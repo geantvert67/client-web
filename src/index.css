@@ -106,6 +106,54 @@ option:hover {
     width: 100%;
 }
 
+.leaflet-control-zoom,
+.leaflet-control-attribution {
+    display: none;
+}
+
+.map-container {
+    width: 100%;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.map-menu {
+    position: absolute;
+    z-index: 998;
+    width: 33%;
+    height: calc(100vh - 4rem);
+    background-color: #26292f;
+    transition: all 0.3s ease;
+}
+
+.map-menu-closed {
+    right: -33%;
+}
+
+.map-menu-open {
+    right: 0;
+}
+
+.map-menu-closed + .map-menu-angle {
+    right: 0px;
+}
+
+.map-menu-open + .map-menu-angle {
+    right: 33%;
+}
+
+.map-menu-angle {
+    position: absolute;
+    z-index: 999;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0;
+    background-color: #26292f;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
 .leaflet-div-icon {
     background: transparent !important;
     border: none !important;
