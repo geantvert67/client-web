@@ -151,6 +151,7 @@ option:hover {
     background-color: #26292f;
     padding: 0.5rem 1rem;
     cursor: pointer;
+    border-radius: 4px 0 0 4px;
     transition: all 0.3s ease;
 }
 

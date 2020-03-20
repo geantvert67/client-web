@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Map, TileLayer, Polygon } from 'react-leaflet';
-import FlagsButtons from './FlagsButtons';
 import {
     isInZone,
     getDistance,
@@ -21,11 +20,10 @@ import {
     getItemsModel,
     getItems
 } from '../../service/configuration';
-import DownloadButton from '../configuration/DownloadButton';
 import ItemsButtons from './ItemsButtons';
-import ConfigMenu from '../configuration/ConfigMenu';
 import { useMainZone } from '../../utils/useMainZone';
 import { useForbiddenZone } from '../../utils/useForbiddenZone';
+import { useFlag } from '../../utils/useFlag';
 
 function GameMap({
     defaultPosition,
@@ -36,7 +34,6 @@ function GameMap({
 }) {
     const [position, setPosition] = useState(defaultPosition);
     const [zoom, setZoom] = useState(17);
-    const [flagsPositions, setFlagsPositions] = useState([]);
 
     const [items, setItems] = useState([]);
     const [selectedModelItem, setSelectedModelItem] = useState();
@@ -58,6 +55,13 @@ function GameMap({
         move: moveForbiddenZone,
         remove: deleteForbiddenZonePoint
     } = useForbiddenZone();
+    const {
+        flagsPositions,
+        setFlagsPositions,
+        create: createFlag,
+        move: moveFlag,
+        remove: deleteFlagPosition
+    } = useFlag();
 
     useEffect(() => {
         let forbZones = [];
@@ -110,7 +114,7 @@ function GameMap({
 
     const handleClick = e => {
         return action === 'flags'
-            ? addFlag(e)
+            ? createFlag(e)
             : action === 'mainZone'
             ? createMainZone(e)
             : action === 'forbiddenZone'
@@ -144,70 +148,6 @@ function GameMap({
             : alert('Veuillez placer les items dans une zone de jeu valide.');
     };
 
-    const addFlag = point => {
-        const newPositon = { lat: point.latlng.lat, lng: point.latlng.lng };
-        let conflict = false;
-
-        forbiddenZones.map(zone => {
-            isInZone(point.latlng.lat, point.latlng.lng, zone) &&
-                (conflict = true);
-        });
-
-        !conflict &&
-            flagsPositions.map(
-                flag =>
-                    getDistance(flag, {
-                        lat: newPositon.lat,
-                        lng: newPositon.lng
-                    }) <
-                        getActionZoneAuto(mainZone) * 2 && (conflict = true)
-            );
-
-        return !conflict &&
-            isInZone(point.latlng.lat, point.latlng.lng, mainZone)
-            ? setFlagsPositions(flagsPositions.concat(newPositon))
-            : alert(
-                  'Veuillez placer les drapeaux dans une zone de jeu valide.'
-              );
-    };
-
-    const moveFlag = (e, flag) => {
-        let otherFlags = flagsPositions.filter(f => f !== flag);
-        const newPositon = {
-            lat: e.target.getLatLng().lat,
-            lng: e.target.getLatLng().lng
-        };
-        let conflict = false;
-
-        forbiddenZones.map(zone => {
-            isInZone(
-                e.target.getLatLng().lat,
-                e.target.getLatLng().lng,
-                zone
-            ) && (conflict = true);
-        });
-
-        !conflict &&
-            flagsPositions.map(
-                flag =>
-                    getDistance(flag, {
-                        lat: newPositon.lat,
-                        lng: newPositon.lng
-                    }) <
-                        getActionZoneAuto(mainZone) * 2 && (conflict = true)
-            );
-
-        !conflict &&
-            isInZone(
-                e.target.getLatLng().lat,
-                e.target.getLatLng().lng,
-                mainZone
-            ) &&
-            otherFlags.push(newPositon);
-
-        setFlagsPositions(otherFlags);
-    };
-
     const moveItem = (e, item) => {
         let otherItems = items.filter(i => i !== item);
         const newPosition = {
@@ -237,10 +177,6 @@ function GameMap({
             });
 
         setItems(otherItems);
-    };
-
-    const deleteFlagPosition = point => {
-        setFlagsPositions(flagsPositions.filter(p => p !== point));
     };
 
     const deleteItem = point => {
@@ -313,13 +249,7 @@ function GameMap({
                         />
                     </Map>
 
-                    {action === 'flags' ? (
-                        <FlagsButtons
-                            setFlagsPositions={setFlagsPositions}
-                            polygonPosition={mainZone}
-                            forbiddenZones={forbiddenZones}
-                        />
-                    ) : action === 'items' ? (
+                    {action === 'items' ? (
                         <ItemsButtons
                             items={items}
                             setItems={setItems}

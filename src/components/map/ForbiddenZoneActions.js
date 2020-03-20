@@ -19,7 +19,7 @@ function ForbiddenZoneActions({ action, setAction }) {
                 className="mt-4 ml-1 mr-1 justify-content-between align-items-center pointer"
                 onClick={() => setIsOpen(!isOpen)}
             >
-                <h3>Zone interdites</h3>
+                <h3>Zones interdites</h3>
                 <FontAwesomeIcon icon={isOpen ? faChevronDown : faChevronUp} />
             </Row>
 

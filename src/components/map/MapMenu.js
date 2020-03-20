@@ -1,8 +1,8 @@
 import React from 'react';
 import { Row, Col, Container } from 'react-bootstrap';
-
 import MainZoneActions from './MainZoneActions';
 import ForbiddenZoneActions from './ForbiddenZoneActions';
+import FlagActions from './FlagActions';
 
 function MapMenu({ action, setAction }) {
     return (
@@ -14,6 +14,7 @@ function MapMenu({ action, setAction }) {
                         action={action}
                         setAction={setAction}
                     />
+                    <FlagActions action={action} setAction={setAction} />
                 </Col>
             </Row>
         </Container>
