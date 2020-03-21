@@ -81,7 +81,7 @@ function ForbiddenZoneItem({ action, setAction, zone }) {
             <Row className="mt-1 ml-1">
                 <Col
                     xs="auto"
-                    className={`mr-3 actions-item ${action ===
+                    className={`mb-3 mr-3 actions-item ${action ===
                         'forbiddenZone' &&
                         index === forbiddenZoneIndex &&
                         'actions-item-selected'}`}
@@ -94,7 +94,7 @@ function ForbiddenZoneItem({ action, setAction, zone }) {
                 </Col>
                 <Col
                     xs="auto"
-                    className={`mr-3 actions-item`}
+                    className={`mb-3 mr-3 actions-item`}
                     onClick={() => removeZone(index)}
                 >
                     <FontAwesomeIcon icon={faTrashAlt} className="danger" />

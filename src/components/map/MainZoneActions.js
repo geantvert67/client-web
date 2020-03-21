@@ -26,13 +26,17 @@ function MainZoneActions({ action, setAction }) {
                 <Row className="mt-3 ml-1">
                     <Col
                         xs="auto"
-                        className={`mr-3 actions-item ${action === 'mainZone' &&
-                            'actions-item-selected'}`}
+                        className={`mb-3 mr-3 actions-item ${action ===
+                            'mainZone' && 'actions-item-selected'}`}
                         onClick={() => setAction('mainZone')}
                     >
                         <FontAwesomeIcon icon={faPlus} />
                     </Col>
-                    <Col xs="auto" className="actions-item" onClick={removeAll}>
+                    <Col
+                        xs="auto"
+                        className="mb-3 actions-item"
+                        onClick={removeAll}
+                    >
                         <FontAwesomeIcon icon={faTrashAlt} className="danger" />
                     </Col>
                 </Row>

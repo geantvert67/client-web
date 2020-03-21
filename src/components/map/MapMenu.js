@@ -52,7 +52,7 @@ function MapMenu({ action, setAction }) {
                     <ItemActions action={action} setAction={setAction} />
                 </Col>
             </Row>
-            <Row className="mt-5 justify-content-end">
+            <Row className="mt-4 justify-content-end">
                 <Col xs="auto">
                     <Button
                         variant="success"

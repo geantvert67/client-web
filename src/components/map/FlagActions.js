@@ -34,13 +34,13 @@ function FlagActions({ action, setAction }) {
                 <Row className="mt-3 ml-1">
                     <Col
                         xs="auto"
-                        className={`mr-3 actions-item ${action === 'flags' &&
-                            'actions-item-selected'}`}
+                        className={`mb-3 mr-3 actions-item ${action ===
+                            'flags' && 'actions-item-selected'}`}
                         onClick={() => setAction('flags')}
                     >
                         <FontAwesomeIcon icon={faPlus} />
                     </Col>
-                    <Col xs="auto" className="mr-3 actions-item">
+                    <Col xs="auto" className="mb-3 mr-3 actions-item">
                         <form onSubmit={handleSubmit(_createRandom)}>
                             <input
                                 style={{ width: '75px' }}
@@ -68,7 +68,11 @@ function FlagActions({ action, setAction }) {
                             </button>
                         </form>
                     </Col>
-                    <Col xs="auto" className="actions-item" onClick={removeAll}>
+                    <Col
+                        xs="auto"
+                        className="mb-3 actions-item"
+                        onClick={removeAll}
+                    >
                         <FontAwesomeIcon icon={faTrashAlt} className="danger" />
                     </Col>
                 </Row>
