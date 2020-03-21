@@ -3,9 +3,9 @@ import { Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faSlidersH,
-    faSuitcase,
     faUsers,
-    faMapMarkedAlt
+    faMapMarkedAlt,
+    faToolbox
 } from '@fortawesome/free-solid-svg-icons';
 import history from '../../utils/history';
 
@@ -42,7 +42,7 @@ function ConfigMenu({ level, configId }) {
                 className={getItemClassName(2)}
                 onClick={() => goTo('/items')}
             >
-                <FontAwesomeIcon icon={faSuitcase} size="lg" />
+                <FontAwesomeIcon icon={faToolbox} size="lg" />
             </Col>
             <Col className={getSeparatorClassName()}></Col>
 

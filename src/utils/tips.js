@@ -26,7 +26,7 @@ export const TIPS = {
             </span>
         ),
         placement: 'bottom',
-        image: 'pylone.png'
+        image: 'sonde.png'
     },
 
     prisme: {
@@ -37,7 +37,7 @@ export const TIPS = {
             </span>
         ),
         placement: 'bottom',
-        image: 'pylone.png'
+        image: 'sonde.png'
     },
 
     intercepteur: {
@@ -61,7 +61,7 @@ export const TIPS = {
             </span>
         ),
         placement: 'bottom',
-        image: 'pylone.png'
+        image: 'sonde.png'
     },
 
     canon: {
@@ -109,7 +109,7 @@ export const TIPS = {
             </span>
         ),
         placement: 'bottom',
-        image: 'pylone.png'
+        image: 'sonde.png'
     },
 
     disloqueur: {
@@ -132,7 +132,7 @@ export const TIPS = {
             </span>
         ),
         placement: 'bottom',
-        image: 'pylone.png'
+        image: 'sonde.png'
     },
 
     antenne: {

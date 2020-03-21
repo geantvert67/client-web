@@ -1,11 +1,19 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { Spinner } from 'react-bootstrap';
 import GameMap from './GameMap';
+
+import MapMenuWrapper from './MapMenuWrapper';
+import { MainZoneProvider } from '../../utils/useMainZone';
+import { ForbiddenZoneProvider } from '../../utils/useForbiddenZone';
+import { FlagProvider } from '../../utils/useFlag';
+import { ItemProvider } from '../../utils/useItem';
 
 function MapCreator() {
     const [action, setAction] = useState('mainZone');
     const [sleepingAction, setSleepingAction] = useState('');
-
     const [devicePosition, setDevicePosition] = useState([]);
+    const { configurationId } = useParams();
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(e => {
@@ -22,55 +30,30 @@ function MapCreator() {
             setSleepingAction('');
     }, [action]);
 
-    return (
-        <>
-            {devicePosition.length !== 0 && (
-                <>
-                    <div className="center">
-                        <button
-                            className={
-                                action === 'mainZone' ? 'selected' : undefined
-                            }
-                            onClick={e => setAction('mainZone')}
-                        >
-                            Créer une zone de jeu
-                        </button>
-                        <button
-                            className={
-                                action === 'flags' ? 'selected' : undefined
-                            }
-                            onClick={e => setAction('flags')}
-                        >
-                            Placer des drapeaux
-                        </button>
-                        <button
-                            className={
-                                action === 'forbiddenZone'
-                                    ? 'selected'
-                                    : undefined
-                            }
-                            onClick={e => setAction('forbiddenZone')}
-                        >
-                            Gérer les zones interdites
-                        </button>
-                        <button
-                            className={
-                                action === 'items' ? 'selected' : undefined
-                            }
-                            onClick={e => setAction('items')}
-                        >
-                            Gérer les items
-                        </button>
-                    </div>
-                    <GameMap
-                        defaultPosition={devicePosition}
-                        action={action}
-                        setAction={setAction}
-                        setSleepingAction={setSleepingAction}
-                    />
-                </>
-            )}
-        </>
+    return devicePosition.length === 0 ? (
+        <Spinner animation="border" variant="light" />
+    ) : (
+        <div className="map-container">
+            <MainZoneProvider>
+                <ForbiddenZoneProvider>
+                    <FlagProvider>
+                        <ItemProvider>
+                            <MapMenuWrapper
+                                action={action}
+                                setAction={setAction}
+                            />
+                            <GameMap
+                                configId={configurationId}
+                                defaultPosition={devicePosition}
+                                action={action}
+                                setAction={setAction}
+                                setSleepingAction={setSleepingAction}
+                            />
+                        </ItemProvider>
+                    </FlagProvider>
+                </ForbiddenZoneProvider>
+            </MainZoneProvider>
+        </div>
     );
 }
 

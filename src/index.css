@@ -102,8 +102,87 @@ option:hover {
 }
 
 .leaflet-container {
-    height: 600px;
-    width: 80%;
+    height: calc(100vh - 4rem);
+    width: 100%;
+}
+
+.leaflet-control-zoom,
+.leaflet-control-attribution {
+    display: none;
+}
+
+.map-container {
+    width: 100%;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.map-menu {
+    position: absolute;
+    z-index: 998;
+    width: 33%;
+    height: calc(100vh - 4rem);
+    overflow-y: scroll;
+    background-color: #26292f;
+    transition: all 0.3s ease;
+}
+
+.map-menu-closed {
+    right: -33%;
+}
+
+.map-menu-open {
+    right: 0;
+}
+
+.map-menu-closed + .map-menu-angle {
+    right: 0px;
+}
+
+.map-menu-open + .map-menu-angle {
+    right: 33%;
+}
+
+.map-menu-angle {
+    position: absolute;
+    z-index: 999;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0;
+    background-color: #26292f;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 4px 0 0 4px;
+    transition: all 0.3s ease;
+}
+
+.actions-item {
+    background-color: #1b1e22;
+    padding: 0.75rem 1.25rem !important;
+    border-radius: 4px;
+    box-shadow: 0px 1px 3px #1b1e22;
+    cursor: pointer;
+}
+
+.actions-item-selected {
+    background-color: #68b684;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+    background-color: #26292f !important;
+    color: white;
+}
+
+.btn-danger {
+    border: none;
+    border-radius: 4px;
+    padding: 0.25rem 0.5rem;
+    display: block;
     margin: 0 auto;
 }
 

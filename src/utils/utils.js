@@ -77,43 +77,23 @@ export const getActionZoneAuto = polygonPosition => {
     return (5 / 100) * getDistance(origin, dest);
 };
 
-export const addRandomFlags = (polygonPosition, forbiddenZone) => {
-    const { x_max, y_max, x_min, y_min } = getZoneBox(polygonPosition);
+export const getItemImage = item => {
+    let iconUrl =
+        item.name === 'Sentinelle'
+            ? require('../img/sentinelle.png')
+            : item.name === 'Canon à photons'
+            ? require('../img/turret.png')
+            : item.name === 'Antenne'
+            ? require('../img/antenne.png')
+            : item.name === 'Sonde'
+            ? require('../img/sonde.png')
+            : item.name === 'Portail'
+            ? require('../img/portail.png')
+            : item.name === 'Disloqueur'
+            ? require('../img/disloqueur.gif')
+            : item.name === 'Intercepteur'
+            ? require('../img/intercepteur.gif')
+            : require('../img/mainZone.gif');
 
-    let randomFlags = [];
-    let nbFlags = 10;
-
-    while (randomFlags.length < nbFlags) {
-        let newFlag = false;
-        let iteration = 0;
-
-        while (!newFlag && iteration < 1000) {
-            let lat = y_min + Math.random() * (y_max - y_min);
-            let lng = x_min + Math.random() * (x_max - x_min);
-
-            let conflict = false;
-            forbiddenZone.map(
-                zone => isInZone(lat, lng, zone) && (conflict = true)
-            );
-
-            !conflict &&
-                randomFlags.map(
-                    flag =>
-                        getDistance(flag, { lat, lng }) <
-                            getActionZoneAuto(polygonPosition) * 2 &&
-                        (conflict = true)
-                );
-
-            !conflict &&
-                isInZone(lat, lng, polygonPosition) &&
-                randomFlags.push({ lat, lng }) &&
-                (newFlag = true);
-
-            iteration++;
-        }
-
-        iteration === 1000 && nbFlags--;
-    }
-
-    return randomFlags;
+    return iconUrl;
 };
