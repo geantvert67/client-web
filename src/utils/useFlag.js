@@ -97,14 +97,16 @@ export const FlagProvider = ({ children }) => {
         });
 
         !conflict &&
-            flagsPositions.map(
-                flag =>
-                    getDistance(flag, {
-                        lat: newPositon.lat,
-                        lng: newPositon.lng
-                    }) <
-                        getActionZoneAuto(mainZone) * 2 && (conflict = true)
-            );
+            flagsPositions
+                .filter(f => f.lat !== flag.lat && f.lng !== flag.lng)
+                .map(
+                    flag =>
+                        getDistance(flag, {
+                            lat: newPositon.lat,
+                            lng: newPositon.lng
+                        }) <
+                            getActionZoneAuto(mainZone) * 2 && (conflict = true)
+                );
 
         !conflict &&
             isInZone(

@@ -27,16 +27,18 @@ function Markers({
 
     return (
         <>
-            {flagsPositions.map(flag => (
+            {flagsPositions.map((flag, index) => (
                 <FlagMarker
+                    key={index}
                     flag={flag}
                     stopDragging={stopDragging}
                     startDragging={startDragging}
                 />
             ))}
 
-            {polygonPosition.map(point => (
+            {polygonPosition.map((point, index) => (
                 <MainZoneMarker
+                    key={index}
                     point={point}
                     stopDragging={stopDragging}
                     startDragging={startDragging}
@@ -44,8 +46,9 @@ function Markers({
             ))}
 
             {forbiddenZones.map(zone =>
-                zone.map(point => (
+                zone.map((point, index) => (
                     <ForbiddenZoneMarker
+                        key={index}
                         point={point}
                         stopDragging={stopDragging}
                         startDragging={startDragging}
@@ -53,8 +56,9 @@ function Markers({
                 ))
             )}
 
-            {items.map(point => (
+            {items.map((point, index) => (
                 <ItemMarker
+                    key={index}
                     point={point}
                     stopDragging={stopDragging}
                     startDragging={startDragging}
