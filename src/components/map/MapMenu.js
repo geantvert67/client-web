@@ -8,6 +8,8 @@ import { updateConfig } from '../../utils/config';
 import { useMainZone } from '../../utils/useMainZone';
 import { useForbiddenZone } from '../../utils/useForbiddenZone';
 import { useFlag } from '../../utils/useFlag';
+import ItemActions from './ItemActions';
+import { useItem } from '../../utils/useItem';
 
 function MapMenu({ action, setAction }) {
     const [loading, setLoading] = useState(false);
@@ -15,6 +17,7 @@ function MapMenu({ action, setAction }) {
     const { position: mainZone } = useMainZone();
     const { forbiddenZones } = useForbiddenZone();
     const { flagsPositions } = useFlag();
+    const { items } = useItem();
 
     const saveMap = () => {
         if (mainZone.length === 0) {
@@ -28,7 +31,7 @@ function MapMenu({ action, setAction }) {
                 mainZone,
                 forbiddenZones,
                 flagsPositions,
-                []
+                items
             )
                 .then(() => console.log('Configuration enregistrée'))
                 .catch(() => alert('Une erreur est survenue'))
@@ -46,6 +49,7 @@ function MapMenu({ action, setAction }) {
                         setAction={setAction}
                     />
                     <FlagActions action={action} setAction={setAction} />
+                    <ItemActions action={action} setAction={setAction} />
                 </Col>
             </Row>
             <Row className="mt-5 justify-content-end">

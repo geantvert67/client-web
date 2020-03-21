@@ -76,3 +76,24 @@ export const getActionZoneAuto = polygonPosition => {
 
     return (5 / 100) * getDistance(origin, dest);
 };
+
+export const getItemImage = item => {
+    let iconUrl =
+        item.name === 'Sentinelle'
+            ? require('../img/sentinelle.png')
+            : item.name === 'Canon à photons'
+            ? require('../img/turret.png')
+            : item.name === 'Antenne'
+            ? require('../img/antenne.png')
+            : item.name === 'Sonde'
+            ? require('../img/sonde.png')
+            : item.name === 'Portail'
+            ? require('../img/portail.png')
+            : item.name === 'Disloqueur'
+            ? require('../img/disloqueur.gif')
+            : item.name === 'Intercepteur'
+            ? require('../img/intercepteur.gif')
+            : require('../img/mainZone.gif');
+
+    return iconUrl;
+};

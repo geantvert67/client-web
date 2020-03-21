@@ -20,10 +20,10 @@ import {
     getItemsModel,
     getItems
 } from '../../service/configuration';
-import ItemsButtons from './ItemsButtons';
 import { useMainZone } from '../../utils/useMainZone';
 import { useForbiddenZone } from '../../utils/useForbiddenZone';
 import { useFlag } from '../../utils/useFlag';
+import { useItem } from '../../utils/useItem';
 
 function GameMap({
     defaultPosition,
@@ -35,10 +35,6 @@ function GameMap({
     const [position, setPosition] = useState(defaultPosition);
     const [zoom, setZoom] = useState(17);
 
-    const [items, setItems] = useState([]);
-    const [selectedModelItem, setSelectedModelItem] = useState();
-
-    const [modelItems, setModelItems] = useState([]);
     const {
         position: mainZone,
         setPosition: setMainZone,
@@ -62,6 +58,15 @@ function GameMap({
         move: moveFlag,
         remove: deleteFlagPosition
     } = useFlag();
+    const {
+        items,
+        setItems,
+        setModelItems,
+        create: createItem,
+        move: moveItem,
+        remove: deleteItem,
+        updateItemQuantity
+    } = useItem();
 
     useEffect(() => {
         let forbZones = [];
@@ -122,93 +127,8 @@ function GameMap({
                 ? createForbiddenZone(e)
                 : alert('Veuillez créer une première zone interdite.')
             : action === 'items'
-            ? addItem(e)
+            ? createItem(e)
             : '';
-    };
-
-    const addItem = point => {
-        const position = { lat: point.latlng.lat, lng: point.latlng.lng };
-
-        let conflict = false;
-
-        forbiddenZones.map(zone => {
-            isInZone(point.latlng.lat, point.latlng.lng, zone) &&
-                (conflict = true);
-        });
-
-        return !conflict &&
-            isInZone(point.latlng.lat, point.latlng.lng, mainZone)
-            ? setItems(
-                  items.concat({
-                      modelItem: modelItems[selectedModelItem],
-                      position,
-                      quantity: 1
-                  })
-              )
-            : alert('Veuillez placer les items dans une zone de jeu valide.');
-    };
-
-    const moveItem = (e, item) => {
-        let otherItems = items.filter(i => i !== item);
-        const newPosition = {
-            lat: e.target.getLatLng().lat,
-            lng: e.target.getLatLng().lng
-        };
-        let conflict = false;
-
-        forbiddenZones.map(zone => {
-            isInZone(
-                e.target.getLatLng().lat,
-                e.target.getLatLng().lng,
-                zone
-            ) && (conflict = true);
-        });
-
-        !conflict &&
-            isInZone(
-                e.target.getLatLng().lat,
-                e.target.getLatLng().lng,
-                mainZone
-            ) &&
-            otherItems.push({
-                modelItem: item.modelItem,
-                newPosition,
-                quantity: item.quantity
-            });
-
-        setItems(otherItems);
-    };
-
-    const deleteItem = point => {
-        setItems(items.filter(p => p !== point));
-    };
-
-    const updateItemQuantity = (item, quantity) => {
-        const otherItems = items.filter(i => i !== item);
-        item.quantity = quantity;
-        otherItems.splice(items.indexOf(item), 0, item);
-        setItems(otherItems);
-    };
-
-    const handleUpdate = (
-        configId,
-        mainZone,
-        forbiddenZones,
-        flagsPositions,
-        items
-    ) => {
-        console.log(items);
-        mainZone.length === 0
-            ? alert(
-                  'Veuillez créer une zone de jeu avant de sauvegarder la carte.'
-              )
-            : updateConfig(
-                  configId,
-                  mainZone,
-                  forbiddenZones,
-                  flagsPositions,
-                  items
-              );
     };
 
     return (
@@ -248,18 +168,6 @@ function GameMap({
                             updateItemQuantity={updateItemQuantity}
                         />
                     </Map>
-
-                    {action === 'items' ? (
-                        <ItemsButtons
-                            items={items}
-                            setItems={setItems}
-                            modelItems={modelItems}
-                            selectedModelItem={selectedModelItem}
-                            setSelectedModelItem={setSelectedModelItem}
-                        />
-                    ) : (
-                        ''
-                    )}
                 </>
             )}
         </>
