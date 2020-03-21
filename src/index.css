@@ -122,6 +122,7 @@ option:hover {
     z-index: 998;
     width: 33%;
     height: calc(100vh - 4rem);
+    overflow-y: scroll;
     background-color: #26292f;
     transition: all 0.3s ease;
 }

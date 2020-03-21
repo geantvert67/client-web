@@ -10,9 +10,11 @@ import {
 } from '../service/configuration';
 
 export const removeElements = idConfig => {
-    removeZones(idConfig);
-    removeFlags(idConfig);
-    removeItems(idConfig);
+    return Promise.all([
+        removeZones(idConfig),
+        removeFlags(idConfig),
+        removeItems(idConfig)
+    ]);
 };
 
 export const updateConfig = (
@@ -22,25 +24,37 @@ export const updateConfig = (
     flagsPositions,
     items
 ) => {
-    removeElements(idConfig);
     let coordMainZone = [];
-    polygonPosition.map(point => coordMainZone.push([point.lat, point.lng]));
-    coordMainZone.push([polygonPosition[0].lat, polygonPosition[0].lng]);
 
-    forbiddenZones.map(zone => {
-        let points = [];
-        zone.map(point => points.push([point.lat, point.lng]));
-        points.push([zone[0].lat, zone[0].lng]);
-        addZone(idConfig, { coordinates: points, forbidden: true });
+    return removeElements(idConfig).then(() => {
+        polygonPosition.map(point =>
+            coordMainZone.push([point.lat, point.lng])
+        );
+        coordMainZone.push([polygonPosition[0].lat, polygonPosition[0].lng]);
+
+        return Promise.all([
+            forbiddenZones.map(zone => {
+                let points = [];
+                zone.map(point => points.push([point.lat, point.lng]));
+                points.push([zone[0].lat, zone[0].lng]);
+                return addZone(idConfig, {
+                    coordinates: points,
+                    forbidden: true
+                });
+            }),
+
+            flagsPositions.map(flag =>
+                addFlag(idConfig, { coordinates: [flag.lat, flag.lng] })
+            ),
+
+            items.map(item => addItem(idConfig, item)),
+
+            addZone(idConfig, {
+                coordinates: coordMainZone,
+                forbidden: false
+            })
+        ]);
     });
-
-    flagsPositions.map(flag =>
-        addFlag(idConfig, { coordinates: [flag.lat, flag.lng] })
-    );
-
-    items.map(item => addItem(idConfig, item));
-
-    addZone(idConfig, { coordinates: coordMainZone, forbidden: false });
 };
 
 export const formatMainZone = zone => {
