@@ -2,6 +2,7 @@ import React, { useState, createContext, useContext } from 'react';
 import { useForbiddenZone } from './useForbiddenZone';
 import { useMainZone } from './useMainZone';
 import { isInZone } from './utils';
+import { toast } from 'react-toastify';
 
 const ItemContext = createContext();
 
@@ -31,7 +32,9 @@ export const ItemProvider = ({ children }) => {
                       quantity: 1
                   })
               )
-            : alert('Veuillez placer les items dans une zone de jeu valide.');
+            : toast.error(
+                  'Veuillez placer les items dans une zone de jeu valide'
+              );
     };
 
     const move = (e, item) => {

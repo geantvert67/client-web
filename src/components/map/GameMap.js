@@ -24,6 +24,7 @@ import { useMainZone } from '../../utils/useMainZone';
 import { useForbiddenZone } from '../../utils/useForbiddenZone';
 import { useFlag } from '../../utils/useFlag';
 import { useItem } from '../../utils/useItem';
+import { toast } from 'react-toastify';
 
 function GameMap({
     defaultPosition,
@@ -111,9 +112,6 @@ function GameMap({
         });
 
         if (conflict) {
-            alert(
-                'Attention, certains cristaux ne se situent plus dans la nouvelle zone. Ceux-ci ont été supprimés.'
-            );
             setFlagsPositions(otherFlags);
         }
     };
@@ -124,18 +122,19 @@ function GameMap({
         items.filter(item => {
             let valid = true;
             forbiddenZones.map(zone => {
-                valid = !isInZone(item.lat, item.lng, zone);
+                valid = !isInZone(item.position.lat, item.position.lng, zone);
                 conflict = conflict || !valid;
             });
-            let validZone = isInZone(item.lat, item.lng, mainZone);
+            let validZone = isInZone(
+                item.position.lat,
+                item.position.lng,
+                mainZone
+            );
             conflict = conflict || !validZone;
             valid && validZone && otherItems.push(item);
         });
 
         if (conflict) {
-            alert(
-                'Attention, certains items ne se situent plus dans la nouvelle zone. Ceux-ci ont été supprimés.'
-            );
             setItems(otherItems);
         }
     };
@@ -148,7 +147,7 @@ function GameMap({
             : action === 'forbiddenZone'
             ? forbiddenZoneIndex !== -1
                 ? createForbiddenZone(e)
-                : alert('Veuillez créer une première zone interdite.')
+                : toast.error('Veuillez créer une première zone interdite')
             : action === 'items'
             ? createItem(e)
             : '';

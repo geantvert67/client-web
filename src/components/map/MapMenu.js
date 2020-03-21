@@ -10,6 +10,7 @@ import { useForbiddenZone } from '../../utils/useForbiddenZone';
 import { useFlag } from '../../utils/useFlag';
 import ItemActions from './ItemActions';
 import { useItem } from '../../utils/useItem';
+import { toast } from 'react-toastify';
 
 function MapMenu({ action, setAction }) {
     const [loading, setLoading] = useState(false);
@@ -21,8 +22,8 @@ function MapMenu({ action, setAction }) {
 
     const saveMap = () => {
         if (mainZone.length === 0) {
-            alert(
-                'Veuillez créer une zone de jeu avant de sauvegarder la carte.'
+            toast.error(
+                "Veuillez créer une zone de jeu avant d'enregistrer la carte"
             );
         } else {
             setLoading(true);
@@ -33,8 +34,8 @@ function MapMenu({ action, setAction }) {
                 flagsPositions,
                 items
             )
-                .then(() => console.log('Configuration enregistrée'))
-                .catch(() => alert('Une erreur est survenue'))
+                .then(() => toast.success('Configuration enregistrée'))
+                .catch(() => toast.error('Une erreur est survenue'))
                 .finally(() => setLoading(false));
         }
     };

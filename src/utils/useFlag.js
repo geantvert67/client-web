@@ -1,4 +1,5 @@
 import React, { useState, createContext, useContext } from 'react';
+import { toast } from 'react-toastify';
 import { useForbiddenZone } from './useForbiddenZone';
 import { isInZone, getDistance, getActionZoneAuto } from './utils';
 import { useMainZone } from './useMainZone';
@@ -33,8 +34,8 @@ export const FlagProvider = ({ children }) => {
         return !conflict &&
             isInZone(point.latlng.lat, point.latlng.lng, mainZone)
             ? setFlagsPositions(flagsPositions.concat(newPositon))
-            : alert(
-                  'Veuillez placer les drapeaux dans une zone de jeu valide.'
+            : toast.error(
+                  'Veuillez placer les drapeaux dans une zone de jeu valide'
               );
     };
 
