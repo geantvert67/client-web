@@ -1,14 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Map, TileLayer, Polygon } from 'react-leaflet';
-import {
-    isInZone,
-    getDistance,
-    getCenterZoneBox,
-    getActionZoneAuto
-} from '../../utils/utils';
+import { isInZone, getCenterZoneBox } from '../../utils/utils';
 import Markers from './Markers';
 import {
-    updateConfig,
     formatMainZone,
     formatForbiddenZone,
     formatFlags,
@@ -39,35 +33,17 @@ function GameMap({
     const {
         position: mainZone,
         setPosition: setMainZone,
-        create: createMainZone,
-        move: movePolygon,
-        remove: deletePolygonPosition
+        create: createMainZone
     } = useMainZone();
     const {
         forbiddenZoneIndex,
         setForbiddenZoneIndex,
         forbiddenZones,
         setForbiddenZones,
-        create: createForbiddenZone,
-        move: moveForbiddenZone,
-        remove: deleteForbiddenZonePoint
+        create: createForbiddenZone
     } = useForbiddenZone();
-    const {
-        flagsPositions,
-        setFlagsPositions,
-        create: createFlag,
-        move: moveFlag,
-        remove: deleteFlagPosition
-    } = useFlag();
-    const {
-        items,
-        setItems,
-        setModelItems,
-        create: createItem,
-        move: moveItem,
-        remove: deleteItem,
-        updateItemQuantity
-    } = useItem();
+    const { flagsPositions, setFlagsPositions, create: createFlag } = useFlag();
+    const { items, setItems, setModelItems, create: createItem } = useItem();
 
     useEffect(() => {
         let forbZones = [];
@@ -154,45 +130,30 @@ function GameMap({
     };
 
     return (
-        <>
-            {defaultPosition.length !== 0 && (
-                <>
-                    <Map center={position} zoom={zoom} onClick={handleClick}>
-                        <TileLayer url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" />
-                        <Polygon color="green" positions={mainZone} />
+        defaultPosition.length !== 0 && (
+            <Map center={position} zoom={zoom} onClick={handleClick}>
+                <TileLayer url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" />
+                <Polygon color="green" positions={mainZone} />
 
-                        {forbiddenZones.map(zone => (
-                            <Polygon
-                                key={zone.id}
-                                color="red"
-                                positions={
-                                    forbiddenZones[forbiddenZones.indexOf(zone)]
-                                }
-                            />
-                        ))}
+                {forbiddenZones.map(zone => (
+                    <Polygon
+                        key={zone.id}
+                        color="red"
+                        positions={forbiddenZones[forbiddenZones.indexOf(zone)]}
+                    />
+                ))}
 
-                        <Markers
-                            polygonPosition={mainZone}
-                            flagsPositions={flagsPositions}
-                            forbiddenZones={forbiddenZones}
-                            movePolygon={movePolygon}
-                            moveFlag={moveFlag}
-                            moveForbiddenZone={moveForbiddenZone}
-                            deletePolygonPosition={deletePolygonPosition}
-                            deleteFlagPosition={deleteFlagPosition}
-                            deleteForbiddenZonePoint={deleteForbiddenZonePoint}
-                            action={action}
-                            setAction={setAction}
-                            setSleepingAction={setSleepingAction}
-                            items={items}
-                            moveItem={moveItem}
-                            deleteItem={deleteItem}
-                            updateItemQuantity={updateItemQuantity}
-                        />
-                    </Map>
-                </>
-            )}
-        </>
+                <Markers
+                    polygonPosition={mainZone}
+                    flagsPositions={flagsPositions}
+                    forbiddenZones={forbiddenZones}
+                    action={action}
+                    setAction={setAction}
+                    setSleepingAction={setSleepingAction}
+                    items={items}
+                />
+            </Map>
+        )
     );
 }
 
