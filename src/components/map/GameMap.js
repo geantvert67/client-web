@@ -93,6 +93,7 @@ function GameMap({
 
     useEffect(() => {
         checkFlags();
+        checkItems();
     }, [mainZone, forbiddenZones]);
 
     const checkFlags = () => {
@@ -114,6 +115,28 @@ function GameMap({
                 'Attention, certains cristaux ne se situent plus dans la nouvelle zone. Ceux-ci ont été supprimés.'
             );
             setFlagsPositions(otherFlags);
+        }
+    };
+
+    const checkItems = () => {
+        let conflict = false;
+        let otherItems = [];
+        items.filter(item => {
+            let valid = true;
+            forbiddenZones.map(zone => {
+                valid = !isInZone(item.lat, item.lng, zone);
+                conflict = conflict || !valid;
+            });
+            let validZone = isInZone(item.lat, item.lng, mainZone);
+            conflict = conflict || !validZone;
+            valid && validZone && otherItems.push(item);
+        });
+
+        if (conflict) {
+            alert(
+                'Attention, certains items ne se situent plus dans la nouvelle zone. Ceux-ci ont été supprimés.'
+            );
+            setItems(otherItems);
         }
     };
 
