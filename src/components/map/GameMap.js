@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Map, TileLayer, Polygon } from 'react-leaflet';
 import { isInZone, getCenterZoneBox } from '../../utils/utils';
 import Markers from './Markers';
@@ -29,6 +29,7 @@ function GameMap({
 }) {
     const [position, setPosition] = useState(defaultPosition);
     const [zoom, setZoom] = useState(17);
+    const map = useRef(null);
 
     const {
         position: mainZone,
@@ -129,9 +130,13 @@ function GameMap({
             : '';
     };
 
+    const closePopups = () => {
+        map.current.leafletElement.closePopup();
+    };
+
     return (
         defaultPosition.length !== 0 && (
-            <Map center={position} zoom={zoom} onClick={handleClick}>
+            <Map ref={map} center={position} zoom={zoom} onClick={handleClick}>
                 <TileLayer url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" />
                 <Polygon color="green" positions={mainZone} />
 
@@ -144,6 +149,7 @@ function GameMap({
                 ))}
 
                 <Markers
+                    closePopups={closePopups}
                     polygonPosition={mainZone}
                     flagsPositions={flagsPositions}
                     forbiddenZones={forbiddenZones}

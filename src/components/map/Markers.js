@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { Button } from 'react-bootstrap';
 import { Marker, Popup, Circle } from 'react-leaflet';
 import { iconWhiteFlag, iconPylone, getItemIcon } from './Icons';
 import { getActionZoneAuto } from '../../utils/utils';
@@ -8,6 +9,7 @@ import { useFlag } from '../../utils/useFlag';
 import { useItem } from '../../utils/useItem';
 
 function Markers({
+    closePopups,
     polygonPosition,
     flagsPositions,
     forbiddenZones,
@@ -17,6 +19,7 @@ function Markers({
     items
 }) {
     const startDragging = () => {
+        closePopups();
         setAction('moveElement');
         setSleepingAction(action);
     };
@@ -89,6 +92,7 @@ function MainZoneMarker({ point, stopDragging, startDragging }) {
         >
             <Popup ref={popup}>
                 <button
+                    className="btn-danger"
                     onClick={e => {
                         popup.current.leafletElement.options.leaflet.map.closePopup();
                         remove(point);
@@ -121,6 +125,7 @@ function ForbiddenZoneMarker({ point, stopDragging, startDragging }) {
         >
             <Popup ref={popup}>
                 <button
+                    className="btn-danger"
                     onClick={e => {
                         popup.current.leafletElement.options.leaflet.map.closePopup();
                         remove(point);
@@ -155,6 +160,7 @@ function FlagMarker({ key, flag, stopDragging, startDragging }) {
             >
                 <Popup ref={popup}>
                     <button
+                        className="btn-danger"
                         onClick={e => {
                             popup.current.leafletElement.options.leaflet.map.closePopup();
                             remove(flag);
@@ -196,11 +202,14 @@ function ItemMarker({ key, point, stopDragging, startDragging }) {
                     <input
                         type="number"
                         defaultValue={point.quantity}
-                        onChange={e => updateItemQuantity(e, point)}
+                        onChange={e =>
+                            updateItemQuantity(point, e.target.value)
+                        }
                     />{' '}
                 </p>
 
                 <button
+                    className="btn-danger"
                     onClick={e => {
                         popup.current.leafletElement.options.leaflet.map.closePopup();
                         remove(point);

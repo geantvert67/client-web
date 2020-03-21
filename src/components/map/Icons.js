@@ -20,6 +20,8 @@ const iconPylone = new L.Icon({
 });
 
 const getItemIcon = modelItem => {
+    if (!modelItem) return iconWhiteFlag;
+
     switch (modelItem.name) {
         case 'Sentinelle':
             return iconSentinelle;
