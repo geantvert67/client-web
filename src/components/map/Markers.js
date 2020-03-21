@@ -133,7 +133,7 @@ function ForbiddenZoneMarker({ point, stopDragging, startDragging }) {
     );
 }
 
-function FlagMarker({ flag, stopDragging, startDragging }) {
+function FlagMarker({ key, flag, stopDragging, startDragging }) {
     const { move, remove } = useFlag();
     const { position: mainZone } = useMainZone();
     const popup = useRef(null);
@@ -141,7 +141,7 @@ function FlagMarker({ flag, stopDragging, startDragging }) {
     return (
         <>
             <Marker
-                key={flag.id}
+                key={key}
                 position={flag}
                 icon={iconWhiteFlag}
                 draggable
@@ -170,15 +170,16 @@ function FlagMarker({ flag, stopDragging, startDragging }) {
     );
 }
 
-function ItemMarker({ point, stopDragging, startDragging }) {
+function ItemMarker({ key, point, stopDragging, startDragging }) {
     const { move, updateItemQuantity, remove } = useItem();
     const popup = useRef(null);
+    const icon = getItemIcon(point.modelItem);
 
     return (
         <Marker
-            key={point.id}
+            key={key}
             position={point.position}
-            icon={getItemIcon(point.modelItem)}
+            icon={icon}
             draggable
             onDragend={e => {
                 move(e, point);

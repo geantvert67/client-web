@@ -61,7 +61,7 @@ export const ItemProvider = ({ children }) => {
             ) &&
             otherItems.push({
                 modelItem: item.modelItem,
-                newPosition,
+                position: newPosition,
                 quantity: item.quantity
             });
 
