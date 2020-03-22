@@ -20,14 +20,16 @@ function ItemActions({ action, setAction }) {
             </Row>
             {isOpen && (
                 <Row className="mt-3 ml-1">
-                    {modelItems.map(item => (
-                        <Item
-                            item={item}
-                            action={action}
-                            setAction={setAction}
-                            key={item.id}
-                        />
-                    ))}
+                    {modelItems.length === 0
+                        ? "Vous n'avez activé aucun modèle d'item."
+                        : modelItems.map(item => (
+                              <Item
+                                  item={item}
+                                  action={action}
+                                  setAction={setAction}
+                                  key={item.id}
+                              />
+                          ))}
                 </Row>
             )}
         </>

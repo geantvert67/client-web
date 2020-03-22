@@ -53,10 +53,13 @@ export const addItemsModel = (idConfig, model) => {
 };
 
 export const updateItemsModel = (idConfig, idModelItem, modelItem) => {
-    return request.put(
-        `/configs/${idConfig}/item-models/${idModelItem}`,
-        modelItem
-    );
+    const i = JSON.parse(JSON.stringify(modelItem));
+    delete i.name;
+    return request.put(`/configs/${idConfig}/item-models/${idModelItem}`, i);
+};
+
+export const deleteItemsModel = (idConfig, idModelItem) => {
+    return request.delete(`/configs/${idConfig}/item-models/${idModelItem}`);
 };
 
 export const getItemsModel = idConfig => {

@@ -8,6 +8,7 @@ import {
     addItem,
     updateItemsModel
 } from '../service/configuration';
+import { config } from '@fortawesome/fontawesome-svg-core';
 
 export const removeElements = idConfig => {
     return Promise.all([
@@ -86,17 +87,6 @@ export const formatFlags = f => {
     return flags;
 };
 
-export const addItemsModels = (idConfig, models) => {
-    return Promise.all(
-        models.map(model =>
-            model.id
-                ? delete model.name &&
-                  updateItemsModel(idConfig, model.id, model)
-                : addItemsModel(idConfig, model)
-        )
-    );
-};
-
 export const formatItems = i => {
     let items = [];
     i.data.map(item =>
@@ -110,6 +100,22 @@ export const formatItems = i => {
         })
     );
     return items;
+};
+
+export const serializeModels = model => {
+    model.autoMove = model.autoMove === 'true';
+    model.visibilityRadius = model.visibilityRadius
+        ? parseFloat(model.visibilityRadius)
+        : null;
+    model.actionRadius = model.actionRadius
+        ? parseFloat(model.actionRadius)
+        : null;
+    model.waitingPeriod = model.waitingPeriod
+        ? parseInt(model.waitingPeriod)
+        : null;
+    Object.keys(model).forEach(key => model[key] == null && delete model[key]);
+
+    return model;
 };
 
 export const serializeConfig = config => {

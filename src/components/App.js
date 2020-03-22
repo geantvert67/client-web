@@ -8,7 +8,6 @@ import PrivateRoute from './authentification/PrivateRoute';
 import MapCreator from './map/MapCreator';
 import TeamConfig from './teams/TeamConfig';
 import CreateTeam from './teams/CreateTeam';
-import ItemsModelsCreator from './items/ItemsModelsCreator';
 import ConfigsWrapper from './configuration/ConfigsWrapper';
 import Profil from './user/Profil';
 import { toast } from 'react-toastify';
@@ -16,6 +15,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ConfigForm from './configuration/ConfigForm';
 import ConfigFormWrapper from './configuration/ConfigFormWrapper';
+import ItemsWrapper from './items/ItemsWrapper';
 
 toast.configure({
     hideProgressBar: true,
@@ -54,7 +54,7 @@ const App = () => {
                 <PrivateRoute
                     exact
                     path="/configs/:configurationId/items"
-                    component={ItemsModelsCreator}
+                    component={ItemsWrapper}
                 />
                 <PrivateRoute
                     exact
