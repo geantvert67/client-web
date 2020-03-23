@@ -29,22 +29,20 @@ const TeamConfigItem = ({ configurationId, team, teams, setTeams }) => {
                 <>
                     <Accordion>
                         <Accordion.Toggle
-                            className="btn-dark priority"
+                            className="dark-team"
                             as={Card.Header}
                         >
                             <Row>
-                                <Col xs="auto">
-                                    <Color c={team.color} />
-                                </Col>
-                                {' - '}
                                 <Col md="9">
-                                    <Card.Title>
-                                        <span className="redirect">
+                                    <Card.Title className="card-team">
+                                        <Color c={team.color} />
+
+                                        <span className="name-team">
                                             {team.name}
                                         </span>
                                     </Card.Title>
                                 </Col>
-                                <Col>
+                                <Col className="card-team">
                                     <FontAwesomeIcon
                                         icon={faTrash}
                                         className="danger"
@@ -54,7 +52,7 @@ const TeamConfigItem = ({ configurationId, team, teams, setTeams }) => {
                                 </Col>
                             </Row>
                         </Accordion.Toggle>
-                        <Accordion.Collapse className="btn-dark">
+                        <Accordion.Collapse className="card-add">
                             <>
                                 <AddMember
                                     configurationId={configurationId}

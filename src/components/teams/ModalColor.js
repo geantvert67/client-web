@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
+import { SketchPicker } from 'react-color';
 import Color from './Color';
 
 const ModalColor = ({
@@ -17,18 +18,13 @@ const ModalColor = ({
         setShow(false);
     };
     return (
-        <Modal show={show} onHide={handleClose}>
-            <Modal.Header closeButton>
-                <Modal.Title>Modal heading</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <input
-                    type="color"
-                    value={c}
-                    onChange={e => setC(e.target.value)}
-                    id="colorWell"
-                ></input>
-                <Color c={c} color={color} setColor={setColor} />
+        <Modal show={show} onHide={handleClose} animation size="sm">
+            <Modal.Header closeButton></Modal.Header>
+            <Modal.Body centered>
+                <SketchPicker
+                    color={c}
+                    onChangeComplete={color => setC(color.hex)}
+                />
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>

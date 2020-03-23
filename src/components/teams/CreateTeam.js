@@ -9,9 +9,7 @@ import history from '../../utils/history';
 import { createTeam } from '../../service/configuration';
 import ModalColor from './ModalColor';
 
-const CreateTeam = () => {
-    const { configurationId } = useParams();
-
+const CreateTeam = ({ configurationId, setIsOpen, teams, setTeams }) => {
     const { register, handleSubmit, watch, errors } = useForm();
 
     const [name, setName] = useState('');
@@ -20,7 +18,8 @@ const CreateTeam = () => {
     const create = e => {
         createTeam(configurationId, { name, color })
             .then(res => {
-                history.push(`/configs/${configurationId}/teams`);
+                setTeams([...teams, res.data]);
+                setIsOpen(false);
             })
             .catch(err => {});
     };
@@ -99,6 +98,12 @@ const CreateTeam = () => {
                         </Row>
                         <Row className="justify-content-md-center">
                             <Col md="auto">
+                                <Button
+                                    variant="success"
+                                    onClick={() => setIsOpen(false)}
+                                >
+                                    Annuler{' '}
+                                </Button>
                                 <Button variant="success" type="submit">
                                     Créer{' '}
                                 </Button>
