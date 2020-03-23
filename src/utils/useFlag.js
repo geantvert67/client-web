@@ -1,9 +1,13 @@
 import React, { useState, createContext, useContext, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useForbiddenZone } from './useForbiddenZone';
-import { isInZone, getDistance, getVisibilityRadiusAuto } from './utils';
+import {
+    isInZone,
+    getDistance,
+    getVisibilityRadiusAuto,
+    getZoneBox
+} from './utils';
 import { useMainZone } from './useMainZone';
-import { getZoneBox } from './utils';
 import { getById } from '../service/configuration';
 
 const FlagContext = createContext();
