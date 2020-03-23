@@ -33,18 +33,16 @@ const TeamConfigItem = ({ configurationId, team, teams, setTeams }) => {
                             as={Card.Header}
                         >
                             <Row>
-                                <Col xs="auto">
-                                    <Color c={team.color} />
-                                </Col>
-                                {' - '}
                                 <Col md="9">
-                                    <Card.Title>
-                                        <span className="redirect">
+                                    <Card.Title className="card-team">
+                                        <Color c={team.color} />
+
+                                        <span className="name-team">
                                             {team.name}
                                         </span>
                                     </Card.Title>
                                 </Col>
-                                <Col>
+                                <Col className="card-team">
                                     <FontAwesomeIcon
                                         icon={faTrash}
                                         className="danger"
