@@ -36,7 +36,7 @@ function MapCreator() {
         <div className="map-container">
             <MainZoneProvider>
                 <ForbiddenZoneProvider>
-                    <FlagProvider>
+                    <FlagProvider configId={configurationId}>
                         <ItemProvider>
                             <MapMenuWrapper
                                 action={action}
