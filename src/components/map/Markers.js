@@ -1,28 +1,25 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import { Button } from 'react-bootstrap';
 import { Marker, Popup, Circle } from 'react-leaflet';
 import { iconWhiteFlag, iconPylone, getItemIcon } from './Icons';
 import { getActionZoneAuto } from '../../utils/utils';
-import { addItem } from '../../service/configuration';
+import { useMainZone } from '../../utils/useMainZone';
+import { useForbiddenZone } from '../../utils/useForbiddenZone';
+import { useFlag } from '../../utils/useFlag';
+import { useItem } from '../../utils/useItem';
 
 function Markers({
+    closePopups,
     polygonPosition,
     flagsPositions,
     forbiddenZones,
-    movePolygon,
-    moveFlag,
-    moveForbiddenZone,
-    deletePolygonPosition,
-    deleteFlagPosition,
-    deleteForbiddenZonePoint,
     action,
     setAction,
     setSleepingAction,
-    items,
-    moveItem,
-    deleteItem,
-    updateItemQuantity
+    items
 }) {
     const startDragging = () => {
+        closePopups();
         setAction('moveElement');
         setSleepingAction(action);
     };
@@ -31,121 +28,197 @@ function Markers({
         setAction('moveElementStop');
     };
 
-    const changeQuantity = (e, point) => {
-        updateItemQuantity(point, e.target.value);
-    };
     return (
         <>
-            {flagsPositions.map(flag => (
-                <>
-                    <Marker
-                        key={flag.id}
-                        position={flag}
-                        icon={iconWhiteFlag}
-                        draggable
-                        onDragend={e => {
-                            moveFlag(e, flag);
-                            stopDragging();
-                        }}
-                        onDragStart={e => {
-                            startDragging();
-                        }}
-                    >
-                        <Popup>
-                            <button onClick={e => deleteFlagPosition(flag)}>
-                                Supprimer
-                            </button>
-                        </Popup>
-                    </Marker>
-
-                    <Circle
-                        center={flag}
-                        radius={getActionZoneAuto(polygonPosition)}
-                    />
-                </>
+            {flagsPositions.map((flag, index) => (
+                <FlagMarker
+                    key={index}
+                    flag={flag}
+                    stopDragging={stopDragging}
+                    startDragging={startDragging}
+                />
             ))}
 
-            {polygonPosition.map(point => (
-                <Marker
-                    key={point.id}
-                    position={point}
-                    icon={iconPylone}
-                    draggable
-                    autoPan
-                    onDragend={e => {
-                        movePolygon(e, point);
-                        stopDragging();
-                    }}
-                    onDragStart={e => {
-                        startDragging();
-                    }}
-                >
-                    <Popup>
-                        <button onClick={e => deletePolygonPosition(point)}>
-                            Supprimer
-                        </button>
-                    </Popup>
-                </Marker>
+            {polygonPosition.map((point, index) => (
+                <MainZoneMarker
+                    key={index}
+                    point={point}
+                    stopDragging={stopDragging}
+                    startDragging={startDragging}
+                />
             ))}
 
             {forbiddenZones.map(zone =>
-                zone.map(point => (
-                    <Marker
-                        key={point.id}
-                        position={point}
-                        draggable
-                        autoPan
-                        onDragend={e => {
-                            moveForbiddenZone(e, point);
-                            stopDragging();
-                        }}
-                        onDragStart={e => {
-                            startDragging();
-                        }}
-                    >
-                        <Popup>
-                            <button
-                                onClick={e => deleteForbiddenZonePoint(point)}
-                            >
-                                Supprimer
-                            </button>
-                        </Popup>
-                    </Marker>
+                zone.map((point, index) => (
+                    <ForbiddenZoneMarker
+                        key={index}
+                        point={point}
+                        stopDragging={stopDragging}
+                        startDragging={startDragging}
+                    />
                 ))
             )}
 
-            {items.map(point => (
-                <Marker
-                    key={point.id}
-                    position={point.position}
-                    icon={getItemIcon(point.modelItem)}
-                    draggable
-                    onDragend={e => {
-                        moveItem(e, point);
-                        stopDragging();
-                    }}
-                    onDragStart={e => {
-                        startDragging();
-                    }}
-                >
-                    <Popup>
-                        <p>
-                            {' '}
-                            Quantité :{' '}
-                            <input
-                                type="number"
-                                defaultValue={point.quantity}
-                                onChange={e => changeQuantity(e, point)}
-                            />{' '}
-                        </p>
-
-                        <button onClick={e => deleteItem(point)}>
-                            Supprimer
-                        </button>
-                    </Popup>
-                </Marker>
+            {items.map((point, index) => (
+                <ItemMarker
+                    key={index}
+                    point={point}
+                    stopDragging={stopDragging}
+                    startDragging={startDragging}
+                />
             ))}
         </>
+    );
+}
+
+function MainZoneMarker({ point, stopDragging, startDragging }) {
+    const { move, remove } = useMainZone();
+    const popup = useRef(null);
+
+    return (
+        <Marker
+            key={point.id}
+            position={point}
+            icon={iconPylone}
+            draggable
+            autoPan
+            onDragend={e => {
+                move(e, point);
+                stopDragging();
+            }}
+            onDragStart={e => {
+                startDragging();
+            }}
+        >
+            <Popup ref={popup}>
+                <button
+                    className="btn-danger"
+                    onClick={e => {
+                        popup.current.leafletElement.options.leaflet.map.closePopup();
+                        remove(point);
+                    }}
+                >
+                    Supprimer
+                </button>
+            </Popup>
+        </Marker>
+    );
+}
+
+function ForbiddenZoneMarker({ point, stopDragging, startDragging }) {
+    const { move, remove } = useForbiddenZone();
+    const popup = useRef(null);
+
+    return (
+        <Marker
+            key={point.id}
+            position={point}
+            draggable
+            autoPan
+            onDragend={e => {
+                move(e, point);
+                stopDragging();
+            }}
+            onDragStart={e => {
+                startDragging();
+            }}
+        >
+            <Popup ref={popup}>
+                <button
+                    className="btn-danger"
+                    onClick={e => {
+                        popup.current.leafletElement.options.leaflet.map.closePopup();
+                        remove(point);
+                    }}
+                >
+                    Supprimer
+                </button>
+            </Popup>
+        </Marker>
+    );
+}
+
+function FlagMarker({ key, flag, stopDragging, startDragging }) {
+    const { move, remove } = useFlag();
+    const { position: mainZone } = useMainZone();
+    const popup = useRef(null);
+
+    return (
+        <>
+            <Marker
+                key={key}
+                position={flag}
+                icon={iconWhiteFlag}
+                draggable
+                onDragend={e => {
+                    move(e, flag);
+                    stopDragging();
+                }}
+                onDragStart={e => {
+                    startDragging();
+                }}
+            >
+                <Popup ref={popup}>
+                    <button
+                        className="btn-danger"
+                        onClick={e => {
+                            popup.current.leafletElement.options.leaflet.map.closePopup();
+                            remove(flag);
+                        }}
+                    >
+                        Supprimer
+                    </button>
+                </Popup>
+            </Marker>
+
+            <Circle center={flag} radius={getActionZoneAuto(mainZone)} />
+        </>
+    );
+}
+
+function ItemMarker({ key, point, stopDragging, startDragging }) {
+    const { move, updateItemQuantity, remove } = useItem();
+    const popup = useRef(null);
+    const icon = getItemIcon(point.modelItem);
+
+    return (
+        <Marker
+            key={key}
+            position={point.position}
+            icon={icon}
+            draggable
+            onDragend={e => {
+                move(e, point);
+                stopDragging();
+            }}
+            onDragStart={e => {
+                startDragging();
+            }}
+        >
+            <Popup ref={popup}>
+                <p>
+                    {' '}
+                    Quantité :{' '}
+                    <input
+                        type="number"
+                        defaultValue={point.quantity}
+                        onChange={e =>
+                            updateItemQuantity(point, e.target.value)
+                        }
+                    />{' '}
+                </p>
+
+                <button
+                    className="btn-danger"
+                    onClick={e => {
+                        popup.current.leafletElement.options.leaflet.map.closePopup();
+                        remove(point);
+                    }}
+                >
+                    Supprimer
+                </button>
+            </Popup>
+        </Marker>
     );
 }
 

@@ -48,9 +48,7 @@ const TeamConfig = () => {
                                         </Col>
                                         <Col>
                                             <Card.Title>
-                                                <span className="redirect">
-                                                    Créer une équipe
-                                                </span>
+                                                <span>Créer une équipe</span>
                                             </Card.Title>
                                         </Col>
                                     </Row>

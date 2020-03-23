@@ -8,11 +8,14 @@ import {
     addItem,
     updateItemsModel
 } from '../service/configuration';
+import { config } from '@fortawesome/fontawesome-svg-core';
 
 export const removeElements = idConfig => {
-    removeZones(idConfig);
-    removeFlags(idConfig);
-    removeItems(idConfig);
+    return Promise.all([
+        removeZones(idConfig),
+        removeFlags(idConfig),
+        removeItems(idConfig)
+    ]);
 };
 
 export const updateConfig = (
@@ -22,25 +25,37 @@ export const updateConfig = (
     flagsPositions,
     items
 ) => {
-    removeElements(idConfig);
     let coordMainZone = [];
-    polygonPosition.map(point => coordMainZone.push([point.lat, point.lng]));
-    coordMainZone.push([polygonPosition[0].lat, polygonPosition[0].lng]);
 
-    forbiddenZones.map(zone => {
-        let points = [];
-        zone.map(point => points.push([point.lat, point.lng]));
-        points.push([zone[0].lat, zone[0].lng]);
-        addZone(idConfig, { coordinates: points, forbidden: true });
+    return removeElements(idConfig).then(() => {
+        polygonPosition.map(point =>
+            coordMainZone.push([point.lat, point.lng])
+        );
+        coordMainZone.push([polygonPosition[0].lat, polygonPosition[0].lng]);
+
+        return Promise.all([
+            forbiddenZones.map(zone => {
+                let points = [];
+                zone.map(point => points.push([point.lat, point.lng]));
+                points.push([zone[0].lat, zone[0].lng]);
+                return addZone(idConfig, {
+                    coordinates: points,
+                    forbidden: true
+                });
+            }),
+
+            flagsPositions.map(flag =>
+                addFlag(idConfig, { coordinates: [flag.lat, flag.lng] })
+            ),
+
+            items.map(item => addItem(idConfig, item)),
+
+            addZone(idConfig, {
+                coordinates: coordMainZone,
+                forbidden: false
+            })
+        ]);
     });
-
-    flagsPositions.map(flag =>
-        addFlag(idConfig, { coordinates: [flag.lat, flag.lng] })
-    );
-
-    items.map(item => addItem(idConfig, item));
-
-    addZone(idConfig, { coordinates: coordMainZone, forbidden: false });
 };
 
 export const formatMainZone = zone => {
@@ -72,17 +87,6 @@ export const formatFlags = f => {
     return flags;
 };
 
-export const addItemsModels = (idConfig, models) => {
-    return Promise.all(
-        models.map(model =>
-            model.id
-                ? delete model.name &&
-                  updateItemsModel(idConfig, model.id, model)
-                : addItemsModel(idConfig, model)
-        )
-    );
-};
-
 export const formatItems = i => {
     let items = [];
     i.data.map(item =>
@@ -96,6 +100,22 @@ export const formatItems = i => {
         })
     );
     return items;
+};
+
+export const serializeModels = model => {
+    model.autoMove = model.autoMove === 'true';
+    model.visibilityRadius = model.visibilityRadius
+        ? parseFloat(model.visibilityRadius)
+        : null;
+    model.actionRadius = model.actionRadius
+        ? parseFloat(model.actionRadius)
+        : null;
+    model.waitingPeriod = model.waitingPeriod
+        ? parseInt(model.waitingPeriod)
+        : null;
+    Object.keys(model).forEach(key => model[key] == null && delete model[key]);
+
+    return model;
 };
 
 export const serializeConfig = config => {

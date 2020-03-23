@@ -19,14 +19,12 @@ const TeamMembers = ({
 
     return (
         <>
-            <Card className="dark-back">
+            <Card className="dark-team">
                 <Card.Body>
                     <Row>
                         <Col>
                             <Card.Title>
-                                <span className="redirect">
-                                    {member.username}
-                                </span>
+                                <span>{member.username}</span>
                             </Card.Title>
                         </Col>
                         <Col xs="auto">

@@ -3,7 +3,7 @@ import { Card, Row, Col, Button } from 'react-bootstrap';
 import history from '../../utils/history';
 import { getUsers, addMember } from '../../service/configuration';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 
 const AddMember = ({ configurationId, teamId, members, setMembers }) => {
@@ -32,27 +32,26 @@ const AddMember = ({ configurationId, teamId, members, setMembers }) => {
 
     return (
         <>
-            <Card className="dark-back">
+            <Card>
                 <Card.Body>
                     <Row>
-                        <Col md="9">
-                            <Card.Title>
-                                <span className="redirect">
-                                    Entrez un nom d'utilisateur
-                                </span>
+                        <Col>
+                            <Card.Title onClick={() => isValid()}>
+                                <span>Entrez un nom d'utilisateur</span>
                             </Card.Title>
                         </Col>
-                        <Col>
+                        <Col xs="auto">
                             <FontAwesomeIcon
-                                icon={faPlusSquare}
+                                icon={faPlus}
                                 size="lg"
                                 onClick={() => isValid()}
                             />
                         </Col>
                         {valid && (
                             <>
-                                <Col md="9">
+                                <Col md="9" className="input-light">
                                     <AsyncTypeahead
+                                        className="input-light"
                                         id="concerned_member_typehead"
                                         labelKey="username"
                                         allowNew={false}
@@ -69,7 +68,7 @@ const AddMember = ({ configurationId, teamId, members, setMembers }) => {
                                         )}
                                     />
                                 </Col>
-                                <Col>
+                                <Col xs="auto">
                                     <Button
                                         variant="success"
                                         type="button"

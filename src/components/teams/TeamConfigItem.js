@@ -29,7 +29,7 @@ const TeamConfigItem = ({ configurationId, team, teams, setTeams }) => {
                 <>
                     <Accordion>
                         <Accordion.Toggle
-                            className="btn-dark priority"
+                            className="dark-team"
                             as={Card.Header}
                         >
                             <Row>
@@ -52,7 +52,7 @@ const TeamConfigItem = ({ configurationId, team, teams, setTeams }) => {
                                 </Col>
                             </Row>
                         </Accordion.Toggle>
-                        <Accordion.Collapse className="btn-dark">
+                        <Accordion.Collapse className="card-add">
                             <>
                                 <AddMember
                                     configurationId={configurationId}
