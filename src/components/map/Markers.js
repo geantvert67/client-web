@@ -1,12 +1,12 @@
-import React, { useRef } from 'react';
-import { Button } from 'react-bootstrap';
+import React, { useRef, useEffect, useState } from 'react';
 import { Marker, Popup, Circle } from 'react-leaflet';
 import { iconWhiteFlag, iconPylone, getItemIcon } from './Icons';
-import { getActionZoneAuto } from '../../utils/utils';
+import { getVisibilityRadiusAuto } from '../../utils/utils';
 import { useMainZone } from '../../utils/useMainZone';
 import { useForbiddenZone } from '../../utils/useForbiddenZone';
 import { useFlag } from '../../utils/useFlag';
 import { useItem } from '../../utils/useItem';
+import { getById } from '../../service/configuration';
 
 function Markers({
     closePopups,
@@ -16,8 +16,15 @@ function Markers({
     action,
     setAction,
     setSleepingAction,
-    items
+    items,
+    configId
 }) {
+    const [config, setConfig] = useState(null);
+
+    useEffect(() => {
+        getById(configId).then(res => setConfig(res.data));
+    }, []);
+
     const startDragging = () => {
         closePopups();
         setAction('moveElement');
@@ -36,6 +43,9 @@ function Markers({
                     flag={flag}
                     stopDragging={stopDragging}
                     startDragging={startDragging}
+                    flagVisibilityRadius={
+                        config !== null && config.flagVisibilityRadius
+                    }
                 />
             ))}
 
@@ -138,7 +148,13 @@ function ForbiddenZoneMarker({ point, stopDragging, startDragging }) {
     );
 }
 
-function FlagMarker({ key, flag, stopDragging, startDragging }) {
+function FlagMarker({
+    key,
+    flag,
+    stopDragging,
+    startDragging,
+    flagVisibilityRadius
+}) {
     const { move, remove } = useFlag();
     const { position: mainZone } = useMainZone();
     const popup = useRef(null);
@@ -171,7 +187,13 @@ function FlagMarker({ key, flag, stopDragging, startDragging }) {
                 </Popup>
             </Marker>
 
-            <Circle center={flag} radius={getActionZoneAuto(mainZone)} />
+            <Circle
+                center={flag}
+                radius={
+                    flagVisibilityRadius ||
+                    getVisibilityRadiusAuto(mainZone, 0.05)
+                }
+            />
         </>
     );
 }
