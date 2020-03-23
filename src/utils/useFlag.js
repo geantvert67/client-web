@@ -1,16 +1,22 @@
-import React, { useState, createContext, useContext } from 'react';
+import React, { useState, createContext, useContext, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useForbiddenZone } from './useForbiddenZone';
-import { isInZone, getDistance, getActionZoneAuto } from './utils';
+import { isInZone, getDistance, getVisibilityRadiusAuto } from './utils';
 import { useMainZone } from './useMainZone';
 import { getZoneBox } from './utils';
+import { getById } from '../service/configuration';
 
 const FlagContext = createContext();
 
-export const FlagProvider = ({ children }) => {
+export const FlagProvider = ({ configId, children }) => {
     const [flagsPositions, setFlagsPositions] = useState([]);
     const { forbiddenZones } = useForbiddenZone();
     const { position: mainZone } = useMainZone();
+    const [config, setConfig] = useState(null);
+
+    useEffect(() => {
+        getById(configId).then(res => setConfig(res.data));
+    }, []);
 
     const create = point => {
         const newPositon = { lat: point.latlng.lat, lng: point.latlng.lng };
@@ -28,7 +34,9 @@ export const FlagProvider = ({ children }) => {
                         lat: newPositon.lat,
                         lng: newPositon.lng
                     }) <
-                        getActionZoneAuto(mainZone) * 2 && (conflict = true)
+                        (config.flagVisibilityRadius ||
+                            getVisibilityRadiusAuto(mainZone, 0.05)) *
+                            2 && (conflict = true)
             );
 
         return !conflict &&
@@ -62,8 +70,9 @@ export const FlagProvider = ({ children }) => {
                     [...randomFlags, ...flagsPositions].map(
                         flag =>
                             getDistance(flag, { lat, lng }) <
-                                getActionZoneAuto(mainZone) * 2 &&
-                            (conflict = true)
+                                (config.flagVisibilityRadius ||
+                                    getVisibilityRadiusAuto(mainZone, 0.05)) *
+                                    2 && (conflict = true)
                     );
 
                 !conflict &&
@@ -105,7 +114,9 @@ export const FlagProvider = ({ children }) => {
                             lat: newPositon.lat,
                             lng: newPositon.lng
                         }) <
-                            getActionZoneAuto(mainZone) * 2 && (conflict = true)
+                            (config.flagVisibilityRadius ||
+                                getVisibilityRadiusAuto(mainZone, 0.05)) *
+                                2 && (conflict = true)
                 );
 
         !conflict &&

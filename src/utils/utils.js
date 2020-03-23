@@ -69,12 +69,14 @@ export const getCenterZoneBox = polygonPosition => {
     return { lng: (x_max + x_min) / 2, lat: (y_max + y_min) / 2 };
 };
 
-export const getActionZoneAuto = polygonPosition => {
+export const getVisibilityRadiusAuto = (polygonPosition, coeff) => {
     const { x_max, x_min, y_max, y_min } = getZoneBox(polygonPosition);
     const origin = { lng: x_max, lat: y_max };
     const dest = { lng: x_min, lat: y_min };
 
-    return (5 / 100) * getDistance(origin, dest);
+    console.log(coeff);
+
+    return coeff * getDistance(origin, dest);
 };
 
 export const getItemImage = item => {

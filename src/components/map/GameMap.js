@@ -157,6 +157,7 @@ function GameMap({
                     setAction={setAction}
                     setSleepingAction={setSleepingAction}
                     items={items}
+                    configId={configId}
                 />
             </Map>
         )
