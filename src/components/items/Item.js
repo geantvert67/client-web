@@ -110,9 +110,14 @@ function ItemForm({ itemModel, item, updateItem }) {
                             validate: {
                                 smallerThanVR: value => {
                                     const { visibilityRadius } = getValues();
+
                                     return (
-                                        !visibilityRadius ||
-                                        value <= visibilityRadius ||
+                                        (!visibilityRadius
+                                            ? true
+                                            : value
+                                            ? parseInt(value) <=
+                                              parseInt(visibilityRadius)
+                                            : true) ||
                                         "Le rayon d'action doit être inférieur ou égal au rayon de visibilité"
                                     );
                                 }
