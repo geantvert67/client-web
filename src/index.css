@@ -353,3 +353,7 @@ input:checked + .slider:before {
 .slider.round:before {
     border-radius: 50%;
 }
+
+.underline {
+    text-decoration: underline !important;
+}

@@ -10,7 +10,7 @@ import { create, updateById } from '../../service/configuration';
 import history from '../../utils/history';
 import ConfigMenu from './ConfigMenu';
 
-function ConfigForm({ config }) {
+function ConfigForm({ config, setConfig }) {
     const [showDuration, setShowDuration] = useState(
         config ? config.gameMode != 'SUPREMACY' : false
     );
@@ -25,7 +25,10 @@ function ConfigForm({ config }) {
     const updateConfig = newConfig => {
         newConfig.id = config.id;
         updateById(serializeConfig(newConfig))
-            .then(res => history.push(`/configs/${res.data.id}/items`))
+            .then(res => {
+                setConfig(res.data);
+                history.push(`/configs/${res.data.id}/items`);
+            })
             .catch(err => setError(err.response.data));
     };
 

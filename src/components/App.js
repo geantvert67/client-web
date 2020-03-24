@@ -5,17 +5,14 @@ import Menu from './Menu';
 import Signin from './authentification/Signin';
 import Signup from './authentification/Signup';
 import PrivateRoute from './authentification/PrivateRoute';
-import MapCreator from './map/MapCreator';
-import TeamConfig from './teams/TeamConfig';
-import CreateTeam from './teams/CreateTeam';
 import ConfigsWrapper from './configuration/ConfigsWrapper';
 import Profil from './user/Profil';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ConfigForm from './configuration/ConfigForm';
-import ConfigFormWrapper from './configuration/ConfigFormWrapper';
-import ItemsWrapper from './items/ItemsWrapper';
+import ConfigLoader from './configuration/ConfigLoader';
+import Error from './Error';
 
 toast.configure({
     hideProgressBar: true,
@@ -47,24 +44,11 @@ const App = () => {
                 />
 
                 <PrivateRoute
-                    exact
-                    path="/configs/:configurationId/edit"
-                    component={ConfigFormWrapper}
+                    path="/configs/:configurationId"
+                    component={ConfigLoader}
                 />
-                <PrivateRoute
-                    exact
-                    path="/configs/:configurationId/items"
-                    component={ItemsWrapper}
-                />
-                <PrivateRoute
-                    exact
-                    path="/configs/:configurationId/teams"
-                    component={TeamConfig}
-                />
-                <PrivateRoute
-                    path="/configs/:configurationId/map"
-                    component={MapCreator}
-                />
+
+                <Route component={Error} />
             </Switch>
         </AuthProvider>
     );
