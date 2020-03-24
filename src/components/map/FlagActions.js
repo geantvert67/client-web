@@ -43,6 +43,7 @@ function FlagActions({ action, setAction }) {
                     <Col xs="auto" className="mb-3 mr-3 actions-item">
                         <form onSubmit={handleSubmit(_createRandom)}>
                             <input
+                                className="input-map"
                                 style={{ width: '75px' }}
                                 type="number"
                                 name="nbFlags"

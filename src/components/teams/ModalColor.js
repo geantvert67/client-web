@@ -1,16 +1,8 @@
 import React, { useState } from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button, Container, Row, Col } from 'react-bootstrap';
 import { SketchPicker } from 'react-color';
-import Color from './Color';
 
-const ModalColor = ({
-    show,
-    setShow,
-    color,
-    setColor,
-    colorChange,
-    setColorChange
-}) => {
+const ModalColor = ({ show, setShow, colorChange, setColorChange }) => {
     const [c, setC] = useState('#ff0000');
     const handleClose = () => setShow(false);
     const handleAdd = () => {
@@ -18,20 +10,29 @@ const ModalColor = ({
         setShow(false);
     };
     return (
-        <Modal show={show} onHide={handleClose} animation size="sm">
-            <Modal.Header closeButton></Modal.Header>
-            <Modal.Body centered>
-                <SketchPicker
-                    color={c}
-                    onChangeComplete={color => setC(color.hex)}
-                />
+        <Modal centered show={show} onHide={handleClose} animation size="sm">
+            <Modal.Body>
+                <Container>
+                    <Row className="justify-content-center">
+                        <Col xs="auto">
+                            <SketchPicker
+                                color={c}
+                                onChangeComplete={color => setC(color.hex)}
+                            />
+                        </Col>
+                    </Row>
+                </Container>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                    Close
+                <Button variant="light" onClick={handleClose}>
+                    Annuler
                 </Button>
-                <Button variant="primary" onClick={handleAdd}>
-                    Ajouter la couleur
+                <Button
+                    variant="success"
+                    className="btn-primary"
+                    onClick={handleAdd}
+                >
+                    Choisir
                 </Button>
             </Modal.Footer>
         </Modal>
