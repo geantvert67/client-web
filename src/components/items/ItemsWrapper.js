@@ -12,6 +12,7 @@ import {
 } from '../../service/configuration';
 import { serializeModels } from '../../utils/config';
 import Switch from '../forms/Switch';
+import history from '../../utils/history';
 
 function ItemsWrapper() {
     const { configurationId } = useParams();
@@ -93,11 +94,9 @@ function ItemsWrapper() {
             })
             .then(() => {
                 return getItemsModel(configurationId).then(res => {
-                    setItems(res.data);
-                    setNewItems(res.data);
+                    history.push(`/configs/${configurationId}/teams`);
                 });
-            })
-            .finally(() => setSaving(false));
+            });
     };
 
     return (

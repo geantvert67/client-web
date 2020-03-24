@@ -62,11 +62,6 @@ const App = () => {
                     component={TeamConfig}
                 />
                 <PrivateRoute
-                    exact
-                    path="/:configurationId/createteam"
-                    component={CreateTeam}
-                />
-                <PrivateRoute
                     path="/configs/:configurationId/map"
                     component={MapCreator}
                 />

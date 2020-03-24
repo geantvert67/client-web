@@ -1,26 +1,39 @@
-import React, { useState } from 'react';
-import { Card, Row, Col, Button } from 'react-bootstrap';
-import history from '../../utils/history';
+import React, { useState, useRef } from 'react';
+import { Card, Row, Col, Button, Alert } from 'react-bootstrap';
 import { getUsers, addMember } from '../../service/configuration';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 
 const AddMember = ({ configurationId, teamId, members, setMembers }) => {
-    const [valid, setValid] = useState(false);
     const [name, setName] = useState('');
     const [member, setMember] = useState([]);
     const [loading, setLoading] = useState(false);
-    const isValid = () => {
-        setValid(!valid);
-    };
-    const handleClick = () => {
-        addMember(configurationId, teamId, name)
-            .then(res => setMembers([...members, res.data]))
-            .catch(err => {
-                setName('');
-            });
-        setValid(!valid);
+    const [error, setError] = useState('');
+    const typeahead = useRef();
+
+    const _addMember = () => {
+        if (name) {
+            addMember(configurationId, teamId, name)
+                .then(res => {
+                    typeahead.current.getInstance().clear();
+                    setMembers([...members, res.data]);
+                })
+                .catch(err => {
+                    const code = err.response.status;
+
+                    if (code === 409)
+                        setError(
+                            "Cet utilisateur fait déjà partie d'une équipe"
+                        );
+                    else if (code === 404)
+                        setError("Cet utilisateur n'existe pas");
+                    else if (code === 400) setError('Cette équipe est pleine');
+                    else setError('Une erreur est survenue');
+                });
+        } else {
+            setError('Veuillez choisir un utilisateur');
+        }
     };
 
     const handleSearch = username => {
@@ -31,58 +44,39 @@ const AddMember = ({ configurationId, teamId, members, setMembers }) => {
     };
 
     return (
-        <>
-            <Card>
-                <Card.Body>
-                    <Row>
-                        <Col>
-                            <Card.Title onClick={() => isValid()}>
-                                <span>Entrez un nom d'utilisateur</span>
-                            </Card.Title>
-                        </Col>
-                        <Col xs="auto">
-                            <FontAwesomeIcon
-                                icon={faPlus}
-                                size="lg"
-                                onClick={() => isValid()}
-                            />
-                        </Col>
-                        {valid && (
-                            <>
-                                <Col md="9" className="input-light">
-                                    <AsyncTypeahead
-                                        className="input-light"
-                                        id="concerned_member_typehead"
-                                        labelKey="username"
-                                        allowNew={false}
-                                        multiple={false}
-                                        minLength={2}
-                                        onSearch={handleSearch}
-                                        placeholder="Sélectionnez un membre à ajouter"
-                                        isLoading={loading}
-                                        options={member}
-                                        renderMenuItemChildren={option => (
-                                            <p key={option.id}>
-                                                {option.username}
-                                            </p>
-                                        )}
-                                    />
-                                </Col>
-                                <Col xs="auto">
-                                    <Button
-                                        variant="success"
-                                        type="button"
-                                        onClick={() => handleClick()}
-                                    >
-                                        Ajouter{' '}
-                                    </Button>
-                                </Col>
-                            </>
-                        )}
-                    </Row>
-                </Card.Body>
-            </Card>
-        </>
+        <Card>
+            <Card.Body>
+                {error && <Alert variant="danger">{error}</Alert>}
+
+                <Row className="align-items-center">
+                    <Col>
+                        <AsyncTypeahead
+                            id="concerned_member_typehead"
+                            value={name}
+                            onChange={e =>
+                                e.length > 0 && setName(e[0].username)
+                            }
+                            ref={typeahead}
+                            labelKey="username"
+                            allowNew={false}
+                            multiple={false}
+                            minLength={2}
+                            maxResults={5}
+                            onSearch={handleSearch}
+                            placeholder="Sélectionnez un membre à ajouter"
+                            isLoading={loading}
+                            options={member}
+                            renderMenuItemChildren={option => (
+                                <span key={option.id}>{option.username}</span>
+                            )}
+                        />
+                    </Col>
+                    <Col xs="auto" onClick={_addMember}>
+                        <FontAwesomeIcon icon={faPlus} />
+                    </Col>
+                </Row>
+            </Card.Body>
+        </Card>
     );
 };
 

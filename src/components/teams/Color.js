@@ -6,7 +6,7 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons';
 const Color = ({ c, color, setColor }) => {
     return (
         <div
-            className="div-color"
+            className="mb-4 div-color"
             style={{ backgroundColor: c }}
             onClick={() => setColor(c)}
         >

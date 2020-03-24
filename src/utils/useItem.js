@@ -1,7 +1,7 @@
 import React, { useState, createContext, useContext } from 'react';
 import { useForbiddenZone } from './useForbiddenZone';
 import { useMainZone } from './useMainZone';
-import { isInZone } from './utils';
+import { isInZone, getZoneBox } from './utils';
 import { toast } from 'react-toastify';
 
 const ItemContext = createContext();
@@ -35,6 +35,43 @@ export const ItemProvider = ({ children }) => {
             : toast.error(
                   'Veuillez placer les items dans une zone de jeu valide'
               );
+    };
+
+    const createRandom = (nb, itemModel) => {
+        const { x_max, y_max, x_min, y_min } = getZoneBox(mainZone);
+
+        let randomItems = [];
+        let nbItems = nb;
+
+        while (randomItems.length < nbItems) {
+            let newItem = false;
+            let iteration = 0;
+
+            while (!newItem && iteration < 10) {
+                let lat = y_min + Math.random() * (y_max - y_min);
+                let lng = x_min + Math.random() * (x_max - x_min);
+
+                let conflict = false;
+                forbiddenZones.map(
+                    zone => isInZone(lat, lng, zone) && (conflict = true)
+                );
+
+                !conflict &&
+                    isInZone(lat, lng, mainZone) &&
+                    randomItems.push({
+                        modelItem: modelItems[itemModel],
+                        position: { lat, lng },
+                        quantity: 1
+                    }) &&
+                    (newItem = true);
+
+                iteration++;
+            }
+
+            iteration === 10 && nbItems--;
+        }
+
+        setItems(items.concat(randomItems));
     };
 
     const move = (e, item) => {
@@ -79,13 +116,20 @@ export const ItemProvider = ({ children }) => {
         setItems(items.filter(p => p !== point));
     };
 
+    const removeAll = itemModel => {
+        const im = modelItems[itemModel];
+        setItems(items.filter(i => i.modelItem.id !== im.id));
+    };
+
     return (
         <ItemContext.Provider
             value={{
                 items,
                 create,
+                createRandom,
                 move,
                 remove,
+                removeAll,
                 updateItemQuantity,
                 setItems,
                 modelItems,

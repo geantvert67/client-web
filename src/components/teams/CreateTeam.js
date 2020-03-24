@@ -1,29 +1,13 @@
 import React, { useState } from 'react';
-import { Form, Row, Col, Button } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
+import { Form, Row, Col, Button, Alert } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import Color from './Color';
-import history from '../../utils/history';
 import { createTeam } from '../../service/configuration';
 import ModalColor from './ModalColor';
 
 const CreateTeam = ({ configurationId, setIsOpen, teams, setTeams }) => {
-    const { register, handleSubmit, watch, errors } = useForm();
-
-    const [name, setName] = useState('');
-    const [color, setColor] = useState(null);
-
-    const create = e => {
-        createTeam(configurationId, { name, color })
-            .then(res => {
-                setTeams([...teams, res.data]);
-                setIsOpen(false);
-            })
-            .catch(err => {});
-    };
-
     const colors = [
         '#E02828',
         '#DC813A',
@@ -38,89 +22,97 @@ const CreateTeam = ({ configurationId, setIsOpen, teams, setTeams }) => {
         '#EA3B64'
     ];
 
+    const { register, handleSubmit, errors } = useForm();
+    const [color, setColor] = useState(null);
     const [colorChange, setColorChange] = useState(colors);
-
     const [show, setShow] = useState(false);
+    const [error, setError] = useState('');
+
+    const create = ({ name }) => {
+        if (color) {
+            createTeam(configurationId, { name, color })
+                .then(res => {
+                    setTeams([...teams, res.data]);
+                    setIsOpen(false);
+                })
+                .catch(err => {
+                    if (err.response.status === 500) {
+                        setError('Ce nom ou cette couleur est déjà utilisé');
+                    } else setError('Une erreur est survenue');
+                });
+        } else {
+            setError('Veuillez choisir une couleur');
+        }
+    };
 
     const handleShow = () => setShow(true);
 
     return (
-        <>
-            <Row>
-                <Col md={{ span: 6, offset: 3 }}>
-                    <h3>Gestion des équipes</h3>
-                    <Form onSubmit={handleSubmit(create)}>
-                        <Form.Group controlId="formGroupEmail">
-                            <Form.Control
-                                placeholder="Nom *"
-                                ref={register({
-                                    required: true,
-                                    minLength: 2,
-                                    maxLength: 50
-                                })}
-                                onChange={e => setName(e.target.value)}
-                            />
-                        </Form.Group>
-                        {errors.name &&
-                            errors.name.type === 'required' &&
-                            'Un nom est requis'}
-                        {errors.name &&
-                            errors.name.type === 'minLength' &&
-                            'Le nom est trop court'}
-                        {errors.name &&
-                            errors.name.type === 'maxLength' &&
-                            'Le nom est trop long'}
+        <Form onSubmit={handleSubmit(create)}>
+            {error && <Alert variant="danger">{error}</Alert>}
 
-                        <label htmlFor="name">Couleur *</label>
-                        <Row
-                            name="color"
-                            id="color"
-                            className="div-createcolor"
-                        >
-                            {colorChange.map(c => (
-                                <Col>
-                                    <Color
-                                        key={c}
-                                        c={c}
-                                        color={color}
-                                        setColor={setColor}
-                                    />
-                                </Col>
-                            ))}
-                            <Col>
-                                <FontAwesomeIcon
-                                    className="div-color"
-                                    icon={faPlusSquare}
-                                    size="lg"
-                                    onClick={handleShow}
-                                />
-                            </Col>
-                        </Row>
-                        <Row className="justify-content-md-center">
-                            <Col md="auto">
-                                <Button
-                                    variant="success"
-                                    onClick={() => setIsOpen(false)}
-                                >
-                                    Annuler{' '}
-                                </Button>
-                                <Button variant="success" type="submit">
-                                    Créer{' '}
-                                </Button>
-                            </Col>
-                        </Row>
-                    </Form>
-                </Col>
-                <ModalColor
-                    show={show}
-                    setShow={setShow}
-                    color={color}
-                    setColor={setColor}
-                    colorChange={colorChange}
-                    setColorChange={setColorChange}
+            <Form.Group>
+                <label>Nom *</label>
+                <Form.Control
+                    placeholder="Entrez un nom"
+                    name="name"
+                    ref={register({
+                        required: 'Ce champ est obligatoire',
+                        minLength: {
+                            value: 2,
+                            message:
+                                'Le nom doit faire entre 2 et 50 caractères'
+                        },
+                        maxLength: {
+                            value: 50,
+                            message:
+                                'Le nom doit faire entre 2 et 50 caractères'
+                        }
+                    })}
                 />
+                <div className="danger mt-2">
+                    {errors.name && errors.name.message}
+                </div>
+            </Form.Group>
+
+            <label>Couleur *</label>
+            <Row name="color" id="color" className="div-createcolor">
+                {colorChange.map(c => (
+                    <Col xs="auto" key={c}>
+                        <Color c={c} color={color} setColor={setColor} />
+                    </Col>
+                ))}
+                <Col xs="auto">
+                    <div className="mb-4 div-color" onClick={handleShow}>
+                        <FontAwesomeIcon icon={faPlus} size="lg" />
+                    </div>
+                </Col>
             </Row>
-        </>
+            <Row className="mt-5 justify-content-between">
+                <Col xs="auto">
+                    <Button variant="light" onClick={() => setIsOpen(false)}>
+                        Annuler
+                    </Button>
+                </Col>
+                <Col xs="auto">
+                    <Button
+                        variant="success"
+                        className="btn-primary"
+                        type="submit"
+                    >
+                        Créer
+                    </Button>
+                </Col>
+            </Row>
+            <ModalColor
+                show={show}
+                setShow={setShow}
+                color={color}
+                setColor={setColor}
+                colorChange={colorChange}
+                setColorChange={setColorChange}
+            />
+        </Form>
     );
 };
 

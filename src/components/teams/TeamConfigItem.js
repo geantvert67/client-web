@@ -2,11 +2,11 @@ import React from 'react';
 import { Card, Row, Col, Accordion } from 'react-bootstrap';
 import { useDataFromUrl } from '../../utils/data';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCopy, faTrash } from '@fortawesome/free-solid-svg-icons';
-import Color from './Color';
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { removeTeam } from '../../service/configuration';
 import AddMember from './AddMember';
 import TeamMembers from './TeamMembers';
+import { toast } from 'react-toastify';
 
 const TeamConfigItem = ({ configurationId, team, teams, setTeams }) => {
     const {
@@ -18,64 +18,62 @@ const TeamConfigItem = ({ configurationId, team, teams, setTeams }) => {
     const deleteTeam = () => {
         removeTeam(configurationId, team.id)
             .then(() => setTeams(teams.filter(t => t.id !== team.id)))
-            .catch(err => {});
+            .catch(() => toast.error('Une erreur est survenue'));
     };
 
     return (
-        <>
-            {loading ? (
-                '...'
-            ) : (
-                <>
-                    <Accordion>
-                        <Accordion.Toggle
-                            className="dark-team"
-                            as={Card.Header}
-                        >
-                            <Row>
-                                <Col md="9">
-                                    <Card.Title className="card-team">
-                                        <Color c={team.color} />
-
-                                        <span className="name-team">
-                                            {team.name}
-                                        </span>
+        <Accordion className="mt-4">
+            <Accordion.Toggle as={Card}>
+                <Card.Body>
+                    <Row className="align-items-center">
+                        <Col xs="auto">
+                            <div
+                                className="div-color"
+                                style={{ backgroundColor: team.color }}
+                            ></div>
+                        </Col>
+                        <Col>
+                            <Row className="justify-content-between align-items-center">
+                                <Col xs="auto">
+                                    <Card.Title className="mb-0">
+                                        {team.name}
                                     </Card.Title>
                                 </Col>
-                                <Col className="card-team">
+                                <Col xs="auto">
                                     <FontAwesomeIcon
-                                        icon={faTrash}
+                                        icon={faTrashAlt}
                                         className="danger"
                                         size="lg"
                                         onClick={() => deleteTeam()}
                                     />
                                 </Col>
                             </Row>
-                        </Accordion.Toggle>
-                        <Accordion.Collapse className="card-add">
-                            <>
-                                <AddMember
-                                    configurationId={configurationId}
-                                    teamId={team.id}
-                                    members={members}
-                                    setMembers={setMembers}
-                                />
-                                {members !== null &&
-                                    members.map(member => (
-                                        <TeamMembers
-                                            configurationId={configurationId}
-                                            teamId={team.id}
-                                            member={member}
-                                            members={members}
-                                            setMembers={setMembers}
-                                        />
-                                    ))}
-                            </>
-                        </Accordion.Collapse>
-                    </Accordion>
+                        </Col>
+                    </Row>
+                </Card.Body>
+            </Accordion.Toggle>
+            <Accordion.Collapse className="mt-2">
+                <>
+                    <AddMember
+                        configurationId={configurationId}
+                        teamId={team.id}
+                        members={members}
+                        setMembers={setMembers}
+                    />
+                    {members !== null &&
+                        members.map(member => (
+                            <TeamMembers
+                                key={member.id}
+                                configurationId={configurationId}
+                                teamId={team.id}
+                                member={member}
+                                members={members}
+                                setMembers={setMembers}
+                            />
+                        ))}
                 </>
-            )}
-        </>
+            </Accordion.Collapse>
+        </Accordion>
     );
 };
 
