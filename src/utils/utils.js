@@ -73,14 +73,20 @@ export const getVisibilityRadiusAuto = (polygonPosition, coeff) => {
     const { x_max, x_min, y_max, y_min } = getZoneBox(polygonPosition);
     const origin = { lng: x_max, lat: y_max };
     const dest = { lng: x_min, lat: y_min };
+    return (
+        Math.round((coeff * getDistance(origin, dest) + Number.EPSILON) * 100) /
+        100
+    );
+};
 
-    return coeff * getDistance(origin, dest);
+export const formatZone = zone => {
+    return zone.map(z => ({ lat: z[0], lng: z[1] }));
 };
 
 export const getItemImage = item => {
     let iconUrl =
         item.name === 'Sentinelle'
-            ? require('../img/sentinelle.gif')
+            ? require('../img/sentinelle.png')
             : item.name === 'Canon à photons'
             ? require('../img/canonPhotons.gif')
             : item.name === 'Antenne'
