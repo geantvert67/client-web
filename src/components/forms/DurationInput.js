@@ -9,7 +9,9 @@ function DurationInput({
 }) {
     const [secondes, setSecondes] = useState(duration % 60);
     const [minutes, setMinutes] = useState(Math.floor((duration % 3600) / 60));
-    const [heures, setHeures] = useState((duration % (3600 * 24)) / 3600);
+    const [heures, setHeures] = useState(
+        Math.floor((duration % (3600 * 24)) / 3600)
+    );
     const [jours, setJours] = useState(Math.floor(duration / (3600 * 24)));
 
     useEffect(() => {
