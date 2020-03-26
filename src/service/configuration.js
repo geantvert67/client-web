@@ -70,6 +70,10 @@ export const createTeam = (idConfig, credentials) => {
     return request.post(`/configs/${idConfig}/teams`, credentials);
 };
 
+export const updateTeam = (idConfig, idTeam, team) => {
+    return request.put(`/configs/${idConfig}/teams/${idTeam}`, team);
+};
+
 export const removeTeam = (idConfig, idTeam) => {
     return request.delete(`/configs/${idConfig}/teams/${idTeam}`);
 };

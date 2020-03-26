@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Row, Col, Button, Alert } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import Color from './Color';
-import { createTeam } from '../../service/configuration';
+import { createTeam, updateTeam } from '../../service/configuration';
 import ModalColor from './ModalColor';
 
-const CreateTeam = ({ configurationId, setIsOpen, teams, setTeams }) => {
+const CreateTeam = ({ configurationId, setIsOpen, team, teams, setTeams }) => {
     const colors = [
         '#E02828',
         '#DC813A',
@@ -23,23 +23,56 @@ const CreateTeam = ({ configurationId, setIsOpen, teams, setTeams }) => {
     ];
 
     const { register, handleSubmit, errors } = useForm();
-    const [color, setColor] = useState(null);
+    const [color, setColor] = useState(team ? team.color : null);
     const [colorChange, setColorChange] = useState(colors);
     const [show, setShow] = useState(false);
     const [error, setError] = useState('');
 
-    const create = ({ name }) => {
+    useEffect(() => {
+        if (team && team.color && !colorChange.includes(team.color)) {
+            setColorChange([...colorChange, team.color]);
+        }
+    }, []);
+
+    const onSubmit = ({ name }) => {
         if (color) {
-            createTeam(configurationId, { name, color })
-                .then(res => {
-                    setTeams([...teams, res.data]);
-                    setIsOpen(false);
-                })
-                .catch(err => {
-                    if (err.response.status === 500) {
-                        setError('Ce nom ou cette couleur est déjà utilisé');
-                    } else setError('Une erreur est survenue');
-                });
+            if (team) {
+                updateTeam(configurationId, team.id, { name, color })
+                    .then(res => {
+                        setTeams(
+                            teams.map(t =>
+                                t.id === res.data.id
+                                    ? {
+                                          ...t,
+                                          color: res.data.color,
+                                          name: res.data.name
+                                      }
+                                    : t
+                            )
+                        );
+                        setIsOpen(false);
+                    })
+                    .catch(err => {
+                        if (err.response.status === 500) {
+                            setError(
+                                'Ce nom ou cette couleur est déjà utilisé'
+                            );
+                        } else setError('Une erreur est survenue');
+                    });
+            } else {
+                createTeam(configurationId, { name, color })
+                    .then(res => {
+                        setTeams([...teams, res.data]);
+                        setIsOpen(false);
+                    })
+                    .catch(err => {
+                        if (err.response.status === 500) {
+                            setError(
+                                'Ce nom ou cette couleur est déjà utilisé'
+                            );
+                        } else setError('Une erreur est survenue');
+                    });
+            }
         } else {
             setError('Veuillez choisir une couleur');
         }
@@ -48,7 +81,7 @@ const CreateTeam = ({ configurationId, setIsOpen, teams, setTeams }) => {
     const handleShow = () => setShow(true);
 
     return (
-        <Form onSubmit={handleSubmit(create)}>
+        <Form onSubmit={handleSubmit(onSubmit)}>
             {error && <Alert variant="danger">{error}</Alert>}
 
             <Form.Group>
@@ -56,6 +89,7 @@ const CreateTeam = ({ configurationId, setIsOpen, teams, setTeams }) => {
                 <Form.Control
                     placeholder="Entrez un nom"
                     name="name"
+                    defaultValue={team ? team.name : ''}
                     ref={register({
                         required: 'Ce champ est obligatoire',
                         minLength: {
@@ -100,14 +134,13 @@ const CreateTeam = ({ configurationId, setIsOpen, teams, setTeams }) => {
                         className="btn-primary"
                         type="submit"
                     >
-                        Créer
+                        {team ? 'Modifier' : 'Créer'}
                     </Button>
                 </Col>
             </Row>
             <ModalColor
                 show={show}
                 setShow={setShow}
-                color={color}
                 setColor={setColor}
                 colorChange={colorChange}
                 setColorChange={setColorChange}
