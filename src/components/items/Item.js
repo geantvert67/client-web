@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Col, Row, Card, Image, Form } from 'react-bootstrap';
 import { getItemImage } from '../../utils/utils';
 import Switch from '../forms/Switch';
+import DurationInput from '../forms/DurationInput';
 import { useForm } from 'react-hook-form';
 
 function Item({ items, itemModel, removeItem, addItem, updateItem }) {
@@ -60,9 +61,11 @@ function Item({ items, itemModel, removeItem, addItem, updateItem }) {
 }
 
 function ItemForm({ itemModel, item, updateItem }) {
+    const [duration, setDuration] = useState(item ? item.waitingPeriod : null);
     const { register, handleSubmit, getValues, errors } = useForm();
 
     const onSubmit = data => {
+        data.waitingPeriod = duration;
         updateItem(itemModel.name, data);
     };
 
@@ -133,29 +136,6 @@ function ItemForm({ itemModel, item, updateItem }) {
 
             <Row>
                 <Col xs={12}>
-                    <label>Période de carence : </label>
-                    <input
-                        className="ml-2 input-light"
-                        name="waitingPeriod"
-                        defaultValue={item ? item.waitingPeriod : null}
-                        type="number"
-                        onBlur={handleSubmit(onSubmit)}
-                        ref={register({
-                            min: {
-                                value: 1,
-                                message:
-                                    'La période de carence doit durer au moins 1 seconde'
-                            }
-                        })}
-                    />
-                </Col>
-                <Col xs="auto" className="danger">
-                    {errors.waitingPeriod && errors.waitingPeriod.message}
-                </Col>
-            </Row>
-
-            <Row>
-                <Col xs={12}>
                     <label>Déplacement automatique : </label>
                     <label className="ml-2 radio-buttons-wrapper">
                         Oui
@@ -190,8 +170,40 @@ function ItemForm({ itemModel, item, updateItem }) {
                     {errors.autoMove && errors.autoMove.message}
                 </Col>
             </Row>
+
+            <Row>
+                <Col xs={12}>
+                    <label>Période de carence : </label>
+                    <DurationInput
+                        onBlur={handleSubmit(onSubmit)}
+                        light={true}
+                        duration={duration}
+                        setDuration={setDuration}
+                    />
+                </Col>
+                <Col xs="auto" className="danger">
+                    {errors.waitingPeriod && errors.waitingPeriod.message}
+                </Col>
+            </Row>
         </Form>
     );
 }
 
 export default Item;
+
+/*
+    <input
+                        className="ml-2 input-light"
+                        name="waitingPeriod"
+                        defaultValue={}
+                        type="number"
+                        onBlur={handleSubmit(onSubmit)}
+                        ref={register({
+                            min: {
+                                value: 1,
+                                message:
+                                    'La période de carence doit durer au moins 1 seconde'
+                            }
+                        })}
+                    />
+*/

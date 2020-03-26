@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Table } from 'react-bootstrap';
 
-function DurationInput({ duration, setDuration }) {
+function DurationInput({
+    duration,
+    setDuration,
+    light = false,
+    onBlur = () => {}
+}) {
     const [secondes, setSecondes] = useState(duration % 60);
     const [minutes, setMinutes] = useState(Math.floor((duration % 3600) / 60));
     const [heures, setHeures] = useState((duration % (3600 * 24)) / 3600);
@@ -17,7 +22,12 @@ function DurationInput({ duration, setDuration }) {
     }, [secondes, minutes, heures, jours]);
 
     return (
-        <Table borderless responsive variant="dark">
+        <Table
+            borderless
+            responsive
+            variant="dark"
+            className={light ? 'table-light' : ''}
+        >
             <thead>
                 <tr>
                     <th>jours</th>
@@ -30,6 +40,8 @@ function DurationInput({ duration, setDuration }) {
                 <tr>
                     <th>
                         <InputNumber
+                            onBlur={onBlur}
+                            light={light}
                             v={jours}
                             setV={setJours}
                             min={0}
@@ -38,6 +50,8 @@ function DurationInput({ duration, setDuration }) {
                     </th>
                     <th>
                         <InputNumber
+                            onBlur={onBlur}
+                            light={light}
                             v={heures}
                             setV={setHeures}
                             min={0}
@@ -46,6 +60,8 @@ function DurationInput({ duration, setDuration }) {
                     </th>
                     <th>
                         <InputNumber
+                            onBlur={onBlur}
+                            light={light}
                             v={minutes}
                             setV={setMinutes}
                             min={0}
@@ -54,6 +70,8 @@ function DurationInput({ duration, setDuration }) {
                     </th>
                     <th>
                         <InputNumber
+                            onBlur={onBlur}
+                            light={light}
                             v={secondes}
                             setV={setSecondes}
                             min={0}
@@ -66,7 +84,7 @@ function DurationInput({ duration, setDuration }) {
     );
 }
 
-function InputNumber({ v, setV, min, max }) {
+function InputNumber({ light, onBlur, v, setV, min, max }) {
     const handleChange = e => {
         const value = e.target.value
             ? Math.max(
@@ -79,7 +97,8 @@ function InputNumber({ v, setV, min, max }) {
 
     return (
         <input
-            className="input-light"
+            onBlur={onBlur}
+            className={light ? 'input-dark' : 'input-light'}
             style={{ width: '50px', paddingLeft: '5px' }}
             type="number"
             value={v}
