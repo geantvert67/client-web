@@ -103,7 +103,7 @@ function InputNumber({ light, onBlur, v, setV, min, max }) {
             className={light ? 'input-dark' : 'input-light'}
             style={{ width: '50px', paddingLeft: '5px' }}
             type="number"
-            value={v}
+            value={Number.isNaN(v) ? 0 : v}
             pattern="[0-9]*"
             inputMode="numeric"
             onChange={handleChange}
