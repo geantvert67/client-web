@@ -10,6 +10,7 @@ a {
 }
 
 select,
+.table-dark,
 .form-control,
 .input-group-text,
 .input-map,
@@ -26,6 +27,7 @@ select,
 }
 
 label,
+.table-dark,
 .form-control,
 .input-light,
 .input-map,
@@ -356,4 +358,12 @@ input:checked + .slider:before {
 
 .underline {
     text-decoration: underline !important;
+}
+
+.table-dark {
+    border-radius: 4px !important;
+}
+
+th {
+    text-align: center !important;
 }

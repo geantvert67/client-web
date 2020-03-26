@@ -74,8 +74,6 @@ export const getVisibilityRadiusAuto = (polygonPosition, coeff) => {
     const origin = { lng: x_max, lat: y_max };
     const dest = { lng: x_min, lat: y_min };
 
-    console.log(coeff);
-
     return coeff * getDistance(origin, dest);
 };
 

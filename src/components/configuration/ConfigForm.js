@@ -9,27 +9,60 @@ import { serializeConfig } from '../../utils/config';
 import { create, updateById } from '../../service/configuration';
 import history from '../../utils/history';
 import ConfigMenu from './ConfigMenu';
+import DurationInput from '../forms/DurationInput';
 
 function ConfigForm({ config, setConfig }) {
     const [showDuration, setShowDuration] = useState(
         config ? config.gameMode != 'SUPREMACY' : false
     );
+    const [flagCaptureDuration, setFlagCaptureDuration] = useState(
+        config ? config.flagCaptureDuration : null
+    );
+    const [duration, setDuration] = useState(config ? config.duration : null);
     const [error, setError] = useState('');
 
+    const validate = config => {
+        if (
+            (config.gameMode != 'SUPREMACY' && !duration) ||
+            (config.gameMode != 'SUPREMACY' && duration < 60) ||
+            (config.gameMode != 'SUPREMACY' && duration > 31536000)
+        ) {
+            setError(
+                'Veuillez entrer une durée comprise entre 60 secondes et 1 an'
+            );
+        } else if (flagCaptureDuration < 60 || flagCaptureDuration > 31536000) {
+            setError(
+                'Veuillez entrer une durée comprise entre 60 secondes et 1 an'
+            );
+        } else {
+            return true;
+        }
+        return false;
+    };
+
     const createConfig = config => {
-        create(serializeConfig(config))
-            .then(res => history.push(`/configs/${res.data.id}/items`))
-            .catch(err => setError(err.response.data));
+        if (validate(config)) {
+            config.flagCaptureDuration = flagCaptureDuration;
+            config.duration = config.gameMode != 'SUPREMACY' ? duration : null;
+            create(serializeConfig(config))
+                .then(res => history.push(`/configs/${res.data.id}/items`))
+                .catch(err => setError(err.response.data));
+        }
     };
 
     const updateConfig = newConfig => {
-        newConfig.id = config.id;
-        updateById(serializeConfig(newConfig))
-            .then(res => {
-                setConfig(res.data);
-                history.push(`/configs/${res.data.id}/items`);
-            })
-            .catch(err => setError(err.response.data));
+        if (validate(newConfig)) {
+            newConfig.id = config.id;
+            newConfig.flagCaptureDuration = flagCaptureDuration;
+            newConfig.duration =
+                newConfig.gameMode != 'SUPREMACY' ? duration : null;
+            updateById(serializeConfig(newConfig))
+                .then(res => {
+                    setConfig(res.data);
+                    history.push(`/configs/${res.data.id}/items`);
+                })
+                .catch(err => setError(err.response.data));
+        }
     };
 
     return (
@@ -89,19 +122,9 @@ function ConfigForm({ config, setConfig }) {
                         {showDuration && (
                             <>
                                 <label>Durée *</label>
-                                <Input
-                                    type="number"
-                                    name="duration"
-                                    placeholder="Entrez un nombre"
-                                    defaultValue={config && config.duration}
-                                    validationSchema={
-                                        showDuration
-                                            ? {
-                                                  required:
-                                                      'Ce champ est obligatoire'
-                                              }
-                                            : {}
-                                    }
+                                <DurationInput
+                                    duration={duration}
+                                    setDuration={setDuration}
                                 />
                             </>
                         )}
@@ -225,7 +248,7 @@ function ConfigForm({ config, setConfig }) {
                         </Row>
 
                         <label className="mt-5">
-                            Rayon de visibilité des drapeaux
+                            Rayon de visibilité des cristaux
                         </label>
                         <Row>
                             <Col>
@@ -251,7 +274,7 @@ function ConfigForm({ config, setConfig }) {
                             </Col>
                         </Row>
 
-                        <label>Rayon d'action des drapeaux</label>
+                        <label>Rayon d'action des cristaux</label>
                         <Row>
                             <Col>
                                 <Input
@@ -276,20 +299,10 @@ function ConfigForm({ config, setConfig }) {
                             </Col>
                         </Row>
 
-                        <label>Temps de possession des drapeaux *</label>
-                        <Input
-                            type="number"
-                            name="flagCaptureDuration"
-                            placeholder="Entrez un nombre"
-                            defaultValue={config && config.flagCaptureDuration}
-                            validationSchema={{
-                                required: 'Ce champ est obligatoire',
-                                min: {
-                                    value: 60,
-                                    message:
-                                        "Le temps de possession doit être d'au moins 60 secondes"
-                                }
-                            }}
+                        <label>Durée de verrouillage des cristaux *</label>
+                        <DurationInput
+                            duration={flagCaptureDuration}
+                            setDuration={setFlagCaptureDuration}
                         />
 
                         <Row className="justify-content-end mt-5">

@@ -1,0 +1,93 @@
+import React, { useState, useEffect } from 'react';
+import { Row, Col, Table } from 'react-bootstrap';
+
+function DurationInput({ duration, setDuration }) {
+    const [secondes, setSecondes] = useState(duration % 60);
+    const [minutes, setMinutes] = useState(Math.floor((duration % 3600) / 60));
+    const [heures, setHeures] = useState((duration % (3600 * 24)) / 3600);
+    const [jours, setJours] = useState(Math.floor(duration / (3600 * 24)));
+
+    useEffect(() => {
+        let s = secondes ? secondes : 0,
+            m = minutes ? minutes : 0,
+            h = heures ? heures : 0,
+            j = jours ? jours : 0;
+
+        setDuration(s + m * 60 + h * 3600 + j * 86400);
+    }, [secondes, minutes, heures, jours]);
+
+    return (
+        <Table borderless responsive variant="dark">
+            <thead>
+                <tr>
+                    <th>jours</th>
+                    <th>heures</th>
+                    <th>minutes</th>
+                    <th>secondes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>
+                        <InputNumber
+                            v={jours}
+                            setV={setJours}
+                            min={0}
+                            max={365}
+                        />
+                    </th>
+                    <th>
+                        <InputNumber
+                            v={heures}
+                            setV={setHeures}
+                            min={0}
+                            max={24}
+                        />
+                    </th>
+                    <th>
+                        <InputNumber
+                            v={minutes}
+                            setV={setMinutes}
+                            min={0}
+                            max={60}
+                        />
+                    </th>
+                    <th>
+                        <InputNumber
+                            v={secondes}
+                            setV={setSecondes}
+                            min={0}
+                            max={60}
+                        />
+                    </th>
+                </tr>
+            </tbody>
+        </Table>
+    );
+}
+
+function InputNumber({ v, setV, min, max }) {
+    const handleChange = e => {
+        const value = e.target.value
+            ? Math.max(
+                  Number(min),
+                  Math.min(Number(max), Number(e.target.value))
+              )
+            : '';
+        setV(value);
+    };
+
+    return (
+        <input
+            className="input-light"
+            style={{ width: '50px', paddingLeft: '5px' }}
+            type="number"
+            value={v}
+            pattern="[0-9]*"
+            inputMode="numeric"
+            onChange={handleChange}
+        />
+    );
+}
+
+export default DurationInput;
