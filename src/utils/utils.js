@@ -80,19 +80,27 @@ export const getVisibilityRadiusAuto = (polygonPosition, coeff) => {
 export const getItemImage = item => {
     let iconUrl =
         item.name === 'Sentinelle'
-            ? require('../img/sentinelle.png')
+            ? require('../img/sentinelle.gif')
             : item.name === 'Canon à photons'
-            ? require('../img/turret.png')
+            ? require('../img/canonPhotons.gif')
             : item.name === 'Antenne'
             ? require('../img/antenne.png')
             : item.name === 'Sonde'
             ? require('../img/sonde.png')
-            : item.name === 'Portail'
+            : item.name === 'Portail de transfert'
             ? require('../img/portail.png')
             : item.name === 'Disloqueur'
-            ? require('../img/disloqueur.gif')
+            ? require('../img/disloqueur.png')
             : item.name === 'Intercepteur'
             ? require('../img/intercepteur.gif')
+            : item.name === 'Noyau protecteur'
+            ? require('../img/noyau.png')
+            : item.name === 'Oracle'
+            ? require('../img/oracle.png')
+            : item.name === 'Tempête'
+            ? require('../img/tempete.png')
+            : item.name === 'Transducteur'
+            ? require('../img/transducteur.gif')
             : require('../img/mainZone.gif');
 
     return iconUrl;

@@ -30,7 +30,7 @@ function Item({ items, itemModel, removeItem, addItem, updateItem }) {
                 <Row className="align-items-center">
                     <Col xs="auto">
                         <Image
-                            style={{ width: '50px' }}
+                            style={{ maxWidth: '50px', maxHeight: '50px' }}
                             src={getItemImage(itemModel)}
                         />
                     </Col>

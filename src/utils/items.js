@@ -12,7 +12,7 @@ export const itemModels = [
     },
 
     {
-        name: 'Prisme de transfert',
+        name: 'Portail de transfert',
         description: 'Transfère un item à un joueur allié'
     },
 
@@ -31,7 +31,7 @@ export const itemModels = [
     {
         name: 'Canon à photons',
         description:
-            "Empèche le joueur qui l'active de capturer des crystaux, d'utiliser et/ou de prendre des items pendant une durée déterminée"
+            "Empèche le joueur qui l'active de capturer des cristaux, d'utiliser et/ou de prendre des items pendant une durée déterminée"
     },
 
     {

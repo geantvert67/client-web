@@ -79,7 +79,10 @@ function Item({ item, action, setAction }) {
                         setSelectedModelItem(index);
                     }}
                 >
-                    <Image style={{ width: '25px' }} src={iconUrl} />
+                    <Image
+                        style={{ maxWidth: '25px', maxHeight: '25px' }}
+                        src={iconUrl}
+                    />
                 </Col>
                 <Col xs="auto" className="mb-3 mr-3 actions-item">
                     <form onSubmit={handleSubmit(_createRandom)}>
