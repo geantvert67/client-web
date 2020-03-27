@@ -13,13 +13,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ConfigForm from './configuration/ConfigForm';
 import ConfigLoader from './configuration/ConfigLoader';
 import Error from './Error';
+import Home from './Home';
 
 toast.configure({
     hideProgressBar: true,
     pauseOnHover: false
 });
-
-const Home = () => <h3>You're at home</h3>;
 
 const App = () => {
     return (

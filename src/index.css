@@ -376,3 +376,20 @@ input:checked + .slider:before {
 th {
     text-align: center !important;
 }
+
+.landing-title {
+    display: inline-block;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+.landing-title:before {
+    content: '';
+    position: absolute;
+    width: 3rem;
+    height: 1px;
+    bottom: 0;
+    left: 0;
+    border-bottom: 5px solid #68b684;
+    border-radius: 4px;
+}
