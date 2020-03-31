@@ -136,7 +136,13 @@ function GameMap({
 
     return (
         defaultPosition.length !== 0 && (
-            <Map ref={map} center={position} zoom={zoom} onClick={handleClick}>
+            <Map
+                ref={map}
+                center={position}
+                zoom={zoom}
+                onClick={handleClick}
+                minZoom={5}
+            >
                 <TileLayer url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" />
                 <Polygon color="green" positions={mainZone} />
 
