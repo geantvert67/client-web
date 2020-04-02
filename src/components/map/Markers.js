@@ -92,7 +92,6 @@ function MainZoneMarker({ point, stopDragging, startDragging }) {
 
     return (
         <Marker
-            key={point.id}
             position={point}
             icon={iconGameArea}
             draggable
@@ -126,7 +125,6 @@ function ForbiddenZoneMarker({ point, stopDragging, startDragging }) {
 
     return (
         <Marker
-            key={point.id}
             position={point}
             icon={iconForbiddenArea}
             draggable
@@ -155,7 +153,6 @@ function ForbiddenZoneMarker({ point, stopDragging, startDragging }) {
 }
 
 function FlagMarker({
-    key,
     flag,
     stopDragging,
     startDragging,
@@ -168,7 +165,6 @@ function FlagMarker({
     return (
         <>
             <Marker
-                key={key}
                 position={flag}
                 icon={iconWhiteFlag}
                 draggable
@@ -204,14 +200,13 @@ function FlagMarker({
     );
 }
 
-function ItemMarker({ key, point, stopDragging, startDragging }) {
+function ItemMarker({ point, stopDragging, startDragging }) {
     const { move, updateItemQuantity, remove } = useItem();
     const popup = useRef(null);
     const icon = getItemIcon(point.modelItem);
 
     return (
         <Marker
-            key={key}
             position={point.position}
             icon={icon}
             draggable
