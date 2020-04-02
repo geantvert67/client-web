@@ -1,6 +1,11 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { Marker, Popup, Circle } from 'react-leaflet';
-import { iconWhiteFlag, iconPylone, getItemIcon } from './Icons';
+import {
+    iconWhiteFlag,
+    iconGameArea,
+    iconForbiddenArea,
+    getItemIcon
+} from './Icons';
 import { getVisibilityRadiusAuto } from '../../utils/utils';
 import { useMainZone } from '../../utils/useMainZone';
 import { useForbiddenZone } from '../../utils/useForbiddenZone';
@@ -89,7 +94,7 @@ function MainZoneMarker({ point, stopDragging, startDragging }) {
         <Marker
             key={point.id}
             position={point}
-            icon={iconPylone}
+            icon={iconGameArea}
             draggable
             autoPan
             onDragend={e => {
@@ -123,6 +128,7 @@ function ForbiddenZoneMarker({ point, stopDragging, startDragging }) {
         <Marker
             key={point.id}
             position={point}
+            icon={iconForbiddenArea}
             draggable
             autoPan
             onDragend={e => {

@@ -176,7 +176,7 @@ function Home() {
                 </Col>
             </Row>
 
-            <Row className="mt-5 justify-content-between align-items-center">
+            <Row className="mt-5 justify-content-between align-items-center flex-column-reverse flex-md-row">
                 <Col md="5">
                     <h2>Joueur lambda</h2>
                     <p className="mt-4 mb-0">

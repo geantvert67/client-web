@@ -107,7 +107,9 @@ export const getItemImage = item => {
             ? require('../img/tempete.png')
             : item.name === 'Transducteur'
             ? require('../img/transducteur.gif')
-            : require('../img/mainZone.gif');
+            : item.name === 'Transporteur'
+            ? require('../img/transporteur.png')
+            : require('../img/gameArea.png');
 
     return iconUrl;
 };

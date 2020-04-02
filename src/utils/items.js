@@ -40,7 +40,7 @@ export const itemModels = [
     },
 
     {
-        name: 'Portail',
+        name: 'Transporteur',
         description:
             "Augmente la taille de l’inventaire du joueur qui l'utilise"
     },
