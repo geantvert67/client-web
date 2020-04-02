@@ -73,10 +73,14 @@ export const getVisibilityRadiusAuto = (polygonPosition, coeff) => {
     const { x_max, x_min, y_max, y_min } = getZoneBox(polygonPosition);
     const origin = { lng: x_max, lat: y_max };
     const dest = { lng: x_min, lat: y_min };
+    return (
+        Math.round((coeff * getDistance(origin, dest) + Number.EPSILON) * 100) /
+        100
+    );
+};
 
-    console.log(coeff);
-
-    return coeff * getDistance(origin, dest);
+export const formatZone = zone => {
+    return zone.map(z => ({ lat: z[0], lng: z[1] }));
 };
 
 export const getItemImage = item => {
@@ -84,18 +88,28 @@ export const getItemImage = item => {
         item.name === 'Sentinelle'
             ? require('../img/sentinelle.png')
             : item.name === 'Canon à photons'
-            ? require('../img/turret.png')
+            ? require('../img/canonPhotons.gif')
             : item.name === 'Antenne'
             ? require('../img/antenne.png')
             : item.name === 'Sonde'
             ? require('../img/sonde.png')
-            : item.name === 'Portail'
+            : item.name === 'Portail de transfert'
             ? require('../img/portail.png')
             : item.name === 'Disloqueur'
-            ? require('../img/disloqueur.gif')
+            ? require('../img/disloqueur.png')
             : item.name === 'Intercepteur'
             ? require('../img/intercepteur.gif')
-            : require('../img/mainZone.gif');
+            : item.name === 'Noyau protecteur'
+            ? require('../img/noyau.png')
+            : item.name === 'Oracle'
+            ? require('../img/oracle.png')
+            : item.name === 'Tempête'
+            ? require('../img/tempete.png')
+            : item.name === 'Transducteur'
+            ? require('../img/transducteur.gif')
+            : item.name === 'Transporteur'
+            ? require('../img/transporteur.png')
+            : require('../img/gameArea.png');
 
     return iconUrl;
 };

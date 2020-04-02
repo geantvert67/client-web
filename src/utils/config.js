@@ -113,7 +113,6 @@ export const serializeModels = model => {
     model.waitingPeriod = model.waitingPeriod
         ? parseInt(model.waitingPeriod)
         : null;
-    Object.keys(model).forEach(key => model[key] == null && delete model[key]);
 
     return model;
 };
@@ -124,7 +123,7 @@ export const serializeConfig = config => {
     config.maxPlayers = config.maxPlayers ? parseInt(config.maxPlayers) : null;
     config.inventorySize = config.inventorySize
         ? parseInt(config.inventorySize)
-        : null;
+        : undefined;
     config.playerVisibilityRadius = config.playerVisibilityRadius
         ? parseFloat(config.playerVisibilityRadius)
         : null;
@@ -140,9 +139,6 @@ export const serializeConfig = config => {
     config.flagCaptureDuration = config.flagCaptureDuration
         ? parseInt(config.flagCaptureDuration)
         : null;
-    Object.keys(config).forEach(
-        key => config[key] == null && delete config[key]
-    );
 
     return config;
 };

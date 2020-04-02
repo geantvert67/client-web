@@ -16,7 +16,9 @@ const TeamConfig = () => {
         `/configs/${configurationId}/teams`
     );
 
-    const [isOpen, setIsOpen] = useState(false);
+    const [create, setCreate] = useState(false);
+    const [update, setUdpdate] = useState(false);
+    const [updatedTeam, setUdpdatedTeam] = useState(null);
 
     return (
         <Container className="mt-5 mb-5">
@@ -26,16 +28,24 @@ const TeamConfig = () => {
 
                     <h3 className="mb-5">Gestion des équipes</h3>
 
-                    {isOpen ? (
+                    {create || update ? (
                         <CreateTeam
                             configurationId={configurationId}
-                            setIsOpen={setIsOpen}
+                            team={updatedTeam}
+                            setIsOpen={
+                                create
+                                    ? setCreate
+                                    : e => {
+                                          setUdpdate(e);
+                                          setUdpdatedTeam(null);
+                                      }
+                            }
                             teams={teams}
                             setTeams={setTeams}
                         />
                     ) : (
                         <>
-                            <Card onClick={() => setIsOpen(true)}>
+                            <Card onClick={() => setCreate(true)}>
                                 <Card.Body>
                                     <Row className="align-items-center">
                                         <Col xs="auto">
@@ -75,6 +85,10 @@ const TeamConfig = () => {
                                     <TeamConfigItem
                                         key={team.id}
                                         configurationId={configurationId}
+                                        setIsOpen={e => {
+                                            setUdpdatedTeam(team);
+                                            setUdpdate(e);
+                                        }}
                                         team={team}
                                         teams={teams}
                                         setTeams={setTeams}

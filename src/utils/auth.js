@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import request from './request';
 import Cookies from 'js-cookie';
+import { Row, Col, Spinner, Container } from 'react-bootstrap';
 
 const AuthContext = createContext();
 
@@ -22,7 +23,15 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     if (loading) {
-        return <h4>Loading...</h4>;
+        return (
+            <Container>
+                <Row className="justify-content-center mt-5">
+                    <Col xs="auto">
+                        <Spinner animation="border" variant="light" />
+                    </Col>
+                </Row>
+            </Container>
+        );
     }
 
     const signup = (user, setError) => {

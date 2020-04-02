@@ -1,6 +1,11 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { Marker, Popup, Circle } from 'react-leaflet';
-import { iconWhiteFlag, iconPylone, getItemIcon } from './Icons';
+import {
+    iconWhiteFlag,
+    iconGameArea,
+    iconForbiddenArea,
+    getItemIcon
+} from './Icons';
 import { getVisibilityRadiusAuto } from '../../utils/utils';
 import { useMainZone } from '../../utils/useMainZone';
 import { useForbiddenZone } from '../../utils/useForbiddenZone';
@@ -87,9 +92,8 @@ function MainZoneMarker({ point, stopDragging, startDragging }) {
 
     return (
         <Marker
-            key={point.id}
             position={point}
-            icon={iconPylone}
+            icon={iconGameArea}
             draggable
             autoPan
             onDragend={e => {
@@ -121,8 +125,8 @@ function ForbiddenZoneMarker({ point, stopDragging, startDragging }) {
 
     return (
         <Marker
-            key={point.id}
             position={point}
+            icon={iconForbiddenArea}
             draggable
             autoPan
             onDragend={e => {
@@ -149,7 +153,6 @@ function ForbiddenZoneMarker({ point, stopDragging, startDragging }) {
 }
 
 function FlagMarker({
-    key,
     flag,
     stopDragging,
     startDragging,
@@ -162,7 +165,6 @@ function FlagMarker({
     return (
         <>
             <Marker
-                key={key}
                 position={flag}
                 icon={iconWhiteFlag}
                 draggable
@@ -198,14 +200,13 @@ function FlagMarker({
     );
 }
 
-function ItemMarker({ key, point, stopDragging, startDragging }) {
+function ItemMarker({ point, stopDragging, startDragging }) {
     const { move, updateItemQuantity, remove } = useItem();
     const popup = useRef(null);
     const icon = getItemIcon(point.modelItem);
 
     return (
         <Marker
-            key={key}
             position={point.position}
             icon={icon}
             draggable
