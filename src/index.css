@@ -93,6 +93,7 @@ option:hover {
 
 .navbar {
     background-color: #1b1e22;
+    height: 4rem !important;
 }
 
 .navbar-brand {
