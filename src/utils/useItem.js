@@ -13,8 +13,6 @@ export const ItemProvider = ({ children }) => {
     const { position: mainZone } = useMainZone();
     const { forbiddenZones } = useForbiddenZone();
 
-    console.log(items);
-
     const create = point => {
         const position = { lat: point.latlng.lat, lng: point.latlng.lng };
 

@@ -1,6 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Map, TileLayer, Polygon } from 'react-leaflet';
-import { isInZone, getCenterZoneBox } from '../../utils/utils';
+import {
+    isInZone,
+    getCenterZoneBox,
+    getVisibilityRadiusAuto,
+    getDistance
+} from '../../utils/utils';
 import Markers from './Markers';
 import {
     formatMainZone,
@@ -12,7 +17,8 @@ import {
     getAreas,
     getFlags,
     getItemsModel,
-    getItems
+    getItems,
+    getById
 } from '../../service/configuration';
 import { useMainZone } from '../../utils/useMainZone';
 import { useForbiddenZone } from '../../utils/useForbiddenZone';
@@ -28,6 +34,7 @@ function GameMap({
     configId
 }) {
     const [position, setPosition] = useState(defaultPosition);
+    const [config, setConfig] = useState(null);
     const [zoom, setZoom] = useState(17);
     const map = useRef(null);
 
@@ -45,6 +52,10 @@ function GameMap({
     } = useForbiddenZone();
     const { flagsPositions, setFlagsPositions, create: createFlag } = useFlag();
     const { items, setItems, setModelItems, create: createItem } = useItem();
+
+    useEffect(() => {
+        getById(configId).then(res => setConfig(res.data));
+    }, []);
 
     useEffect(() => {
         let forbZones = [];
@@ -84,8 +95,20 @@ function GameMap({
                 conflict = conflict || !valid;
             });
             let validZone = isInZone(flag.lat, flag.lng, mainZone);
+            flagsPositions
+                .filter(f => f.lat !== flag.lat && f.lng !== flag.lng)
+                .map(
+                    f2 =>
+                        getDistance(f2, {
+                            lat: flag.lat,
+                            lng: flag.lng
+                        }) <
+                            (config.flagVisibilityRadius ||
+                                getVisibilityRadiusAuto(mainZone, 0.05)) *
+                                2 && (conflict = true)
+                );
             conflict = conflict || !validZone;
-            valid && validZone && otherFlags.push(flag);
+            valid && validZone && !conflict && otherFlags.push(flag);
         });
 
         if (conflict) {
