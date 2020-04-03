@@ -95,6 +95,7 @@ function GameMap({
                 conflict = conflict || !valid;
             });
             let validZone = isInZone(flag.lat, flag.lng, mainZone);
+            let conflictFlags = false;
             flagsPositions
                 .filter(f => f.lat !== flag.lat && f.lng !== flag.lng)
                 .map(
@@ -105,10 +106,10 @@ function GameMap({
                         }) <
                             (config.flagVisibilityRadius ||
                                 getVisibilityRadiusAuto(mainZone, 0.05)) *
-                                2 && (conflict = true)
+                                2 && (conflictFlags = true)
                 );
-            conflict = conflict || !validZone;
-            valid && validZone && !conflict && otherFlags.push(flag);
+            conflict = conflict || !validZone || conflictFlags;
+            valid && validZone && !conflictFlags && otherFlags.push(flag);
         });
 
         if (conflict) {
