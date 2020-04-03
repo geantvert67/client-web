@@ -35,7 +35,9 @@ function ConfigMenu({ level, configId }) {
             >
                 <FontAwesomeIcon icon={faSlidersH} size="lg" />
             </Col>
-            <Col className={getSeparatorClassName()}></Col>
+            <Col
+                className={`${getSeparatorClassName()} d-none d-lg-block`}
+            ></Col>
 
             <Col
                 xs="auto"
@@ -44,7 +46,9 @@ function ConfigMenu({ level, configId }) {
             >
                 <FontAwesomeIcon icon={faUsers} size="lg" />
             </Col>
-            <Col className={getSeparatorClassName()}></Col>
+            <Col
+                className={`${getSeparatorClassName()} d-none d-lg-block`}
+            ></Col>
 
             <Col
                 xs="auto"
@@ -53,7 +57,9 @@ function ConfigMenu({ level, configId }) {
             >
                 <FontAwesomeIcon icon={faToolbox} size="lg" />
             </Col>
-            <Col className={getSeparatorClassName()}></Col>
+            <Col
+                className={`${getSeparatorClassName()} d-none d-lg-block`}
+            ></Col>
 
             <Col
                 xs="auto"

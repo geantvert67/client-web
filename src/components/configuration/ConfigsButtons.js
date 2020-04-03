@@ -30,7 +30,7 @@ const ConfigsButtons = ({ community, setCommunity }) => {
                                 }
                                 onClick={() => setCommunity(true)}
                             >
-                                Communauté
+                                Configs publiques
                             </Button>
                         </Col>
                     </Row>
