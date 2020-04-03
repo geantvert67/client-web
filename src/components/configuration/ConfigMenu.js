@@ -40,18 +40,18 @@ function ConfigMenu({ level, configId }) {
             <Col
                 xs="auto"
                 className={getItemClassName(2)}
-                onClick={() => goTo('/items')}
+                onClick={() => goTo('/teams')}
             >
-                <FontAwesomeIcon icon={faToolbox} size="lg" />
+                <FontAwesomeIcon icon={faUsers} size="lg" />
             </Col>
             <Col className={getSeparatorClassName()}></Col>
 
             <Col
                 xs="auto"
                 className={getItemClassName(3)}
-                onClick={() => goTo('/teams')}
+                onClick={() => goTo('/items')}
             >
-                <FontAwesomeIcon icon={faUsers} size="lg" />
+                <FontAwesomeIcon icon={faToolbox} size="lg" />
             </Col>
             <Col className={getSeparatorClassName()}></Col>
 

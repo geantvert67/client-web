@@ -24,7 +24,7 @@ const TeamConfig = () => {
         <Container className="mt-5 mb-5">
             <Row>
                 <Col md={{ span: 6, offset: 3 }}>
-                    <ConfigMenu level={3} configId={configurationId} />
+                    <ConfigMenu level={2} configId={configurationId} />
 
                     <h3 className="mb-5">Gestion des équipes</h3>
 
