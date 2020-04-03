@@ -20,7 +20,7 @@ function ForbiddenZoneActions({ action, setAction }) {
                 onClick={() => setIsOpen(!isOpen)}
             >
                 <h3>Zones interdites</h3>
-                <FontAwesomeIcon icon={isOpen ? faChevronDown : faChevronUp} />
+                <FontAwesomeIcon icon={isOpen ? faChevronUp : faChevronDown} />
             </Row>
 
             {isOpen && (

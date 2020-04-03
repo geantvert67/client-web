@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Col, Row, Card, Image, Form } from 'react-bootstrap';
 import { getItemImage } from '../../utils/utils';
 import Switch from '../forms/Switch';
+import DurationInput from '../forms/DurationInput';
 import { useForm } from 'react-hook-form';
 
 function Item({ items, itemModel, removeItem, addItem, updateItem }) {
@@ -29,7 +30,7 @@ function Item({ items, itemModel, removeItem, addItem, updateItem }) {
                 <Row className="align-items-center">
                     <Col xs="auto">
                         <Image
-                            style={{ width: '50px' }}
+                            style={{ maxWidth: '50px', maxHeight: '50px' }}
                             src={getItemImage(itemModel)}
                         />
                     </Col>
@@ -60,9 +61,11 @@ function Item({ items, itemModel, removeItem, addItem, updateItem }) {
 }
 
 function ItemForm({ itemModel, item, updateItem }) {
+    const [duration, setDuration] = useState(item ? item.waitingPeriod : null);
     const { register, handleSubmit, getValues, errors } = useForm();
 
     const onSubmit = data => {
+        data.waitingPeriod = duration;
         updateItem(itemModel.name, data);
     };
 
@@ -110,9 +113,14 @@ function ItemForm({ itemModel, item, updateItem }) {
                             validate: {
                                 smallerThanVR: value => {
                                     const { visibilityRadius } = getValues();
+
                                     return (
-                                        !visibilityRadius ||
-                                        value <= visibilityRadius ||
+                                        (!visibilityRadius
+                                            ? true
+                                            : value
+                                            ? parseInt(value) <=
+                                              parseInt(visibilityRadius)
+                                            : true) ||
                                         "Le rayon d'action doit être inférieur ou égal au rayon de visibilité"
                                     );
                                 }
@@ -123,29 +131,6 @@ function ItemForm({ itemModel, item, updateItem }) {
                 </Col>
                 <Col xs="auto" className="danger">
                     {errors.actionRadius && errors.actionRadius.message}
-                </Col>
-            </Row>
-
-            <Row>
-                <Col xs={12}>
-                    <label>Période de carence : </label>
-                    <input
-                        className="ml-2 input-light"
-                        name="waitingPeriod"
-                        defaultValue={item ? item.waitingPeriod : null}
-                        type="number"
-                        onBlur={handleSubmit(onSubmit)}
-                        ref={register({
-                            min: {
-                                value: 1,
-                                message:
-                                    'La période de carence doit durer au moins 1 seconde'
-                            }
-                        })}
-                    />
-                </Col>
-                <Col xs="auto" className="danger">
-                    {errors.waitingPeriod && errors.waitingPeriod.message}
                 </Col>
             </Row>
 
@@ -185,8 +170,40 @@ function ItemForm({ itemModel, item, updateItem }) {
                     {errors.autoMove && errors.autoMove.message}
                 </Col>
             </Row>
+
+            <Row>
+                <Col xs={12}>
+                    <label>Période de carence : </label>
+                    <DurationInput
+                        onBlur={handleSubmit(onSubmit)}
+                        light={true}
+                        duration={duration}
+                        setDuration={setDuration}
+                    />
+                </Col>
+                <Col xs="auto" className="danger">
+                    {errors.waitingPeriod && errors.waitingPeriod.message}
+                </Col>
+            </Row>
         </Form>
     );
 }
 
 export default Item;
+
+/*
+    <input
+                        className="ml-2 input-light"
+                        name="waitingPeriod"
+                        defaultValue={}
+                        type="number"
+                        onBlur={handleSubmit(onSubmit)}
+                        ref={register({
+                            min: {
+                                value: 1,
+                                message:
+                                    'La période de carence doit durer au moins 1 seconde'
+                            }
+                        })}
+                    />
+*/

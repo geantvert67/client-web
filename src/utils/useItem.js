@@ -13,6 +13,8 @@ export const ItemProvider = ({ children }) => {
     const { position: mainZone } = useMainZone();
     const { forbiddenZones } = useForbiddenZone();
 
+    console.log(items);
+
     const create = point => {
         const position = { lat: point.latlng.lat, lng: point.latlng.lng };
 
@@ -75,7 +77,8 @@ export const ItemProvider = ({ children }) => {
     };
 
     const move = (e, item) => {
-        let otherItems = items.filter(i => i !== item);
+        const newItems = [...items];
+        const index = items.indexOf(item);
         const newPosition = {
             lat: e.target.getLatLng().lat,
             lng: e.target.getLatLng().lng
@@ -90,19 +93,19 @@ export const ItemProvider = ({ children }) => {
             ) && (conflict = true);
         });
 
-        !conflict &&
+        if (
+            !conflict &&
             isInZone(
                 e.target.getLatLng().lat,
                 e.target.getLatLng().lng,
                 mainZone
-            ) &&
-            otherItems.push({
-                modelItem: item.modelItem,
-                position: newPosition,
-                quantity: item.quantity
-            });
+            )
+        ) {
+            item.position = newPosition;
+            newItems.splice(index, 1, item);
+        }
 
-        setItems(otherItems);
+        setItems(newItems);
     };
 
     const updateItemQuantity = (item, quantity) => {

@@ -20,7 +20,7 @@ function MainZoneActions({ action, setAction }) {
                 onClick={() => setIsOpen(!isOpen)}
             >
                 <h3>Zone de jeu</h3>
-                <FontAwesomeIcon icon={isOpen ? faChevronDown : faChevronUp} />
+                <FontAwesomeIcon icon={isOpen ? faChevronUp : faChevronDown} />
             </Row>
             {isOpen && (
                 <Row className="mt-3 ml-1">

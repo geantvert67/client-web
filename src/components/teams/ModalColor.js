@@ -2,11 +2,18 @@ import React, { useState } from 'react';
 import { Modal, Button, Container, Row, Col } from 'react-bootstrap';
 import { SketchPicker } from 'react-color';
 
-const ModalColor = ({ show, setShow, colorChange, setColorChange }) => {
+const ModalColor = ({
+    show,
+    setShow,
+    colorChange,
+    setColorChange,
+    setColor
+}) => {
     const [c, setC] = useState('#ff0000');
     const handleClose = () => setShow(false);
     const handleAdd = () => {
         setColorChange([...colorChange, c]);
+        setColor(c);
         setShow(false);
     };
     return (
