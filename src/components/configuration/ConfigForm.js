@@ -45,7 +45,7 @@ function ConfigForm({ config, setConfig }) {
             config.flagCaptureDuration = flagCaptureDuration;
             config.duration = config.gameMode != 'SUPREMACY' ? duration : null;
             create(serializeConfig(config))
-                .then(res => history.push(`/configs/${res.data.id}/items`))
+                .then(res => history.push(`/configs/${res.data.id}/teams`))
                 .catch(err => setError(err.response.data));
         }
     };
@@ -59,7 +59,7 @@ function ConfigForm({ config, setConfig }) {
             updateById(serializeConfig(newConfig))
                 .then(res => {
                     setConfig(res.data);
-                    history.push(`/configs/${res.data.id}/items`);
+                    history.push(`/configs/${res.data.id}/teams`);
                 })
                 .catch(err => setError(err.response.data));
         }
