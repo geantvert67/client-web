@@ -94,7 +94,7 @@ function ItemsWrapper() {
             })
             .then(() => {
                 return getItemsModel(configurationId).then(res => {
-                    history.push(`/configs/${configurationId}/teams`);
+                    history.push(`/configs/${configurationId}/map`);
                 });
             });
     };
