@@ -64,7 +64,7 @@ const iconTransporteur = new L.Icon({
     iconUrl: require('../../img/transporteur.png'),
     iconRetinaUrl: require('../../img/transporteur.png'),
     iconAnchor: [25, 50], // A modifier pour centrer les points de zone
-    popupAnchor: [0, 0],
+    popupAnchor: [0, -40],
     iconSize: new L.Point(50, 50),
     className: 'leaflet-div-icon'
 });
@@ -82,7 +82,7 @@ const iconTempete = new L.Icon({
     iconUrl: require('../../img/tempete.png'),
     iconRetinaUrl: require('../../img/tempete.png'),
     iconAnchor: [33, 64], // A modifier pour centrer les points de zone
-    popupAnchor: [0, 0],
+    popupAnchor: [-10, -55],
     iconSize: new L.Point(47, 66),
     className: 'leaflet-div-icon'
 });
@@ -91,7 +91,7 @@ const iconOracle = new L.Icon({
     iconUrl: require('../../img/oracle.png'),
     iconRetinaUrl: require('../../img/oracle.png'),
     iconAnchor: [21, 59], // A modifier pour centrer les points de zone
-    popupAnchor: [0, 0],
+    popupAnchor: [0, -50],
     iconSize: new L.Point(42, 59),
     className: 'leaflet-div-icon'
 });
@@ -100,7 +100,7 @@ const iconNoyau = new L.Icon({
     iconUrl: require('../../img/noyau.png'),
     iconRetinaUrl: require('../../img/noyau.png'),
     iconAnchor: [17, 18], // A modifier pour centrer les points de zone
-    popupAnchor: [0, 0],
+    popupAnchor: [0, -10],
     iconSize: new L.Point(34, 36),
     className: 'leaflet-div-icon'
 });
@@ -109,7 +109,7 @@ const iconCanonPhotons = new L.Icon({
     iconUrl: require('../../img/canonPhotons.gif'),
     iconRetinaUrl: require('../../img/canonPhotons.gif'),
     iconAnchor: [11, 33], // A modifier pour centrer les points de zone
-    popupAnchor: [0, 0],
+    popupAnchor: [0, -30],
     iconSize: new L.Point(22, 33),
     className: 'leaflet-div-icon'
 });
@@ -118,7 +118,7 @@ const iconAntenne = new L.Icon({
     iconUrl: require('../../img/antenne.png'),
     iconRetinaUrl: require('../../img/antenne.png'),
     iconAnchor: [14, 47], // A modifier pour centrer les points de zone
-    popupAnchor: [0, 0],
+    popupAnchor: [0, -40],
     iconSize: new L.Point(28, 47),
     className: 'leaflet-div-icon'
 });
@@ -127,7 +127,7 @@ const iconDisloqueur = new L.Icon({
     iconUrl: require('../../img/disloqueur.png'),
     iconRetinaUrl: require('../../img/disloqueur.png'),
     iconAnchor: [32, 64], // A modifier pour centrer les points de zone
-    popupAnchor: [0, 0],
+    popupAnchor: [0, -55],
     iconSize: new L.Point(64, 64),
     className: 'leaflet-div-icon'
 });
@@ -136,7 +136,7 @@ const iconIntercepteur = new L.Icon({
     iconUrl: require('../../img/intercepteur.gif'),
     iconRetinaUrl: require('../../img/intercepteur.gif'),
     iconAnchor: [23, 14], // A modifier pour centrer les points de zone
-    popupAnchor: [0, 0],
+    popupAnchor: [0, -5],
     iconSize: new L.Point(46, 28),
     className: 'leaflet-div-icon'
 });
@@ -145,7 +145,7 @@ const iconPortail = new L.Icon({
     iconUrl: require('../../img/portail.png'),
     iconRetinaUrl: require('../../img/portail.png'),
     iconAnchor: [12, 48], // A modifier pour centrer les points de zone
-    popupAnchor: [0, 0],
+    popupAnchor: [0, -45],
     iconSize: new L.Point(24, 48),
     className: 'leaflet-div-icon'
 });
@@ -154,7 +154,7 @@ const iconSentinelle = new L.Icon({
     iconUrl: require('../../img/sentinelle.png'),
     iconRetinaUrl: require('../../img/sentinelle.png'),
     iconAnchor: [9, 10], // A modifier pour centrer les points de zone
-    popupAnchor: [0, 0],
+    popupAnchor: [0, -5],
     iconSize: new L.Point(18, 20),
     className: 'leaflet-div-icon'
 });
@@ -163,7 +163,7 @@ const iconSonde = new L.Icon({
     iconUrl: require('../../img/sonde.png'),
     iconRetinaUrl: require('../../img/sonde.png'),
     iconAnchor: [26, 36], // A modifier pour centrer les points de zone
-    popupAnchor: [0, 0],
+    popupAnchor: [0, -25],
     iconSize: new L.Point(52, 36),
     className: 'leaflet-div-icon'
 });
