@@ -35,25 +35,31 @@ function ConfigMenu({ level, configId }) {
             >
                 <FontAwesomeIcon icon={faSlidersH} size="lg" />
             </Col>
-            <Col className={getSeparatorClassName()}></Col>
+            <Col
+                className={`${getSeparatorClassName()} d-none d-lg-block`}
+            ></Col>
 
             <Col
                 xs="auto"
                 className={getItemClassName(2)}
-                onClick={() => goTo('/items')}
-            >
-                <FontAwesomeIcon icon={faToolbox} size="lg" />
-            </Col>
-            <Col className={getSeparatorClassName()}></Col>
-
-            <Col
-                xs="auto"
-                className={getItemClassName(3)}
                 onClick={() => goTo('/teams')}
             >
                 <FontAwesomeIcon icon={faUsers} size="lg" />
             </Col>
-            <Col className={getSeparatorClassName()}></Col>
+            <Col
+                className={`${getSeparatorClassName()} d-none d-lg-block`}
+            ></Col>
+
+            <Col
+                xs="auto"
+                className={getItemClassName(3)}
+                onClick={() => goTo('/items')}
+            >
+                <FontAwesomeIcon icon={faToolbox} size="lg" />
+            </Col>
+            <Col
+                className={`${getSeparatorClassName()} d-none d-lg-block`}
+            ></Col>
 
             <Col
                 xs="auto"

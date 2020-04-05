@@ -94,7 +94,7 @@ function ItemsWrapper() {
             })
             .then(() => {
                 return getItemsModel(configurationId).then(res => {
-                    history.push(`/configs/${configurationId}/teams`);
+                    history.push(`/configs/${configurationId}/map`);
                 });
             });
     };
@@ -103,7 +103,7 @@ function ItemsWrapper() {
         <Container className="mt-5 mb-5">
             <Row>
                 <Col md={{ span: 6, offset: 3 }}>
-                    <ConfigMenu level={2} configId={configurationId} />
+                    <ConfigMenu level={3} configId={configurationId} />
 
                     <h3 className="mb-5">Gestion des items</h3>
 

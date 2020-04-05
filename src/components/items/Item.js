@@ -63,6 +63,7 @@ function Item({ items, itemModel, removeItem, addItem, updateItem }) {
 function ItemForm({ itemModel, item, updateItem }) {
     const [duration, setDuration] = useState(item ? item.waitingPeriod : null);
     const { register, handleSubmit, getValues, errors } = useForm();
+    console.log(item);
 
     const onSubmit = data => {
         data.waitingPeriod = duration;
@@ -143,7 +144,9 @@ function ItemForm({ itemModel, item, updateItem }) {
                             name="autoMove"
                             type="radio"
                             value={true}
-                            defaultChecked={item ? item.autoMove : false}
+                            defaultChecked={
+                                item ? Boolean(item.autoMove) : false
+                            }
                             onBlur={handleSubmit(onSubmit)}
                             ref={register({
                                 required: 'Ce champ est obligatoire'
@@ -157,7 +160,9 @@ function ItemForm({ itemModel, item, updateItem }) {
                             name="autoMove"
                             type="radio"
                             value={false}
-                            defaultChecked={item ? !item.autoMove : true}
+                            defaultChecked={
+                                item ? Boolean(!item.autoMove) : true
+                            }
                             onBlur={handleSubmit(onSubmit)}
                             ref={register({
                                 required: 'Ce champ est obligatoire'

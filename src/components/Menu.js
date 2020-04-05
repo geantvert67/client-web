@@ -2,13 +2,14 @@ import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import { Button, Dropdown, DropdownButton } from 'react-bootstrap';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '../utils/auth';
 
 const Menu = () => {
     const { user, signout } = useAuth();
+    const { pathname } = useLocation();
 
     return (
         <>
@@ -58,17 +59,21 @@ const Menu = () => {
                         <>
                             <Nav className="mr-auto"></Nav>
                             <Nav className="align-items-center">
-                                <NavLink className="nav-link" to="/signup">
-                                    S'inscrire{' '}
-                                </NavLink>
-                                <NavLink className="nav-link" to="/signin">
-                                    <Button
-                                        variant="success"
-                                        className="btn-primary"
-                                    >
-                                        Se connecter
-                                    </Button>
-                                </NavLink>
+                                {pathname !== '/signup' && (
+                                    <NavLink className="nav-link" to="/signup">
+                                        S'inscrire
+                                    </NavLink>
+                                )}
+                                {pathname !== '/signin' && (
+                                    <NavLink className="nav-link" to="/signin">
+                                        <Button
+                                            variant="success"
+                                            className="btn-primary"
+                                        >
+                                            Se connecter
+                                        </Button>
+                                    </NavLink>
+                                )}
                             </Nav>
                         </>
                     )}
