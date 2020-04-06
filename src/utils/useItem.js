@@ -101,6 +101,8 @@ export const ItemProvider = ({ children }) => {
         ) {
             item.position = newPosition;
             newItems.splice(index, 1, item);
+        } else {
+            newItems.splice(index, 1);
         }
 
         setItems(newItems);

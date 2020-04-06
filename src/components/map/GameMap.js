@@ -166,6 +166,7 @@ function GameMap({
                 zoom={zoom}
                 onClick={handleClick}
                 minZoom={5}
+                maxZoom={25}
             >
                 <TileLayer url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" />
                 <Polygon color="green" positions={mainZone} />
