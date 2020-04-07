@@ -5,7 +5,8 @@ import {
     faChevronDown,
     faChevronUp,
     faDice,
-    faPlus,
+    faEye,
+    faEyeSlash,
     faTrashAlt
 } from '@fortawesome/free-solid-svg-icons';
 import { useItem } from '../../utils/useItem';
@@ -62,11 +63,22 @@ function Item({ item, action, setAction }) {
         selectedModelItem,
         setSelectedModelItem,
         createRandom,
-        removeAll
+        removeAll,
+        hiddenItems,
+        setHiddenItems
     } = useItem();
     const { register, handleSubmit, reset } = useForm();
     const index = modelItems.indexOf(item);
     const iconUrl = getItemImage(item);
+    const hidden = hiddenItems.indexOf(item.name) !== -1;
+
+    const showItem = () => {
+        setHiddenItems(hiddenItems.filter(im => im !== item.name));
+    };
+
+    const hideItem = () => {
+        setHiddenItems([...hiddenItems, ...[item.name]]);
+    };
 
     const _createRandom = ({ nbItems }) => {
         reset({ nbFlags: null });
@@ -128,10 +140,17 @@ function Item({ item, action, setAction }) {
                 </Col>
                 <Col
                     xs="auto"
-                    className="mb-3 actions-item"
+                    className="mb-3 mr-3 actions-item"
                     onClick={_removeAll}
                 >
                     <FontAwesomeIcon icon={faTrashAlt} className="danger" />
+                </Col>
+                <Col
+                    xs="auto"
+                    className="mb-3 actions-item"
+                    onClick={() => (hidden ? showItem() : hideItem())}
+                >
+                    <FontAwesomeIcon icon={hidden ? faEye : faEyeSlash} />
                 </Col>
             </Row>
         </Col>

@@ -11,6 +11,7 @@ export const ItemProvider = ({ children }) => {
     const [modelItems, setModelItems] = useState([]);
     const [selectedModelItem, setSelectedModelItem] = useState('');
     const [showRadius, setShowRadius] = useState(false);
+    const [hiddenItems, setHiddenItems] = useState([]);
     const { position: mainZone } = useMainZone();
     const { forbiddenZones } = useForbiddenZone();
 
@@ -141,7 +142,9 @@ export const ItemProvider = ({ children }) => {
                 selectedModelItem,
                 setSelectedModelItem,
                 showRadius,
-                setShowRadius
+                setShowRadius,
+                hiddenItems,
+                setHiddenItems
             }}
         >
             {children}

@@ -216,12 +216,18 @@ function FlagMarker({
 }
 
 function ItemMarker({ point, stopDragging, startDragging }) {
-    const { move, updateItemQuantity, remove, showRadius } = useItem();
+    const {
+        move,
+        updateItemQuantity,
+        remove,
+        showRadius,
+        hiddenItems
+    } = useItem();
     const { position: mainZone } = useMainZone();
     const popup = useRef(null);
     const icon = getItemIcon(point.modelItem);
 
-    return (
+    return hiddenItems.indexOf(point.modelItem.name) === -1 ? (
         <>
             <Marker
                 position={point.position}
@@ -282,6 +288,8 @@ function ItemMarker({ point, stopDragging, startDragging }) {
                 </>
             )}
         </>
+    ) : (
+        <></>
     );
 }
 

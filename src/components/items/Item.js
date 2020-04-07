@@ -63,7 +63,6 @@ function Item({ items, itemModel, removeItem, addItem, updateItem }) {
 function ItemForm({ itemModel, item, updateItem }) {
     const [duration, setDuration] = useState(item ? item.waitingPeriod : null);
     const { register, handleSubmit, getValues, errors } = useForm();
-    console.log(item);
 
     const onSubmit = data => {
         data.waitingPeriod = duration;
