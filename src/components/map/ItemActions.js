@@ -11,10 +11,11 @@ import {
 import { useItem } from '../../utils/useItem';
 import { getItemImage } from '../../utils/utils';
 import { useForm } from 'react-hook-form';
+import Switch from '../forms/Switch';
 
 function ItemActions({ action, setAction }) {
     const [isOpen, setIsOpen] = useState(false);
-    const { modelItems } = useItem();
+    const { modelItems, showRadius, setShowRadius } = useItem();
 
     return (
         <>
@@ -27,6 +28,18 @@ function ItemActions({ action, setAction }) {
             </Row>
             {isOpen && (
                 <Row className="mt-3 ml-1">
+                    <Col xs="12" className="mb-1">
+                        <Row className="align-items-center justify-content-between">
+                            <Col className="mb-3">Afficher les rayons</Col>
+                            <Col xs="auto">
+                                <Switch
+                                    on={showRadius}
+                                    setOn={() => setShowRadius(!showRadius)}
+                                />
+                            </Col>
+                        </Row>
+                    </Col>
+
                     {modelItems.length === 0
                         ? "Vous n'avez activé aucun modèle d'item."
                         : modelItems.map(item => (

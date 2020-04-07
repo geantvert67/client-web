@@ -214,47 +214,72 @@ function FlagMarker({
 }
 
 function ItemMarker({ point, stopDragging, startDragging }) {
-    const { move, updateItemQuantity, remove } = useItem();
+    const { move, updateItemQuantity, remove, showRadius } = useItem();
+    const { position: mainZone } = useMainZone();
     const popup = useRef(null);
     const icon = getItemIcon(point.modelItem);
 
     return (
-        <Marker
-            position={point.position}
-            icon={icon}
-            draggable
-            onDragend={e => {
-                move(e, point);
-                stopDragging();
-            }}
-            onDragStart={e => {
-                startDragging();
-            }}
-        >
-            <Popup ref={popup}>
-                <p>
-                    {' '}
-                    Quantité :{' '}
-                    <input
-                        type="number"
-                        defaultValue={point.quantity}
-                        onChange={e =>
-                            updateItemQuantity(point, e.target.value)
-                        }
-                    />{' '}
-                </p>
+        <>
+            <Marker
+                position={point.position}
+                icon={icon}
+                draggable
+                onDragend={e => {
+                    move(e, point);
+                    stopDragging();
+                }}
+                onDragStart={e => {
+                    startDragging();
+                }}
+            >
+                <Popup ref={popup}>
+                    <p>
+                        {' '}
+                        Quantité :{' '}
+                        <input
+                            type="number"
+                            defaultValue={point.quantity}
+                            onChange={e =>
+                                updateItemQuantity(point, e.target.value)
+                            }
+                        />{' '}
+                    </p>
 
-                <button
-                    className="btn-danger"
-                    onClick={e => {
-                        popup.current.leafletElement.options.leaflet.map.closePopup();
-                        remove(point);
-                    }}
-                >
-                    Supprimer
-                </button>
-            </Popup>
-        </Marker>
+                    <button
+                        className="btn-danger"
+                        onClick={e => {
+                            popup.current.leafletElement.options.leaflet.map.closePopup();
+                            remove(point);
+                        }}
+                    >
+                        Supprimer
+                    </button>
+                </Popup>
+            </Marker>
+
+            {showRadius && (
+                <>
+                    <Circle
+                        center={point.position}
+                        radius={
+                            point.modelItem.visibilityRadius ||
+                            getVisibilityRadiusAuto(mainZone, 0.04)
+                        }
+                        stroke={false}
+                    />
+
+                    <Circle
+                        center={point.position}
+                        radius={
+                            point.modelItem.actionRadius ||
+                            getVisibilityRadiusAuto(mainZone, 0.035)
+                        }
+                        stroke={false}
+                    />
+                </>
+            )}
+        </>
     );
 }
 
