@@ -51,6 +51,9 @@ function Markers({
                     flagVisibilityRadius={
                         config !== null && config.flagVisibilityRadius
                     }
+                    flagActionRadius={
+                        config !== null && config.flagActionRadius
+                    }
                 />
             ))}
 
@@ -156,7 +159,8 @@ function FlagMarker({
     flag,
     stopDragging,
     startDragging,
-    flagVisibilityRadius
+    flagVisibilityRadius,
+    flagActionRadius
 }) {
     const { move, remove } = useFlag();
     const { position: mainZone } = useMainZone();
@@ -195,6 +199,15 @@ function FlagMarker({
                     flagVisibilityRadius ||
                     getVisibilityRadiusAuto(mainZone, 0.05)
                 }
+                stroke={false}
+            />
+
+            <Circle
+                center={flag}
+                radius={
+                    flagActionRadius || getVisibilityRadiusAuto(mainZone, 0.045)
+                }
+                stroke={false}
             />
         </>
     );
