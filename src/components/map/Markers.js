@@ -162,11 +162,11 @@ function FlagMarker({
     flagVisibilityRadius,
     flagActionRadius
 }) {
-    const { move, remove } = useFlag();
+    const { move, remove, showFlags } = useFlag();
     const { position: mainZone } = useMainZone();
     const popup = useRef(null);
 
-    return (
+    return showFlags ? (
         <>
             <Marker
                 position={flag}
@@ -210,6 +210,8 @@ function FlagMarker({
                 stroke={false}
             />
         </>
+    ) : (
+        <></>
     );
 }
 

@@ -6,14 +6,16 @@ import {
     faTrashAlt,
     faChevronDown,
     faChevronUp,
-    faDice
+    faDice,
+    faEye,
+    faEyeSlash
 } from '@fortawesome/free-solid-svg-icons';
 import { useFlag } from '../../utils/useFlag';
 import { useForm } from 'react-hook-form';
 
 function FlagActions({ action, setAction }) {
     const { register, handleSubmit, reset } = useForm();
-    const { removeAll, createRandom } = useFlag();
+    const { removeAll, createRandom, showFlags, setShowFlags } = useFlag();
     const [isOpen, setIsOpen] = useState(false);
 
     const _createRandom = ({ nbFlags }) => {
@@ -71,10 +73,19 @@ function FlagActions({ action, setAction }) {
                     </Col>
                     <Col
                         xs="auto"
-                        className="mb-3 actions-item"
+                        className="mb-3 mr-3 actions-item"
                         onClick={removeAll}
                     >
                         <FontAwesomeIcon icon={faTrashAlt} className="danger" />
+                    </Col>
+                    <Col
+                        xs="auto"
+                        className="mb-3 actions-item"
+                        onClick={() => setShowFlags(!showFlags)}
+                    >
+                        <FontAwesomeIcon
+                            icon={showFlags ? faEyeSlash : faEye}
+                        />
                     </Col>
                 </Row>
             )}
