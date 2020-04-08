@@ -93,6 +93,7 @@ option:hover {
 
 .navbar {
     background-color: #1b1e22;
+    height: 4rem !important;
 }
 
 .navbar-brand {
@@ -202,7 +203,7 @@ option:hover {
     color: white;
 }
 
-.btn-danger {
+.btn-small {
     border: none;
     border-radius: 4px;
     padding: 0.25rem 0.5rem;
@@ -377,6 +378,11 @@ th {
     text-align: center !important;
 }
 
+.modal-header,
+.modal-footer {
+    border: none !important;
+}
+
 .landing-title {
     display: inline-block;
     position: relative;
@@ -392,4 +398,32 @@ th {
     left: 0;
     border-bottom: 5px solid #68b684;
     border-radius: 4px;
+}
+
+@media screen and (max-width: 900px) {
+    .map-menu {
+        width: 50%;
+    }
+
+    .map-menu-closed {
+        right: -50%;
+    }
+
+    .map-menu-open + .map-menu-angle {
+        right: 50%;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .map-menu {
+        width: 85%;
+    }
+
+    .map-menu-closed {
+        right: -85%;
+    }
+
+    .map-menu-open + .map-menu-angle {
+        right: 85%;
+    }
 }

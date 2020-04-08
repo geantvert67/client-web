@@ -11,6 +11,7 @@ import { useFlag } from '../../utils/useFlag';
 import ItemActions from './ItemActions';
 import { useItem } from '../../utils/useItem';
 import { toast } from 'react-toastify';
+import ConfigMenu from '../configuration/ConfigMenu';
 
 function MapMenu({ action, setAction }) {
     const [loading, setLoading] = useState(false);
@@ -41,9 +42,15 @@ function MapMenu({ action, setAction }) {
     };
 
     return (
-        <Container className="mt-3">
+        <Container className="mt-3 mb-3">
             <Row>
                 <Col>
+                    <Row className="mx-1">
+                        <Col>
+                            <ConfigMenu level={3} configId={configurationId} />
+                        </Col>
+                    </Row>
+
                     <MainZoneActions action={action} setAction={setAction} />
                     <ForbiddenZoneActions
                         action={action}

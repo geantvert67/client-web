@@ -1,3 +1,11 @@
+import { addItemsModel } from '../service/configuration';
+
+export const initializeItemModels = configId => {
+    return Promise.all(
+        itemModels.map(im => addItemsModel(configId, { name: im.name }))
+    );
+};
+
 export const itemModels = [
     {
         name: 'Sonde',

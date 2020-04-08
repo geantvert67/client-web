@@ -6,7 +6,9 @@ import {
     getAreas,
     updateById,
     getItemsModel,
-    updateItemsModel
+    updateItemsModel,
+    updateItem,
+    getItems
 } from '../../service/configuration';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDownload } from '@fortawesome/free-solid-svg-icons';
@@ -86,6 +88,39 @@ function DownloadButton({ configId }) {
             );
     };
 
+    const itemsRadius = (config, zone) => {
+        return getItems(config.id)
+            .then(res => {
+                return Promise.all(
+                    res.data.map(m => {
+                        const newModel = {};
+                        if (!m.visibilityRadius) {
+                            newModel.visibilityRadius = getVisibilityRadiusAuto(
+                                zone,
+                                0.04
+                            );
+                        }
+                        if (!m.actionRadius) {
+                            const AR = getVisibilityRadiusAuto(zone, 0.035);
+                            if (m.visibilityRadius) {
+                                newModel.actionRadius =
+                                    AR < m.visibilityRadius
+                                        ? AR
+                                        : m.visibilityRadius * 0.95;
+                            } else {
+                                newModel.actionRadius = AR;
+                            }
+                        }
+
+                        return updateItem(config.id, m.id, newModel);
+                    })
+                );
+            })
+            .catch(() =>
+                toast.error('Impossible de télécharger la configuration')
+            );
+    };
+
     const calculateRadius = () => {
         return getById(configId)
             .then(res => {
@@ -100,7 +135,8 @@ function DownloadButton({ configId }) {
 
                         return Promise.all([
                             configRadius(config, zone),
-                            itemModelsRadius(config, zone)
+                            itemModelsRadius(config, zone),
+                            itemsRadius(config, zone)
                         ]);
                     })
                     .catch(() =>

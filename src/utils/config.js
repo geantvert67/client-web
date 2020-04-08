@@ -4,11 +4,8 @@ import {
     removeZones,
     removeFlags,
     removeItems,
-    addItemsModel,
-    addItem,
-    updateItemsModel
+    addItem
 } from '../service/configuration';
-import { config } from '@fortawesome/fontawesome-svg-core';
 
 export const removeElements = idConfig => {
     return Promise.all([
@@ -34,15 +31,17 @@ export const updateConfig = (
         coordMainZone.push([polygonPosition[0].lat, polygonPosition[0].lng]);
 
         return Promise.all([
-            forbiddenZones.map(zone => {
-                let points = [];
-                zone.map(point => points.push([point.lat, point.lng]));
-                points.push([zone[0].lat, zone[0].lng]);
-                return addZone(idConfig, {
-                    coordinates: points,
-                    forbidden: true
-                });
-            }),
+            forbiddenZones
+                .filter(z => z.length > 0)
+                .map(zone => {
+                    let points = [];
+                    zone.map(point => points.push([point.lat, point.lng]));
+                    points.push([zone[0].lat, zone[0].lng]);
+                    return addZone(idConfig, {
+                        coordinates: points,
+                        forbidden: true
+                    });
+                }),
 
             flagsPositions.map(flag =>
                 addFlag(idConfig, { coordinates: [flag.lat, flag.lng] })
@@ -91,12 +90,17 @@ export const formatItems = i => {
     let items = [];
     i.data.map(item =>
         items.push({
+            id: item.id,
             quantity: item.quantity,
             position: {
                 lat: item.position.coordinates[0],
                 lng: item.position.coordinates[1]
             },
-            modelItem: item.ItemModel
+            name: item.name,
+            visibilityRadius: item.visibilityRadius,
+            actionRadius: item.actionRadius,
+            waitingPeriod: item.waitingPeriod,
+            autoMove: item.autoMove
         })
     );
     return items;
@@ -115,6 +119,22 @@ export const serializeModels = model => {
         : null;
 
     return model;
+};
+
+export const serializeItem = item => {
+    item.autoMove = item.autoMove === 'true';
+    item.quantity = item.quantity ? parseInt(item.quantity) : 1;
+    item.visibilityRadius = item.visibilityRadius
+        ? parseFloat(item.visibilityRadius)
+        : null;
+    item.actionRadius = item.actionRadius
+        ? parseFloat(item.actionRadius)
+        : null;
+    item.waitingPeriod = item.waitingPeriod
+        ? parseInt(item.waitingPeriod)
+        : null;
+
+    return item;
 };
 
 export const serializeConfig = config => {

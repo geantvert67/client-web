@@ -10,6 +10,7 @@ import { create, updateById } from '../../service/configuration';
 import history from '../../utils/history';
 import ConfigMenu from './ConfigMenu';
 import DurationInput from '../forms/DurationInput';
+import { initializeItemModels } from '../../utils/items';
 
 function ConfigForm({ config, setConfig }) {
     const [showDuration, setShowDuration] = useState(
@@ -45,7 +46,12 @@ function ConfigForm({ config, setConfig }) {
             config.flagCaptureDuration = flagCaptureDuration;
             config.duration = config.gameMode != 'SUPREMACY' ? duration : null;
             create(serializeConfig(config))
-                .then(res => history.push(`/configs/${res.data.id}/items`))
+                .then(res => {
+                    const configId = res.data.id;
+                    initializeItemModels(configId).then(() =>
+                        history.push(`/configs/${configId}/teams`)
+                    );
+                })
                 .catch(err => setError(err.response.data));
         }
     };
@@ -59,7 +65,7 @@ function ConfigForm({ config, setConfig }) {
             updateById(serializeConfig(newConfig))
                 .then(res => {
                     setConfig(res.data);
-                    history.push(`/configs/${res.data.id}/items`);
+                    history.push(`/configs/${res.data.id}/teams`);
                 })
                 .catch(err => setError(err.response.data));
         }

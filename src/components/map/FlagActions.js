@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Image } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-    faPlus,
     faTrashAlt,
     faChevronDown,
     faChevronUp,
-    faDice
+    faDice,
+    faEye,
+    faEyeSlash
 } from '@fortawesome/free-solid-svg-icons';
 import { useFlag } from '../../utils/useFlag';
 import { useForm } from 'react-hook-form';
 
 function FlagActions({ action, setAction }) {
+    const iconFlag = require('../../img/cristal.png');
     const { register, handleSubmit, reset } = useForm();
-    const { removeAll, createRandom } = useFlag();
+    const { removeAll, createRandom, showFlags, setShowFlags } = useFlag();
     const [isOpen, setIsOpen] = useState(false);
 
     const _createRandom = ({ nbFlags }) => {
@@ -38,7 +40,10 @@ function FlagActions({ action, setAction }) {
                             'flags' && 'actions-item-selected'}`}
                         onClick={() => setAction('flags')}
                     >
-                        <FontAwesomeIcon icon={faPlus} />
+                        <Image
+                            style={{ maxWidth: '25px', maxHeight: '25px' }}
+                            src={iconFlag}
+                        />
                     </Col>
                     <Col xs="auto" className="mb-3 mr-3 actions-item">
                         <form onSubmit={handleSubmit(_createRandom)}>
@@ -71,10 +76,19 @@ function FlagActions({ action, setAction }) {
                     </Col>
                     <Col
                         xs="auto"
-                        className="mb-3 actions-item"
+                        className="mb-3 mr-3 actions-item"
                         onClick={removeAll}
                     >
                         <FontAwesomeIcon icon={faTrashAlt} className="danger" />
+                    </Col>
+                    <Col
+                        xs="auto"
+                        className="mb-3 actions-item"
+                        onClick={() => setShowFlags(!showFlags)}
+                    >
+                        <FontAwesomeIcon
+                            icon={showFlags ? faEyeSlash : faEye}
+                        />
                     </Col>
                 </Row>
             )}
