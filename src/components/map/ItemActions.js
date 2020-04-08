@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Row, Col, Image } from 'react-bootstrap';
+import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faChevronDown,
@@ -7,12 +8,17 @@ import {
     faDice,
     faEye,
     faEyeSlash,
-    faTrashAlt
+    faTrashAlt,
+    faCog
 } from '@fortawesome/free-solid-svg-icons';
+import { updateItemsModel } from '../../service/configuration';
+import { serializeModels } from '../../utils/config';
+import { toast } from 'react-toastify';
 import { useItem } from '../../utils/useItem';
 import { getItemImage } from '../../utils/utils';
 import { useForm } from 'react-hook-form';
 import Switch from '../forms/Switch';
+import ItemForm from './ItemForm';
 
 function ItemActions({ action, setAction }) {
     const [isOpen, setIsOpen] = useState(false);
@@ -58,8 +64,11 @@ function ItemActions({ action, setAction }) {
 }
 
 function Item({ item, action, setAction }) {
+    const [showModal, setShowModal] = useState(false);
+    const { configurationId } = useParams();
     const {
         modelItems,
+        setModelItems,
         selectedModelItem,
         setSelectedModelItem,
         createRandom,
@@ -71,6 +80,8 @@ function Item({ item, action, setAction }) {
     const index = modelItems.indexOf(item);
     const iconUrl = getItemImage(item);
     const hidden = hiddenItems.indexOf(item.name) !== -1;
+
+    const handleClose = () => setShowModal(false);
 
     const showItem = () => {
         setHiddenItems(hiddenItems.filter(im => im !== item.name));
@@ -87,6 +98,20 @@ function Item({ item, action, setAction }) {
 
     const _removeAll = () => {
         removeAll(index);
+    };
+
+    const onSubmit = data => {
+        const itemModel = modelItems.filter(im => im.name === item.name)[0];
+
+        updateItemsModel(configurationId, itemModel.id, serializeModels(data))
+            .then(res => {
+                const index = modelItems.indexOf(itemModel);
+                const newModels = [...modelItems];
+                newModels.splice(index, 1, res.data);
+                setModelItems(newModels);
+                handleClose();
+            })
+            .catch(err => toast.error(err.response.data));
     };
 
     return (
@@ -147,12 +172,26 @@ function Item({ item, action, setAction }) {
                 </Col>
                 <Col
                     xs="auto"
-                    className="mb-3 actions-item"
+                    className="mb-3 mr-3 actions-item"
                     onClick={() => (hidden ? showItem() : hideItem())}
                 >
                     <FontAwesomeIcon icon={hidden ? faEye : faEyeSlash} />
                 </Col>
+                <Col
+                    xs="auto"
+                    className="mb-3 actions-item"
+                    onClick={() => setShowModal(true)}
+                >
+                    <FontAwesomeIcon icon={faCog} />
+                </Col>
             </Row>
+
+            <ItemForm
+                item={item}
+                showModal={showModal}
+                handleClose={handleClose}
+                onSubmit={onSubmit}
+            />
         </Col>
     );
 }

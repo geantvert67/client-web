@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Image } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useMainZone } from '../../utils/useMainZone';
 import {
-    faPlus,
     faTrashAlt,
     faChevronDown,
     faChevronUp
@@ -12,6 +11,7 @@ import {
 function MainZoneActions({ action, setAction }) {
     const { removeAll } = useMainZone();
     const [isOpen, setIsOpen] = useState(true);
+    const iconGameArea = require('../../img/gameArea.png');
 
     return (
         <>
@@ -30,7 +30,10 @@ function MainZoneActions({ action, setAction }) {
                             'mainZone' && 'actions-item-selected'}`}
                         onClick={() => setAction('mainZone')}
                     >
-                        <FontAwesomeIcon icon={faPlus} />
+                        <Image
+                            style={{ maxWidth: '25px', maxHeight: '25px' }}
+                            src={iconGameArea}
+                        />
                     </Col>
                     <Col
                         xs="auto"

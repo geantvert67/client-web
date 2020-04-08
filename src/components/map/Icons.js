@@ -4,7 +4,7 @@ const iconWhiteFlag = new L.Icon({
     iconUrl: require('../../img/cristal.png'),
     iconRetinaUrl: require('../../img/cristal.png'),
     iconAnchor: [24, 48], // A modifier pour centrer le cristal
-    popupAnchor: [0, 0],
+    popupAnchor: [-3, -38],
     iconSize: new L.Point(48, 48),
     className: 'leaflet-div-icon'
 });
@@ -13,7 +13,7 @@ const iconGameArea = new L.Icon({
     iconUrl: require('../../img/gameArea.png'),
     iconRetinaUrl: require('../../img/gameArea.png'),
     iconAnchor: [6, 43], // A modifier pour centrer les points de zone
-    popupAnchor: [0, 0],
+    popupAnchor: [0, -40],
     iconSize: new L.Point(13, 43),
     className: 'leaflet-div-icon'
 });
@@ -22,15 +22,15 @@ const iconForbiddenArea = new L.Icon({
     iconUrl: require('../../img/forbiddenArea.png'),
     iconRetinaUrl: require('../../img/forbiddenArea.png'),
     iconAnchor: [6, 43], // A modifier pour centrer les points de zone
-    popupAnchor: [0, 0],
+    popupAnchor: [0, -40],
     iconSize: new L.Point(13, 43),
     className: 'leaflet-div-icon'
 });
 
-const getItemIcon = modelItem => {
-    if (!modelItem) return iconWhiteFlag;
+const getItemIcon = item => {
+    if (!item) return iconWhiteFlag;
 
-    switch (modelItem.name) {
+    switch (item.name) {
         case 'Sentinelle':
             return iconSentinelle;
         case 'Canon à photons':

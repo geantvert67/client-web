@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Image } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faPlus,
@@ -71,7 +71,7 @@ function ForbiddenZoneItem({ action, setAction, zone }) {
         setForbiddenZoneIndex,
         removeZone
     } = useForbiddenZone();
-
+    const iconForbiddenArea = require('../../img/forbiddenArea.png');
     const index = forbiddenZones.indexOf(zone);
 
     return (
@@ -90,7 +90,10 @@ function ForbiddenZoneItem({ action, setAction, zone }) {
                         setForbiddenZoneIndex(index);
                     }}
                 >
-                    <FontAwesomeIcon icon={faPlus} />
+                    <Image
+                        style={{ maxWidth: '25px', maxHeight: '25px' }}
+                        src={iconForbiddenArea}
+                    />
                 </Col>
                 <Col
                     xs="auto"

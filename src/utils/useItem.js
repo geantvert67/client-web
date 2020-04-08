@@ -25,13 +25,19 @@ export const ItemProvider = ({ children }) => {
                 (conflict = true);
         });
 
+        const im = modelItems[selectedModelItem];
+
         return !conflict &&
             isInZone(point.latlng.lat, point.latlng.lng, mainZone)
             ? setItems(
                   items.concat({
-                      modelItem: modelItems[selectedModelItem],
+                      name: im.name,
                       position,
-                      quantity: 1
+                      quantity: 1,
+                      visibilityRadius: im.visibilityRadius,
+                      actionRadius: im.actionRadius,
+                      waitingPeriod: im.waitingPeriod,
+                      autoMove: im.autoMove
                   })
               )
             : toast.error(
@@ -58,12 +64,18 @@ export const ItemProvider = ({ children }) => {
                     zone => isInZone(lat, lng, zone) && (conflict = true)
                 );
 
+                const im = modelItems[itemModel];
+
                 !conflict &&
                     isInZone(lat, lng, mainZone) &&
                     randomItems.push({
-                        modelItem: modelItems[itemModel],
+                        name: im.name,
                         position: { lat, lng },
-                        quantity: 1
+                        quantity: 1,
+                        visibilityRadius: im.visibilityRadius,
+                        actionRadius: im.actionRadius,
+                        waitingPeriod: im.waitingPeriod,
+                        autoMove: im.autoMove
                     }) &&
                     (newItem = true);
 
@@ -110,10 +122,11 @@ export const ItemProvider = ({ children }) => {
         setItems(newItems);
     };
 
-    const updateItemQuantity = (item, quantity) => {
+    const updateItem = (item, newItem) => {
+        newItem.name = item.name;
+        newItem.position = item.position;
         const otherItems = items.filter(i => i !== item);
-        item.quantity = quantity;
-        otherItems.splice(items.indexOf(item), 0, item);
+        otherItems.splice(items.indexOf(item), 0, newItem);
         setItems(otherItems);
     };
 
@@ -123,7 +136,7 @@ export const ItemProvider = ({ children }) => {
 
     const removeAll = itemModel => {
         const im = modelItems[itemModel];
-        setItems(items.filter(i => i.modelItem.id !== im.id));
+        setItems(items.filter(i => i.name !== im.name));
     };
 
     return (
@@ -135,7 +148,7 @@ export const ItemProvider = ({ children }) => {
                 move,
                 remove,
                 removeAll,
-                updateItemQuantity,
+                updateItem,
                 setItems,
                 modelItems,
                 setModelItems,

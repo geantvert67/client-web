@@ -11,7 +11,12 @@ import { useMainZone } from '../../utils/useMainZone';
 import { useForbiddenZone } from '../../utils/useForbiddenZone';
 import { useFlag } from '../../utils/useFlag';
 import { useItem } from '../../utils/useItem';
-import { getById } from '../../service/configuration';
+import { getById, updateItem } from '../../service/configuration';
+import ItemForm from './ItemForm';
+import { serializeItem } from '../../utils/config';
+import { Col, Row } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashAlt, faCog } from '@fortawesome/free-solid-svg-icons';
 
 function Markers({
     closePopups,
@@ -109,7 +114,7 @@ function MainZoneMarker({ point, stopDragging, startDragging }) {
         >
             <Popup ref={popup}>
                 <button
-                    className="btn-danger"
+                    className="btn-small  btn-danger"
                     onClick={e => {
                         popup.current.leafletElement.options.leaflet.map.closePopup();
                         remove(point);
@@ -142,7 +147,7 @@ function ForbiddenZoneMarker({ point, stopDragging, startDragging }) {
         >
             <Popup ref={popup}>
                 <button
-                    className="btn-danger"
+                    className="btn-small  btn-danger"
                     onClick={e => {
                         popup.current.leafletElement.options.leaflet.map.closePopup();
                         remove(point);
@@ -182,7 +187,7 @@ function FlagMarker({
             >
                 <Popup ref={popup}>
                     <button
-                        className="btn-danger"
+                        className="btn-small  btn-danger"
                         onClick={e => {
                             popup.current.leafletElement.options.leaflet.map.closePopup();
                             remove(flag);
@@ -216,18 +221,20 @@ function FlagMarker({
 }
 
 function ItemMarker({ point, stopDragging, startDragging }) {
-    const {
-        move,
-        updateItemQuantity,
-        remove,
-        showRadius,
-        hiddenItems
-    } = useItem();
+    const [showModal, setShowModal] = useState(false);
+    const { move, updateItem, remove, showRadius, hiddenItems } = useItem();
     const { position: mainZone } = useMainZone();
     const popup = useRef(null);
-    const icon = getItemIcon(point.modelItem);
+    const icon = getItemIcon(point);
 
-    return hiddenItems.indexOf(point.modelItem.name) === -1 ? (
+    const handleClose = () => setShowModal(false);
+
+    const onSubmit = data => {
+        updateItem(point, serializeItem(data));
+        handleClose();
+    };
+
+    return hiddenItems.indexOf(point.name) === -1 ? (
         <>
             <Marker
                 position={point.position}
@@ -242,20 +249,15 @@ function ItemMarker({ point, stopDragging, startDragging }) {
                 }}
             >
                 <Popup ref={popup}>
-                    <p>
-                        {' '}
-                        Quantité :{' '}
-                        <input
-                            type="number"
-                            defaultValue={point.quantity}
-                            onChange={e =>
-                                updateItemQuantity(point, e.target.value)
-                            }
-                        />{' '}
-                    </p>
+                    <button
+                        className="btn-small btn-light"
+                        onClick={() => setShowModal(true)}
+                    >
+                        Modifier
+                    </button>
 
                     <button
-                        className="btn-danger"
+                        className="mt-1 btn-small btn-danger"
                         onClick={e => {
                             popup.current.leafletElement.options.leaflet.map.closePopup();
                             remove(point);
@@ -266,12 +268,20 @@ function ItemMarker({ point, stopDragging, startDragging }) {
                 </Popup>
             </Marker>
 
+            <ItemForm
+                item={point}
+                showModal={showModal}
+                handleClose={handleClose}
+                model={false}
+                onSubmit={onSubmit}
+            />
+
             {showRadius && (
                 <>
                     <Circle
                         center={point.position}
                         radius={
-                            point.modelItem.visibilityRadius ||
+                            point.visibilityRadius ||
                             getVisibilityRadiusAuto(mainZone, 0.04)
                         }
                         stroke={false}
@@ -280,7 +290,7 @@ function ItemMarker({ point, stopDragging, startDragging }) {
                     <Circle
                         center={point.position}
                         radius={
-                            point.modelItem.actionRadius ||
+                            point.actionRadius ||
                             getVisibilityRadiusAuto(mainZone, 0.035)
                         }
                         stroke={false}

@@ -47,7 +47,7 @@ function MapMenu({ action, setAction }) {
                 <Col>
                     <Row className="mx-1">
                         <Col>
-                            <ConfigMenu level={4} configId={configurationId} />
+                            <ConfigMenu level={3} configId={configurationId} />
                         </Col>
                     </Row>
 
