@@ -42,12 +42,12 @@ function MapMenu({ action, setAction }) {
     };
 
     return (
-        <Container className="mt-3">
+        <Container className="mt-3 mb-3">
             <Row>
                 <Col>
                     <Row className="mx-1">
                         <Col>
-                            <ConfigMenu level={4} configId={configurationId} />
+                            <ConfigMenu level={3} configId={configurationId} />
                         </Col>
                     </Row>
 

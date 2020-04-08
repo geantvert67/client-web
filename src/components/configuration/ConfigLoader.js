@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Route, Switch } from 'react-router-dom';
 import { Spinner, Row, Col, Container } from 'react-bootstrap';
 import PrivateRoute from '../authentification/PrivateRoute';
-import ItemsWrapper from '../items/ItemsWrapper';
 import TeamConfig from '../teams/TeamConfig';
 import MapCreator from '../map/MapCreator';
 import { getById } from '../../service/configuration';
@@ -37,11 +36,6 @@ function ConfigLoader() {
                 component={() => (
                     <ConfigForm config={config} setConfig={setConfig} />
                 )}
-            />
-            <PrivateRoute
-                exact
-                path="/configs/:configurationId/items"
-                component={ItemsWrapper}
             />
             <PrivateRoute
                 exact

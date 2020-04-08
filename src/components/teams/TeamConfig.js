@@ -104,7 +104,7 @@ const TeamConfig = () => {
                                         className="btn-primary"
                                         onClick={() =>
                                             history.push(
-                                                `/configs/${configurationId}/items`
+                                                `/configs/${configurationId}/map`
                                             )
                                         }
                                     >

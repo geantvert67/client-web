@@ -14,6 +14,7 @@ const FlagContext = createContext();
 
 export const FlagProvider = ({ configId, children }) => {
     const [flagsPositions, setFlagsPositions] = useState([]);
+    const [showFlags, setShowFlags] = useState(true);
     const { forbiddenZones } = useForbiddenZone();
     const { position: mainZone } = useMainZone();
     const [config, setConfig] = useState(null);
@@ -151,7 +152,9 @@ export const FlagProvider = ({ configId, children }) => {
                 createRandom,
                 move,
                 remove,
-                removeAll
+                removeAll,
+                showFlags,
+                setShowFlags
             }}
         >
             {children}

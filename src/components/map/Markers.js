@@ -11,7 +11,12 @@ import { useMainZone } from '../../utils/useMainZone';
 import { useForbiddenZone } from '../../utils/useForbiddenZone';
 import { useFlag } from '../../utils/useFlag';
 import { useItem } from '../../utils/useItem';
-import { getById } from '../../service/configuration';
+import { getById, updateItem } from '../../service/configuration';
+import ItemForm from './ItemForm';
+import { serializeItem } from '../../utils/config';
+import { Col, Row } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashAlt, faCog } from '@fortawesome/free-solid-svg-icons';
 
 function Markers({
     closePopups,
@@ -50,6 +55,9 @@ function Markers({
                     startDragging={startDragging}
                     flagVisibilityRadius={
                         config !== null && config.flagVisibilityRadius
+                    }
+                    flagActionRadius={
+                        config !== null && config.flagActionRadius
                     }
                 />
             ))}
@@ -106,7 +114,7 @@ function MainZoneMarker({ point, stopDragging, startDragging }) {
         >
             <Popup ref={popup}>
                 <button
-                    className="btn-danger"
+                    className="btn-small  btn-danger"
                     onClick={e => {
                         popup.current.leafletElement.options.leaflet.map.closePopup();
                         remove(point);
@@ -139,7 +147,7 @@ function ForbiddenZoneMarker({ point, stopDragging, startDragging }) {
         >
             <Popup ref={popup}>
                 <button
-                    className="btn-danger"
+                    className="btn-small  btn-danger"
                     onClick={e => {
                         popup.current.leafletElement.options.leaflet.map.closePopup();
                         remove(point);
@@ -156,13 +164,14 @@ function FlagMarker({
     flag,
     stopDragging,
     startDragging,
-    flagVisibilityRadius
+    flagVisibilityRadius,
+    flagActionRadius
 }) {
-    const { move, remove } = useFlag();
+    const { move, remove, showFlags } = useFlag();
     const { position: mainZone } = useMainZone();
     const popup = useRef(null);
 
-    return (
+    return showFlags ? (
         <>
             <Marker
                 position={flag}
@@ -178,7 +187,7 @@ function FlagMarker({
             >
                 <Popup ref={popup}>
                     <button
-                        className="btn-danger"
+                        className="btn-small  btn-danger"
                         onClick={e => {
                             popup.current.leafletElement.options.leaflet.map.closePopup();
                             remove(flag);
@@ -195,53 +204,102 @@ function FlagMarker({
                     flagVisibilityRadius ||
                     getVisibilityRadiusAuto(mainZone, 0.05)
                 }
+                stroke={false}
+            />
+
+            <Circle
+                center={flag}
+                radius={
+                    flagActionRadius || getVisibilityRadiusAuto(mainZone, 0.045)
+                }
+                stroke={false}
             />
         </>
+    ) : (
+        <></>
     );
 }
 
 function ItemMarker({ point, stopDragging, startDragging }) {
-    const { move, updateItemQuantity, remove } = useItem();
+    const [showModal, setShowModal] = useState(false);
+    const { move, updateItem, remove, showRadius, hiddenItems } = useItem();
+    const { position: mainZone } = useMainZone();
     const popup = useRef(null);
-    const icon = getItemIcon(point.modelItem);
+    const icon = getItemIcon(point);
 
-    return (
-        <Marker
-            position={point.position}
-            icon={icon}
-            draggable
-            onDragend={e => {
-                move(e, point);
-                stopDragging();
-            }}
-            onDragStart={e => {
-                startDragging();
-            }}
-        >
-            <Popup ref={popup}>
-                <p>
-                    {' '}
-                    Quantité :{' '}
-                    <input
-                        type="number"
-                        defaultValue={point.quantity}
-                        onChange={e =>
-                            updateItemQuantity(point, e.target.value)
+    const handleClose = () => setShowModal(false);
+
+    const onSubmit = data => {
+        updateItem(point, serializeItem(data));
+        handleClose();
+    };
+
+    return hiddenItems.indexOf(point.name) === -1 ? (
+        <>
+            <Marker
+                position={point.position}
+                icon={icon}
+                draggable
+                onDragend={e => {
+                    move(e, point);
+                    stopDragging();
+                }}
+                onDragStart={e => {
+                    startDragging();
+                }}
+            >
+                <Popup ref={popup}>
+                    <button
+                        className="btn-small btn-light"
+                        onClick={() => setShowModal(true)}
+                    >
+                        Modifier
+                    </button>
+
+                    <button
+                        className="mt-1 btn-small btn-danger"
+                        onClick={e => {
+                            popup.current.leafletElement.options.leaflet.map.closePopup();
+                            remove(point);
+                        }}
+                    >
+                        Supprimer
+                    </button>
+                </Popup>
+            </Marker>
+
+            <ItemForm
+                item={point}
+                showModal={showModal}
+                handleClose={handleClose}
+                model={false}
+                onSubmit={onSubmit}
+            />
+
+            {showRadius && (
+                <>
+                    <Circle
+                        center={point.position}
+                        radius={
+                            point.visibilityRadius ||
+                            getVisibilityRadiusAuto(mainZone, 0.04)
                         }
-                    />{' '}
-                </p>
+                        stroke={false}
+                    />
 
-                <button
-                    className="btn-danger"
-                    onClick={e => {
-                        popup.current.leafletElement.options.leaflet.map.closePopup();
-                        remove(point);
-                    }}
-                >
-                    Supprimer
-                </button>
-            </Popup>
-        </Marker>
+                    <Circle
+                        center={point.position}
+                        radius={
+                            point.actionRadius ||
+                            getVisibilityRadiusAuto(mainZone, 0.035)
+                        }
+                        stroke={false}
+                    />
+                </>
+            )}
+        </>
+    ) : (
+        <></>
     );
 }
 

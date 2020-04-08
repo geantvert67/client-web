@@ -203,7 +203,7 @@ option:hover {
     color: white;
 }
 
-.btn-danger {
+.btn-small {
     border: none;
     border-radius: 4px;
     padding: 0.25rem 0.5rem;
@@ -376,6 +376,11 @@ input:checked + .slider:before {
 
 th {
     text-align: center !important;
+}
+
+.modal-header,
+.modal-footer {
+    border: none !important;
 }
 
 .landing-title {

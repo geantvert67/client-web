@@ -4,8 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faSlidersH,
     faUsers,
-    faMapMarkedAlt,
-    faToolbox
+    faMapMarkedAlt
 } from '@fortawesome/free-solid-svg-icons';
 import history from '../../utils/history';
 
@@ -53,17 +52,6 @@ function ConfigMenu({ level, configId }) {
             <Col
                 xs="auto"
                 className={getItemClassName(3)}
-                onClick={() => goTo('/items')}
-            >
-                <FontAwesomeIcon icon={faToolbox} size="lg" />
-            </Col>
-            <Col
-                className={`${getSeparatorClassName()} d-none d-lg-block`}
-            ></Col>
-
-            <Col
-                xs="auto"
-                className={getItemClassName(4)}
                 onClick={() => goTo('/map')}
             >
                 <FontAwesomeIcon icon={faMapMarkedAlt} size="lg" />
