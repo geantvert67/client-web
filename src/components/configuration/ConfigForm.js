@@ -11,6 +11,7 @@ import history from '../../utils/history';
 import ConfigMenu from './ConfigMenu';
 import DurationInput from '../forms/DurationInput';
 import { initializeItemModels } from '../../utils/items';
+import { HelpButton } from '../OverlayTip';
 
 function ConfigForm({ config, setConfig }) {
     const [showDuration, setShowDuration] = useState(
@@ -86,7 +87,6 @@ function ConfigForm({ config, setConfig }) {
 
                     <Form onSubmit={config ? updateConfig : createConfig}>
                         {error && <Alert variant="danger">{error}</Alert>}
-
                         <label>Nom *</label>
                         <Input
                             type="text"
@@ -107,7 +107,6 @@ function ConfigForm({ config, setConfig }) {
                                 }
                             }}
                         />
-
                         <label>Mode de jeu *</label>
                         <Input
                             as="select"
@@ -124,7 +123,6 @@ function ConfigForm({ config, setConfig }) {
                             <option value="TIME">TIME</option>
                             <option value="FLAG">FLAG</option>
                         </Input>
-
                         {showDuration && (
                             <>
                                 <label>Durée *</label>
@@ -134,7 +132,6 @@ function ConfigForm({ config, setConfig }) {
                                 />
                             </>
                         )}
-
                         <label>Visible par *</label>
                         <RadioButtonWrapper name="isPrivate">
                             <RadioButton
@@ -158,7 +155,6 @@ function ConfigForm({ config, setConfig }) {
                                 }}
                             />
                         </RadioButtonWrapper>
-
                         <label className="mt-5">
                             Nombre maximum de joueurs par équipe
                         </label>
@@ -180,8 +176,8 @@ function ConfigForm({ config, setConfig }) {
                                 }
                             }}
                         />
-
-                        <label>Taille de l'inventaire</label>
+                        <label>Taille de l'inventaire</label>{' '}
+                        <HelpButton tipKey="inventaire" />
                         <Input
                             type="number"
                             name="inventorySize"
@@ -200,10 +196,10 @@ function ConfigForm({ config, setConfig }) {
                                 }
                             }}
                         />
-
                         <label className="mt-5">
                             Rayon de visibilité des joueurs
-                        </label>
+                        </label>{' '}
+                        <HelpButton tipKey="visibilityRadius" />
                         <Row>
                             <Col>
                                 <Input
@@ -227,8 +223,8 @@ function ConfigForm({ config, setConfig }) {
                                 mètres
                             </Col>
                         </Row>
-
-                        <label>Rayon d'action des joueurs</label>
+                        <label>Rayon d'action des joueurs</label>{' '}
+                        <HelpButton tipKey="actionRadius" />
                         <Row>
                             <Col>
                                 <Input
@@ -252,10 +248,10 @@ function ConfigForm({ config, setConfig }) {
                                 mètres
                             </Col>
                         </Row>
-
                         <label className="mt-5">
                             Rayon de visibilité des cristaux
-                        </label>
+                        </label>{' '}
+                        <HelpButton tipKey="visibilityRadius" />
                         <Row>
                             <Col>
                                 <Input
@@ -279,8 +275,8 @@ function ConfigForm({ config, setConfig }) {
                                 mètres
                             </Col>
                         </Row>
-
-                        <label>Rayon d'action des cristaux</label>
+                        <label>Rayon d'action des cristaux</label>{' '}
+                        <HelpButton tipKey="actionRadius" />
                         <Row>
                             <Col>
                                 <Input
@@ -304,13 +300,12 @@ function ConfigForm({ config, setConfig }) {
                                 mètres
                             </Col>
                         </Row>
-
-                        <label>Durée de verrouillage des cristaux *</label>
+                        <label>Durée de verrouillage des cristaux *</label>{' '}
+                        <HelpButton tipKey="locked" />
                         <DurationInput
                             duration={flagCaptureDuration}
                             setDuration={setFlagCaptureDuration}
                         />
-
                         <Row className="justify-content-end mt-5">
                             <Col xs="auto">
                                 <Button
