@@ -35,7 +35,9 @@ function ForbiddenZoneActions({ action, setAction }) {
                                 createZone();
                             }}
                         >
-                            <FontAwesomeIcon icon={faPlus} />
+                            <IconOverlay tipKey="addForbiddenArea">
+                                <FontAwesomeIcon icon={faPlus} />
+                            </IconOverlay>
                         </Col>
                         <IconOverlay tipKey="delete">
                             <Col

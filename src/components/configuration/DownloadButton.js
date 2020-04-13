@@ -13,6 +13,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDownload } from '@fortawesome/free-solid-svg-icons';
 import { getVisibilityRadiusAuto, formatZone } from '../../utils/utils';
+import { IconOverlay } from '../OverlayTip';
 
 function DownloadButton({ configId }) {
     const configRadius = (config, zone) => {
@@ -174,12 +175,14 @@ function DownloadButton({ configId }) {
     };
 
     return (
-        <FontAwesomeIcon
-            icon={faDownload}
-            size="lg"
-            onClick={downloadConfig}
-            className="mr-2 ml-2"
-        />
+        <IconOverlay tipKey="download">
+            <FontAwesomeIcon
+                icon={faDownload}
+                size="lg"
+                onClick={downloadConfig}
+                className="mr-2 ml-2"
+            />
+        </IconOverlay>
     );
 }
 

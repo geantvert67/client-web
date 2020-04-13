@@ -7,6 +7,7 @@ import {
     faMapMarkedAlt
 } from '@fortawesome/free-solid-svg-icons';
 import history from '../../utils/history';
+import { IconOverlay } from '../OverlayTip';
 
 function ConfigMenu({ level, configId }) {
     const goTo = url => {
@@ -32,7 +33,9 @@ function ConfigMenu({ level, configId }) {
                 className={getItemClassName(1)}
                 onClick={() => goTo('/edit')}
             >
-                <FontAwesomeIcon icon={faSlidersH} size="lg" />
+                <IconOverlay tipKey="config">
+                    <FontAwesomeIcon icon={faSlidersH} size="lg" />
+                </IconOverlay>
             </Col>
             <Col
                 className={`${getSeparatorClassName()} d-none d-lg-block`}
@@ -43,7 +46,9 @@ function ConfigMenu({ level, configId }) {
                 className={getItemClassName(2)}
                 onClick={() => goTo('/teams')}
             >
-                <FontAwesomeIcon icon={faUsers} size="lg" />
+                <IconOverlay tipKey="teams">
+                    <FontAwesomeIcon icon={faUsers} size="lg" />
+                </IconOverlay>
             </Col>
             <Col
                 className={`${getSeparatorClassName()} d-none d-lg-block`}
@@ -54,7 +59,9 @@ function ConfigMenu({ level, configId }) {
                 className={getItemClassName(3)}
                 onClick={() => goTo('/map')}
             >
-                <FontAwesomeIcon icon={faMapMarkedAlt} size="lg" />
+                <IconOverlay tipKey="map">
+                    <FontAwesomeIcon icon={faMapMarkedAlt} size="lg" />
+                </IconOverlay>
             </Col>
         </Row>
     );

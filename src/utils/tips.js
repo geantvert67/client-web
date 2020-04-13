@@ -67,6 +67,26 @@ export const GENERAL_TIPS = {
         placement: 'right'
     },
 
+    addForbiddenArea: {
+        tip: 'Ajouter une zone interdite',
+        placement: 'top'
+    },
+
+    config: {
+        tip: 'Paramètres généraux',
+        placement: 'top'
+    },
+
+    teams: {
+        tip: 'Equipes et membres',
+        placement: 'top'
+    },
+
+    map: {
+        tip: 'Cartede jeu',
+        placement: 'top'
+    },
+
     delete: {
         tip: 'Supprimer ',
         placement: 'top'
@@ -100,6 +120,41 @@ export const GENERAL_TIPS = {
     dice: {
         tip: 'Ajouter aléatoirement ',
         placement: 'top'
+    },
+
+    addTeam: {
+        tip: 'Ajouter une équipe ',
+        placement: 'top'
+    },
+
+    addMember: {
+        tip: "Ajouter à l'équipe ",
+        placement: 'top'
+    },
+
+    deleteMember: {
+        tip: "Retirer de l'équipe ",
+        placement: 'top'
+    }
+};
+
+export const GAME_TIPS = {
+    supremacy: {
+        tip:
+            "Partie non chronométrée. La partie s'arrête lorsqu'une équipe a capturé la majorité absolue de cristaux.",
+        placement: 'right'
+    },
+
+    flag: {
+        tip:
+            "Partie chronométrée. L'équipe possédant le plus de cristaux à la fin du temps imparti remporte la partie.",
+        placement: 'right'
+    },
+
+    time: {
+        tip:
+            "Partie chronométrée. L'équipe ayant le plus grand temps de possession de cristaux à la fin du temps imparti remporte la partie.",
+        placement: 'right'
     }
 };
 

@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import ConfigMenu from '../configuration/ConfigMenu';
 import CreateTeam from './CreateTeam';
+import { IconOverlay } from '../OverlayTip';
 
 const TeamConfig = () => {
     const { configurationId } = useParams();
@@ -55,10 +56,12 @@ const TeamConfig = () => {
                                                     backgroundColor: '#26292f'
                                                 }}
                                             >
-                                                <FontAwesomeIcon
-                                                    icon={faPlus}
-                                                    size="lg"
-                                                />
+                                                <IconOverlay tipKey="addTeam">
+                                                    <FontAwesomeIcon
+                                                        icon={faPlus}
+                                                        size="lg"
+                                                    />
+                                                </IconOverlay>
                                             </div>
                                         </Col>
                                         <Col>

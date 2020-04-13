@@ -12,6 +12,7 @@ import ConfigMenu from './ConfigMenu';
 import DurationInput from '../forms/DurationInput';
 import { initializeItemModels } from '../../utils/items';
 import { HelpButton } from '../OverlayTip';
+import { GAME_TIPS } from '../../utils/tips';
 
 function ConfigForm({ config, setConfig }) {
     const [showDuration, setShowDuration] = useState(
@@ -119,9 +120,18 @@ function ConfigForm({ config, setConfig }) {
                                 required: 'Ce champ est obligatoire'
                             }}
                         >
-                            <option value="SUPREMACY">SUPREMACY</option>
-                            <option value="TIME">TIME</option>
-                            <option value="FLAG">FLAG</option>
+                            <option
+                                title={GAME_TIPS['supremacy'].tip}
+                                value="SUPREMACY"
+                            >
+                                SUPREMACY
+                            </option>
+                            <option title={GAME_TIPS['time'].tip} value="TIME">
+                                TIME
+                            </option>
+                            <option title={GAME_TIPS['flag'].tip} value="FLAG">
+                                FLAG
+                            </option>
                         </Input>
                         {showDuration && (
                             <>

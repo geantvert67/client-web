@@ -1,6 +1,11 @@
 import React from 'react';
 import { OverlayTrigger, Tooltip, Image, Row, Col } from 'react-bootstrap';
-import { CONFIG_TIPS, ITEMS_TIPS, GENERAL_TIPS } from '../utils/tips';
+import {
+    CONFIG_TIPS,
+    ITEMS_TIPS,
+    GENERAL_TIPS,
+    GAME_TIPS
+} from '../utils/tips';
 import { getItemImage } from '../utils/utils';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -80,11 +85,10 @@ export function ItemOverlay({
     );
 }
 
-export function IconOverlay(props) {
-    const tip = GENERAL_TIPS[props.tipKey];
-    const iconUrl = props.icon || null;
+export function IconOverlay({ children, tipKey, icon = false }) {
+    const tip = GENERAL_TIPS[tipKey];
+    const iconUrl = icon || null;
 
-    console.log(props);
     return (
         <>
             <OverlayTrigger
@@ -106,7 +110,7 @@ export function IconOverlay(props) {
                     )
                 }
             >
-                {props.children}
+                {children}
             </OverlayTrigger>{' '}
         </>
     );
