@@ -11,6 +11,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { useFlag } from '../../utils/useFlag';
 import { useForm } from 'react-hook-form';
+import { IconOverlay } from '../OverlayTip';
 
 function FlagActions({ action, setAction }) {
     const iconFlag = require('../../img/cristal.png');
@@ -34,17 +35,19 @@ function FlagActions({ action, setAction }) {
             </Row>
             {isOpen && (
                 <Row className="mt-3 ml-1">
-                    <Col
-                        xs="auto"
-                        className={`mb-3 mr-3 actions-item ${action ===
-                            'flags' && 'actions-item-selected'}`}
-                        onClick={() => setAction('flags')}
-                    >
-                        <Image
-                            style={{ maxWidth: '25px', maxHeight: '25px' }}
-                            src={iconFlag}
-                        />
-                    </Col>
+                    <IconOverlay tipKey="crystal" icon={iconFlag}>
+                        <Col
+                            xs="auto"
+                            className={`mb-3 mr-3 actions-item ${action ===
+                                'flags' && 'actions-item-selected'}`}
+                            onClick={() => setAction('flags')}
+                        >
+                            <Image
+                                style={{ maxWidth: '25px', maxHeight: '25px' }}
+                                src={iconFlag}
+                            />
+                        </Col>
+                    </IconOverlay>
                     <Col xs="auto" className="mb-3 mr-3 actions-item">
                         <form onSubmit={handleSubmit(_createRandom)}>
                             <input
@@ -57,39 +60,47 @@ function FlagActions({ action, setAction }) {
                                 min={1}
                                 max={100}
                             />
-
-                            <button
-                                type="submit"
-                                style={{
-                                    backgroundColor: 'transparent',
-                                    border: 'none',
-                                    padding: '0'
-                                }}
-                            >
-                                <FontAwesomeIcon
-                                    className="ml-2"
-                                    icon={faDice}
-                                    color="white"
-                                />
-                            </button>
+                            <IconOverlay tipKey="dice">
+                                <button
+                                    type="submit"
+                                    style={{
+                                        backgroundColor: 'transparent',
+                                        border: 'none',
+                                        padding: '0'
+                                    }}
+                                >
+                                    <FontAwesomeIcon
+                                        className="ml-2"
+                                        icon={faDice}
+                                        color="white"
+                                    />
+                                </button>
+                            </IconOverlay>
                         </form>
                     </Col>
-                    <Col
-                        xs="auto"
-                        className="mb-3 mr-3 actions-item"
-                        onClick={removeAll}
-                    >
-                        <FontAwesomeIcon icon={faTrashAlt} className="danger" />
-                    </Col>
-                    <Col
-                        xs="auto"
-                        className="mb-3 actions-item"
-                        onClick={() => setShowFlags(!showFlags)}
-                    >
-                        <FontAwesomeIcon
-                            icon={showFlags ? faEyeSlash : faEye}
-                        />
-                    </Col>
+                    <IconOverlay tipKey="delete">
+                        <Col
+                            xs="auto"
+                            className="mb-3 mr-3 actions-item"
+                            onClick={removeAll}
+                        >
+                            <FontAwesomeIcon
+                                icon={faTrashAlt}
+                                className="danger"
+                            />
+                        </Col>
+                    </IconOverlay>
+                    <IconOverlay tipKey={showFlags ? 'mask' : 'unmask'}>
+                        <Col
+                            xs="auto"
+                            className="mb-3 actions-item"
+                            onClick={() => setShowFlags(!showFlags)}
+                        >
+                            <FontAwesomeIcon
+                                icon={showFlags ? faEyeSlash : faEye}
+                            />
+                        </Col>
+                    </IconOverlay>
                 </Row>
             )}
         </>

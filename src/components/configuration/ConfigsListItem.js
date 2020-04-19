@@ -8,6 +8,7 @@ import history from '../../utils/history';
 import { cloneConfiguration } from '../../service/configuration';
 import moment from 'moment';
 import DownloadButton from './DownloadButton';
+import { IconOverlay } from '../OverlayTip';
 
 const ConfigsListItem = ({ configuration, community, deleteConfig }) => {
     const cloneConfig = configId => {
@@ -55,23 +56,28 @@ const ConfigsListItem = ({ configuration, community, deleteConfig }) => {
                     </Col>
 
                     <Col xs="auto">
-                        <FontAwesomeIcon
-                            icon={faCopy}
-                            size="lg"
-                            className="mr-2 ml-2"
-                            onClick={() => cloneConfig(configuration.id)}
-                        />
+                        <IconOverlay tipKey="clone">
+                            <FontAwesomeIcon
+                                icon={faCopy}
+                                size="lg"
+                                className="mr-2 ml-2"
+                                onClick={() => cloneConfig(configuration.id)}
+                            />
+                        </IconOverlay>
                         {!community && (
                             <>
                                 <DownloadButton configId={configuration.id} />
-                                <FontAwesomeIcon
-                                    icon={faTrashAlt}
-                                    size="lg"
-                                    className="mr-2 ml-2 danger"
-                                    onClick={() =>
-                                        deleteConfig(configuration.id)
-                                    }
-                                />
+
+                                <IconOverlay tipKey="delete">
+                                    <FontAwesomeIcon
+                                        icon={faTrashAlt}
+                                        size="lg"
+                                        className="mr-2 ml-2 danger"
+                                        onClick={() =>
+                                            deleteConfig(configuration.id)
+                                        }
+                                    />
+                                </IconOverlay>
                             </>
                         )}
                     </Col>

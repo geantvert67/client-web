@@ -7,6 +7,7 @@ import {
     faChevronDown,
     faChevronUp
 } from '@fortawesome/free-solid-svg-icons';
+import { IconOverlay } from '../OverlayTip';
 
 function MainZoneActions({ action, setAction }) {
     const { removeAll } = useMainZone();
@@ -24,24 +25,31 @@ function MainZoneActions({ action, setAction }) {
             </Row>
             {isOpen && (
                 <Row className="mt-3 ml-1">
-                    <Col
-                        xs="auto"
-                        className={`mb-3 mr-3 actions-item ${action ===
-                            'mainZone' && 'actions-item-selected'}`}
-                        onClick={() => setAction('mainZone')}
-                    >
-                        <Image
-                            style={{ maxWidth: '25px', maxHeight: '25px' }}
-                            src={iconGameArea}
-                        />
-                    </Col>
-                    <Col
-                        xs="auto"
-                        className="mb-3 actions-item"
-                        onClick={removeAll}
-                    >
-                        <FontAwesomeIcon icon={faTrashAlt} className="danger" />
-                    </Col>
+                    <IconOverlay tipKey="area" icon={iconGameArea}>
+                        <Col
+                            xs="auto"
+                            className={`mb-3 mr-3 actions-item ${action ===
+                                'mainZone' && 'actions-item-selected'}`}
+                            onClick={() => setAction('mainZone')}
+                        >
+                            <Image
+                                style={{ maxWidth: '25px', maxHeight: '25px' }}
+                                src={iconGameArea}
+                            />
+                        </Col>
+                    </IconOverlay>
+                    <IconOverlay tipKey="delete">
+                        <Col
+                            xs="auto"
+                            className="mb-3 actions-item"
+                            onClick={removeAll}
+                        >
+                            <FontAwesomeIcon
+                                icon={faTrashAlt}
+                                className="danger"
+                            />
+                        </Col>
+                    </IconOverlay>
                 </Row>
             )}
         </>

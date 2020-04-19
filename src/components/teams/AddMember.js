@@ -4,6 +4,7 @@ import { getUsers, addMember } from '../../service/configuration';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
+import { IconOverlay } from '../OverlayTip';
 
 const AddMember = ({ configurationId, teamId, members, setMembers }) => {
     const [name, setName] = useState('');
@@ -72,7 +73,9 @@ const AddMember = ({ configurationId, teamId, members, setMembers }) => {
                         />
                     </Col>
                     <Col xs="auto" onClick={_addMember}>
-                        <FontAwesomeIcon icon={faPlus} />
+                        <IconOverlay tipKey="addMember">
+                            <FontAwesomeIcon icon={faPlus} />
+                        </IconOverlay>
                     </Col>
                 </Row>
             </Card.Body>

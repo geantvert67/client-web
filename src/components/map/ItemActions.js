@@ -15,10 +15,10 @@ import { updateItemsModel } from '../../service/configuration';
 import { serializeModels } from '../../utils/config';
 import { toast } from 'react-toastify';
 import { useItem } from '../../utils/useItem';
-import { getItemImage } from '../../utils/utils';
 import { useForm } from 'react-hook-form';
 import Switch from '../forms/Switch';
 import ItemForm from './ItemForm';
+import { ItemOverlay, IconOverlay } from '../OverlayTip';
 
 function ItemActions({ action, setAction }) {
     const [isOpen, setIsOpen] = useState(false);
@@ -78,7 +78,6 @@ function Item({ item, action, setAction }) {
     } = useItem();
     const { register, handleSubmit, reset } = useForm();
     const index = modelItems.indexOf(item);
-    const iconUrl = getItemImage(item);
     const hidden = hiddenItems.indexOf(item.name) !== -1;
 
     const handleClose = () => setShowModal(false);
@@ -119,21 +118,15 @@ function Item({ item, action, setAction }) {
             <h4>{item.name}</h4>
 
             <Row className="mt-1 ml-1 align-items-center">
-                <Col
-                    xs="auto"
-                    className={`mr-3 mb-3 actions-item ${action === 'items' &&
-                        selectedModelItem === index &&
-                        'actions-item-selected'}`}
-                    onClick={() => {
-                        setAction('items');
-                        setSelectedModelItem(index);
-                    }}
-                >
-                    <Image
-                        style={{ maxWidth: '25px', maxHeight: '25px' }}
-                        src={iconUrl}
-                    />
-                </Col>
+                <ItemOverlay
+                    item={item}
+                    setAction={setAction}
+                    setSelectedModelItem={setSelectedModelItem}
+                    action={action}
+                    selectedModelItem={selectedModelItem}
+                    index={index}
+                />
+
                 <Col xs="auto" className="mb-3 mr-3 actions-item">
                     <form onSubmit={handleSubmit(_createRandom)}>
                         <input
@@ -146,44 +139,51 @@ function Item({ item, action, setAction }) {
                             min={1}
                             max={100}
                         />
-
-                        <button
-                            type="submit"
-                            style={{
-                                backgroundColor: 'transparent',
-                                border: 'none',
-                                padding: '0'
-                            }}
-                        >
-                            <FontAwesomeIcon
-                                className="ml-2"
-                                icon={faDice}
-                                color="white"
-                            />
-                        </button>
+                        <IconOverlay tipKey="dice">
+                            <button
+                                type="submit"
+                                style={{
+                                    backgroundColor: 'transparent',
+                                    border: 'none',
+                                    padding: '0'
+                                }}
+                            >
+                                <FontAwesomeIcon
+                                    className="ml-2"
+                                    icon={faDice}
+                                    color="white"
+                                />
+                            </button>
+                        </IconOverlay>
                     </form>
                 </Col>
-                <Col
-                    xs="auto"
-                    className="mb-3 mr-3 actions-item"
-                    onClick={_removeAll}
-                >
-                    <FontAwesomeIcon icon={faTrashAlt} className="danger" />
-                </Col>
-                <Col
-                    xs="auto"
-                    className="mb-3 mr-3 actions-item"
-                    onClick={() => (hidden ? showItem() : hideItem())}
-                >
-                    <FontAwesomeIcon icon={hidden ? faEye : faEyeSlash} />
-                </Col>
-                <Col
-                    xs="auto"
-                    className="mb-3 actions-item"
-                    onClick={() => setShowModal(true)}
-                >
-                    <FontAwesomeIcon icon={faCog} />
-                </Col>
+                <IconOverlay tipKey="delete">
+                    <Col
+                        xs="auto"
+                        className="mb-3 mr-3 actions-item"
+                        onClick={_removeAll}
+                    >
+                        <FontAwesomeIcon icon={faTrashAlt} className="danger" />
+                    </Col>
+                </IconOverlay>
+                <IconOverlay tipKey={hidden ? 'unmask' : 'mask'}>
+                    <Col
+                        xs="auto"
+                        className="mb-3 mr-3 actions-item"
+                        onClick={() => (hidden ? showItem() : hideItem())}
+                    >
+                        <FontAwesomeIcon icon={hidden ? faEye : faEyeSlash} />
+                    </Col>
+                </IconOverlay>
+                <IconOverlay tipKey="modify">
+                    <Col
+                        xs="auto"
+                        className="mb-3 actions-item"
+                        onClick={() => setShowModal(true)}
+                    >
+                        <FontAwesomeIcon icon={faCog} />
+                    </Col>
+                </IconOverlay>
             </Row>
 
             <ItemForm

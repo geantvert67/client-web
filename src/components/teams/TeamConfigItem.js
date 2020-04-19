@@ -7,6 +7,7 @@ import { removeTeam } from '../../service/configuration';
 import AddMember from './AddMember';
 import TeamMembers from './TeamMembers';
 import { toast } from 'react-toastify';
+import { IconOverlay } from '../OverlayTip';
 
 const TeamConfigItem = ({
     configurationId,
@@ -45,21 +46,27 @@ const TeamConfigItem = ({
                                 </Col>
                                 <Col xs="auto">
                                     <Row>
-                                        <Col xs="auto">
-                                            <FontAwesomeIcon
-                                                icon={faPencilAlt}
-                                                size="lg"
-                                                onClick={() => setIsOpen(true)}
-                                            />
-                                        </Col>
-                                        <Col xs="auto">
-                                            <FontAwesomeIcon
-                                                icon={faTrashAlt}
-                                                className="danger"
-                                                size="lg"
-                                                onClick={() => deleteTeam()}
-                                            />
-                                        </Col>
+                                        <IconOverlay tipKey="modify">
+                                            <Col xs="auto">
+                                                <FontAwesomeIcon
+                                                    icon={faPencilAlt}
+                                                    size="lg"
+                                                    onClick={() =>
+                                                        setIsOpen(true)
+                                                    }
+                                                />
+                                            </Col>
+                                        </IconOverlay>
+                                        <IconOverlay tipKey="delete">
+                                            <Col xs="auto">
+                                                <FontAwesomeIcon
+                                                    icon={faTrashAlt}
+                                                    className="danger"
+                                                    size="lg"
+                                                    onClick={() => deleteTeam()}
+                                                />
+                                            </Col>
+                                        </IconOverlay>
                                     </Row>
                                 </Col>
                             </Row>
