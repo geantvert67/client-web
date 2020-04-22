@@ -185,79 +185,9 @@ function ConfigForm({ config }) {
                                 }
                             }}
                         />
-                        <label>Taille de l'inventaire</label>{' '}
-                        <HelpButton tipKey="inventaire" />
-                        <Input
-                            type="number"
-                            name="inventorySize"
-                            placeholder="Entrez un nombre"
-                            defaultValue={config && config.inventorySize}
-                            validationSchema={{
-                                min: {
-                                    value: 1,
-                                    message:
-                                        'Veuillez choisir un nombre entre 1 et 10'
-                                },
-                                max: {
-                                    value: 10,
-                                    message:
-                                        'Veuillez choisir un nombre entre 1 et 10'
-                                }
-                            }}
-                        />
                         <label className="mt-5">
-                            Rayon de visibilité des joueurs
+                            Durée de verrouillage des cristaux *
                         </label>{' '}
-                        <HelpButton tipKey="visibilityRadius" />
-                        <Row>
-                            <Col>
-                                <Input
-                                    type="number"
-                                    step="0.01"
-                                    name="playerVisibilityRadius"
-                                    placeholder="Entrez un nombre"
-                                    defaultValue={
-                                        config && config.playerVisibilityRadius
-                                    }
-                                    validationSchema={{
-                                        min: {
-                                            value: 0.01,
-                                            message:
-                                                'Le rayon de visibilité doit faire au minimum 0.01m'
-                                        }
-                                    }}
-                                />
-                            </Col>
-                            <Col xs="auto" className="subtitle mt-1">
-                                mètres
-                            </Col>
-                        </Row>
-                        <label>Rayon d'action des joueurs</label>{' '}
-                        <HelpButton tipKey="actionRadius" />
-                        <Row>
-                            <Col>
-                                <Input
-                                    type="number"
-                                    step="0.01"
-                                    name="playerActionRadius"
-                                    placeholder="Entrez un nombre"
-                                    defaultValue={
-                                        config && config.playerActionRadius
-                                    }
-                                    validationSchema={{
-                                        min: {
-                                            value: 0.01,
-                                            message:
-                                                "Le rayon d'action doit faire au minimum 0.01m"
-                                        }
-                                    }}
-                                />
-                            </Col>
-                            <Col xs="auto" className="subtitle mt-1">
-                                mètres
-                            </Col>
-                        </Row>
-                        <label>Durée de verrouillage des cristaux *</label>{' '}
                         <HelpButton tipKey="locked" />
                         <DurationInput
                             duration={flagCaptureDuration}
