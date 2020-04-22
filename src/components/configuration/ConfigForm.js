@@ -14,7 +14,7 @@ import { initializeItemModels } from '../../utils/items';
 import { HelpButton } from '../OverlayTip';
 import { GAME_TIPS } from '../../utils/tips';
 
-function ConfigForm({ config, setConfig }) {
+function ConfigForm({ config }) {
     const [showDuration, setShowDuration] = useState(
         config ? config.gameMode != 'SUPREMACY' : false
     );
@@ -66,7 +66,6 @@ function ConfigForm({ config, setConfig }) {
                 newConfig.gameMode != 'SUPREMACY' ? duration : null;
             updateById(serializeConfig(newConfig))
                 .then(res => {
-                    setConfig(res.data);
                     history.push(`/configs/${res.data.id}/teams`);
                 })
                 .catch(err => setError(err.response.data));
@@ -244,58 +243,6 @@ function ConfigForm({ config, setConfig }) {
                                     placeholder="Entrez un nombre"
                                     defaultValue={
                                         config && config.playerActionRadius
-                                    }
-                                    validationSchema={{
-                                        min: {
-                                            value: 0.01,
-                                            message:
-                                                "Le rayon d'action doit faire au minimum 0.01m"
-                                        }
-                                    }}
-                                />
-                            </Col>
-                            <Col xs="auto" className="subtitle mt-1">
-                                mètres
-                            </Col>
-                        </Row>
-                        <label className="mt-5">
-                            Rayon de visibilité des cristaux
-                        </label>{' '}
-                        <HelpButton tipKey="visibilityRadius" />
-                        <Row>
-                            <Col>
-                                <Input
-                                    type="number"
-                                    step="0.01"
-                                    name="flagVisibilityRadius"
-                                    placeholder="Entrez un nombre"
-                                    defaultValue={
-                                        config && config.flagVisibilityRadius
-                                    }
-                                    validationSchema={{
-                                        min: {
-                                            value: 0.01,
-                                            message:
-                                                'Le rayon de visibilité doit faire au minimum 0.01m'
-                                        }
-                                    }}
-                                />
-                            </Col>
-                            <Col xs="auto" className="subtitle mt-1">
-                                mètres
-                            </Col>
-                        </Row>
-                        <label>Rayon d'action des cristaux</label>{' '}
-                        <HelpButton tipKey="actionRadius" />
-                        <Row>
-                            <Col>
-                                <Input
-                                    type="number"
-                                    step="0.01"
-                                    name="flagActionRadius"
-                                    placeholder="Entrez un nombre"
-                                    defaultValue={
-                                        config && config.flagActionRadius
                                     }
                                     validationSchema={{
                                         min: {

@@ -5,7 +5,7 @@ import PrivateRoute from '../authentification/PrivateRoute';
 import TeamConfig from '../teams/TeamConfig';
 import MapCreator from '../map/MapCreator';
 import { getById } from '../../service/configuration';
-import ConfigForm from './ConfigForm';
+import ConfigFormWrapper from './ConfigFormWrapper';
 import Error from '../Error';
 
 function ConfigLoader() {
@@ -33,9 +33,7 @@ function ConfigLoader() {
             <PrivateRoute
                 exact
                 path="/configs/:configurationId/edit"
-                component={() => (
-                    <ConfigForm config={config} setConfig={setConfig} />
-                )}
+                component={ConfigFormWrapper}
             />
             <PrivateRoute
                 exact
