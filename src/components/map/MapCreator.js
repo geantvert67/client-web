@@ -25,7 +25,7 @@ function MapCreator() {
     }, []);
 
     useEffect(() => {
-        action === 'moveElementStop' &&
+        (action === 'moveElementStop' || action === 'showPopupStop') &&
             setAction(sleepingAction) &&
             setSleepingAction('');
     }, [action]);

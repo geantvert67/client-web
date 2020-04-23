@@ -38,7 +38,6 @@ export function ItemOverlay({
     action,
     index
 }) {
-    console.log(item);
     const tip = ITEMS_TIPS[item.name];
     const iconUrl = getItemImage(item);
 
