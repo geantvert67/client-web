@@ -24,6 +24,7 @@ function MapCreator() {
         }) || setDevicePosition({ lat: 48.529918, lng: 7.737041 });
     }, []);
 
+    console.log(action, sleepingAction);
     useEffect(() => {
         (action === 'moveElementStop' || action === 'showPopupStop') &&
             setAction(sleepingAction) &&
@@ -41,6 +42,7 @@ function MapCreator() {
                             <MapMenuWrapper
                                 action={action}
                                 setAction={setAction}
+                                setSleepingAction={setSleepingAction}
                             />
                             <GameMap
                                 configId={configurationId}

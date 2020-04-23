@@ -35,6 +35,7 @@ export function ItemOverlay({
     setAction,
     setSelectedModelItem,
     selectedModelItem,
+    setSleepingAction,
     action,
     index
 }) {
@@ -66,7 +67,9 @@ export function ItemOverlay({
                             selectedModelItem === index &&
                             'actions-item-selected'}`}
                         onClick={() => {
-                            setAction('items');
+                            action === 'showPopup'
+                                ? setSleepingAction('items')
+                                : setAction('items');
                             setSelectedModelItem(index);
                         }}
                     >

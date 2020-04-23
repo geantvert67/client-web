@@ -13,7 +13,7 @@ import { useFlag } from '../../utils/useFlag';
 import { useForm } from 'react-hook-form';
 import { IconOverlay } from '../OverlayTip';
 
-function FlagActions({ action, setAction }) {
+function FlagActions({ action, setAction, setSleepingAction }) {
     const iconFlag = require('../../img/cristal.png');
     const { register, handleSubmit, reset } = useForm();
     const { removeAll, createRandom, showFlags, setShowFlags } = useFlag();
@@ -40,7 +40,11 @@ function FlagActions({ action, setAction }) {
                             xs="auto"
                             className={`mb-3 mr-3 actions-item ${action ===
                                 'flags' && 'actions-item-selected'}`}
-                            onClick={() => setAction('flags')}
+                            onClick={() =>
+                                action === 'showPopup'
+                                    ? setSleepingAction('flags')
+                                    : setAction('flags')
+                            }
                         >
                             <Image
                                 style={{ maxWidth: '25px', maxHeight: '25px' }}

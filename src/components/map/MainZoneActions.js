@@ -9,7 +9,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { IconOverlay } from '../OverlayTip';
 
-function MainZoneActions({ action, setAction }) {
+function MainZoneActions({ action, setAction, setSleepingAction }) {
     const { removeAll } = useMainZone();
     const [isOpen, setIsOpen] = useState(true);
     const iconGameArea = require('../../img/gameArea.png');
@@ -30,7 +30,11 @@ function MainZoneActions({ action, setAction }) {
                             xs="auto"
                             className={`mb-3 mr-3 actions-item ${action ===
                                 'mainZone' && 'actions-item-selected'}`}
-                            onClick={() => setAction('mainZone')}
+                            onClick={() =>
+                                action === 'showPopup'
+                                    ? setSleepingAction('mainZone')
+                                    : setAction('mainZone')
+                            }
                         >
                             <Image
                                 style={{ maxWidth: '25px', maxHeight: '25px' }}

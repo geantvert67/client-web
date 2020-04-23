@@ -38,7 +38,7 @@ function Markers({
     const startDragging = () => {
         closePopups();
         setAction('moveElement');
-        setSleepingAction(action);
+        action !== 'showPopupStop' && setSleepingAction(action);
     };
 
     const stopDragging = () => {

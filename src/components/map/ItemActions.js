@@ -20,7 +20,7 @@ import Switch from '../forms/Switch';
 import ItemForm from './ItemForm';
 import { ItemOverlay, IconOverlay } from '../OverlayTip';
 
-function ItemActions({ action, setAction }) {
+function ItemActions({ action, setAction, setSleepingAction }) {
     const [isOpen, setIsOpen] = useState(false);
     const { modelItems, showRadius, setShowRadius } = useItem();
 
@@ -54,6 +54,7 @@ function ItemActions({ action, setAction }) {
                                   item={item}
                                   action={action}
                                   setAction={setAction}
+                                  setSleepingAction={setSleepingAction}
                                   key={item.id}
                               />
                           ))}
@@ -63,7 +64,7 @@ function ItemActions({ action, setAction }) {
     );
 }
 
-function Item({ item, action, setAction }) {
+function Item({ item, action, setAction, setSleepingAction }) {
     const [showModal, setShowModal] = useState(false);
     const { configurationId } = useParams();
     const {
@@ -122,6 +123,7 @@ function Item({ item, action, setAction }) {
                     item={item}
                     setAction={setAction}
                     setSelectedModelItem={setSelectedModelItem}
+                    setSleepingAction={setSleepingAction}
                     action={action}
                     selectedModelItem={selectedModelItem}
                     index={index}
