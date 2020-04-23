@@ -84,7 +84,7 @@ function ForbiddenZoneItem({ action, setAction, zone }) {
             <h4>{`Zone interdite n°${index + 1}`}</h4>
 
             <Row className="mt-1 ml-1">
-                <IconOverlay tipKey="forbiddenArea" icon={iconForbiddenArea}>
+                <IconOverlay tipKey="forbiddenArea">
                     <Col
                         xs="auto"
                         className={`mb-3 mr-3 actions-item ${action ===

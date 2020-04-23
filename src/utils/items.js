@@ -20,7 +20,7 @@ export const itemModels = [
     },
 
     {
-        name: 'Portail de transfert',
+        name: 'Prisme de transfert',
         description: 'Transfère un item à un joueur allié'
     },
 

@@ -28,6 +28,7 @@ import { toast } from 'react-toastify';
 import { Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faVectorSquare } from '@fortawesome/free-solid-svg-icons';
+import { IconOverlay } from '../OverlayTip';
 
 function GameMap({
     defaultPosition,
@@ -168,13 +169,15 @@ function GameMap({
     return (
         defaultPosition.length !== 0 && (
             <>
-                <Button
-                    variant="light"
-                    className="btn-toast"
-                    onClick={() => centerGameArea(mainZone)}
-                >
-                    <FontAwesomeIcon icon={faVectorSquare} />
-                </Button>
+                <IconOverlay tipKey="centerOnGameArea">
+                    <Button
+                        variant="light"
+                        className="btn-toast"
+                        onClick={() => centerGameArea(mainZone)}
+                    >
+                        <FontAwesomeIcon icon={faVectorSquare} />
+                    </Button>
+                </IconOverlay>
 
                 <Map
                     ref={map}
