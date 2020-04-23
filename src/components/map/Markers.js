@@ -45,6 +45,11 @@ function Markers({
         setAction('moveElementStop');
     };
 
+    const actionToSleep = () => {
+        setAction('showPopup');
+        setSleepingAction(action);
+    };
+
     return (
         <>
             {flagsPositions.map((flag, index) => (
@@ -53,6 +58,7 @@ function Markers({
                     flag={flag}
                     stopDragging={stopDragging}
                     startDragging={startDragging}
+                    actionToSleep={actionToSleep}
                     flagVisibilityRadius={
                         config !== null && config.flagVisibilityRadius
                     }
@@ -68,6 +74,7 @@ function Markers({
                     point={point}
                     stopDragging={stopDragging}
                     startDragging={startDragging}
+                    actionToSleep={actionToSleep}
                 />
             ))}
 
@@ -78,6 +85,7 @@ function Markers({
                         point={point}
                         stopDragging={stopDragging}
                         startDragging={startDragging}
+                        actionToSleep={actionToSleep}
                     />
                 ))
             )}
@@ -88,13 +96,14 @@ function Markers({
                     point={point}
                     stopDragging={stopDragging}
                     startDragging={startDragging}
+                    actionToSleep={actionToSleep}
                 />
             ))}
         </>
     );
 }
 
-function MainZoneMarker({ point, stopDragging, startDragging }) {
+function MainZoneMarker({ point, stopDragging, startDragging, actionToSleep }) {
     const { move, remove } = useMainZone();
     const popup = useRef(null);
 
@@ -110,6 +119,9 @@ function MainZoneMarker({ point, stopDragging, startDragging }) {
             }}
             onDragStart={e => {
                 startDragging();
+            }}
+            onClick={e => {
+                actionToSleep();
             }}
         >
             <Popup ref={popup}>
@@ -127,7 +139,12 @@ function MainZoneMarker({ point, stopDragging, startDragging }) {
     );
 }
 
-function ForbiddenZoneMarker({ point, stopDragging, startDragging }) {
+function ForbiddenZoneMarker({
+    point,
+    stopDragging,
+    startDragging,
+    actionToSleep
+}) {
     const { move, remove } = useForbiddenZone();
     const popup = useRef(null);
 
@@ -143,6 +160,9 @@ function ForbiddenZoneMarker({ point, stopDragging, startDragging }) {
             }}
             onDragStart={e => {
                 startDragging();
+            }}
+            onClick={e => {
+                actionToSleep();
             }}
         >
             <Popup ref={popup}>
@@ -165,7 +185,8 @@ function FlagMarker({
     stopDragging,
     startDragging,
     flagVisibilityRadius,
-    flagActionRadius
+    flagActionRadius,
+    actionToSleep
 }) {
     const { move, remove, showFlags } = useFlag();
     const { position: mainZone } = useMainZone();
@@ -183,6 +204,9 @@ function FlagMarker({
                 }}
                 onDragStart={e => {
                     startDragging();
+                }}
+                onClick={e => {
+                    actionToSleep();
                 }}
             >
                 <Popup ref={popup}>
@@ -220,7 +244,7 @@ function FlagMarker({
     );
 }
 
-function ItemMarker({ point, stopDragging, startDragging }) {
+function ItemMarker({ point, stopDragging, startDragging, actionToSleep }) {
     const [showModal, setShowModal] = useState(false);
     const { move, updateItem, remove, showRadius, hiddenItems } = useItem();
     const { position: mainZone } = useMainZone();
@@ -246,6 +270,9 @@ function ItemMarker({ point, stopDragging, startDragging }) {
                 }}
                 onDragStart={e => {
                     startDragging();
+                }}
+                onClick={e => {
+                    actionToSleep();
                 }}
             >
                 <Popup ref={popup}>
