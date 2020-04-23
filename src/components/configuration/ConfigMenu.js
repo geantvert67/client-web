@@ -28,41 +28,42 @@ function ConfigMenu({ level, configId }) {
 
     return (
         <Row className="mb-5 justify-content-between align-items-center">
-            <Col
-                xs="auto"
-                className={getItemClassName(1)}
-                onClick={() => goTo('/edit')}
-            >
-                <IconOverlay tipKey="config">
+            <IconOverlay tipKey="config">
+                <Col
+                    xs="auto"
+                    className={getItemClassName(1)}
+                    onClick={() => goTo('/edit')}
+                >
                     <FontAwesomeIcon icon={faSlidersH} size="lg" />
-                </IconOverlay>
-            </Col>
+                </Col>
+            </IconOverlay>
             <Col
                 className={`${getSeparatorClassName()} d-none d-lg-block`}
             ></Col>
 
-            <Col
-                xs="auto"
-                className={getItemClassName(2)}
-                onClick={() => goTo('/teams')}
-            >
-                <IconOverlay tipKey="teams">
+            <IconOverlay tipKey="teams">
+                <Col
+                    xs="auto"
+                    className={getItemClassName(2)}
+                    onClick={() => goTo('/teams')}
+                >
                     <FontAwesomeIcon icon={faUsers} size="lg" />
-                </IconOverlay>
-            </Col>
+                </Col>
+            </IconOverlay>
+
             <Col
                 className={`${getSeparatorClassName()} d-none d-lg-block`}
             ></Col>
 
-            <Col
-                xs="auto"
-                className={getItemClassName(3)}
-                onClick={() => goTo('/map')}
-            >
-                <IconOverlay tipKey="map">
+            <IconOverlay tipKey="map">
+                <Col
+                    xs="auto"
+                    className={getItemClassName(3)}
+                    onClick={() => goTo('/map')}
+                >
                     <FontAwesomeIcon icon={faMapMarkedAlt} size="lg" />
-                </IconOverlay>
-            </Col>
+                </Col>
+            </IconOverlay>
         </Row>
     );
 }

@@ -17,6 +17,7 @@ const AddMember = ({ configurationId, teamId, members, setMembers }) => {
         if (name) {
             addMember(configurationId, teamId, name)
                 .then(res => {
+                    setError('');
                     typeahead.current.getInstance().clear();
                     setMembers([...members, res.data]);
                 })

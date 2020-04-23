@@ -3,6 +3,7 @@ import { Row, Col, Container, Button } from 'react-bootstrap';
 import MainZoneActions from './MainZoneActions';
 import ForbiddenZoneActions from './ForbiddenZoneActions';
 import FlagActions from './FlagActions';
+import PlayerActions from './PlayerActions';
 import { useParams } from 'react-router-dom';
 import { updateConfig } from '../../utils/config';
 import { useMainZone } from '../../utils/useMainZone';
@@ -56,6 +57,7 @@ function MapMenu({ action, setAction }) {
                         action={action}
                         setAction={setAction}
                     />
+                    <PlayerActions />
                     <FlagActions action={action} setAction={setAction} />
                     <ItemActions action={action} setAction={setAction} />
                 </Col>

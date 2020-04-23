@@ -25,6 +25,10 @@ import { useForbiddenZone } from '../../utils/useForbiddenZone';
 import { useFlag } from '../../utils/useFlag';
 import { useItem } from '../../utils/useItem';
 import { toast } from 'react-toastify';
+import { Button } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faVectorSquare } from '@fortawesome/free-solid-svg-icons';
+import { IconOverlay } from '../OverlayTip';
 
 function GameMap({
     defaultPosition,
@@ -65,7 +69,7 @@ function GameMap({
             zones.data.map(zone =>
                 !zone.forbidden
                     ? (setMainZone(formatMainZone(zone)),
-                      setPosition(getCenterZoneBox(formatMainZone(zone))))
+                      centerGameArea(formatMainZone(zone)))
                     : forbZones.push(formatForbiddenZone(zoneIndex, zone))
             );
         });
@@ -158,40 +162,58 @@ function GameMap({
         map.current.leafletElement.closePopup();
     };
 
+    const centerGameArea = gameArea => {
+        map.current.leafletElement.panTo(getCenterZoneBox(gameArea));
+    };
+
     return (
         defaultPosition.length !== 0 && (
-            <Map
-                ref={map}
-                center={position}
-                zoom={zoom}
-                onClick={handleClick}
-                minZoom={5}
-                maxZoom={25}
-                onPopupClose={() => setAction('showPopupStop')}
-            >
-                <TileLayer url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" />
-                <Polygon color="green" positions={mainZone} />
+            <>
+                <IconOverlay tipKey="centerOnGameArea">
+                    <Button
+                        variant="light"
+                        className="btn-toast"
+                        onClick={() => centerGameArea(mainZone)}
+                    >
+                        <FontAwesomeIcon icon={faVectorSquare} />
+                    </Button>
+                </IconOverlay>
 
-                {forbiddenZones.map(zone => (
-                    <Polygon
-                        key={zone.id}
-                        color="red"
-                        positions={forbiddenZones[forbiddenZones.indexOf(zone)]}
+                <Map
+                    ref={map}
+                    center={position}
+                    zoom={zoom}
+                    onClick={handleClick}
+                    minZoom={5}
+                    maxZoom={25}
+                    onPopupClose={() => setAction('showPopupStop')}
+                >
+                    <TileLayer url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" />
+                    <Polygon color="green" positions={mainZone} />
+
+                    {forbiddenZones.map(zone => (
+                        <Polygon
+                            key={zone.id}
+                            color="red"
+                            positions={
+                                forbiddenZones[forbiddenZones.indexOf(zone)]
+                            }
+                        />
+                    ))}
+
+                    <Markers
+                        closePopups={closePopups}
+                        polygonPosition={mainZone}
+                        flagsPositions={flagsPositions}
+                        forbiddenZones={forbiddenZones}
+                        action={action}
+                        setAction={setAction}
+                        setSleepingAction={setSleepingAction}
+                        items={items}
+                        configId={configId}
                     />
-                ))}
-
-                <Markers
-                    closePopups={closePopups}
-                    polygonPosition={mainZone}
-                    flagsPositions={flagsPositions}
-                    forbiddenZones={forbiddenZones}
-                    action={action}
-                    setAction={setAction}
-                    setSleepingAction={setSleepingAction}
-                    items={items}
-                    configId={configId}
-                />
-            </Map>
+                </Map>
+            </>
         )
     );
 }
