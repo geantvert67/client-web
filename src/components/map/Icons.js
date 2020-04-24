@@ -39,7 +39,7 @@ const getItemIcon = item => {
             return iconAntenne;
         case 'Sonde':
             return iconSonde;
-        case 'Prisme de transfert':
+        case 'Portail de transfert':
             return iconPortail;
         case 'Disloqueur':
             return iconDisloqueur;
