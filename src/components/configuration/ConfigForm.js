@@ -50,7 +50,7 @@ function ConfigForm({ config }) {
             create(serializeConfig(config))
                 .then(res => {
                     const configId = res.data.id;
-                    initializeItemModels(configId).then(() =>
+                    initializeItemModels(duration, configId).then(() =>
                         history.push(`/configs/${configId}/teams`)
                     );
                 })

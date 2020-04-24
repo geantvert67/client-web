@@ -100,7 +100,9 @@ export const formatItems = i => {
             visibilityRadius: item.visibilityRadius,
             actionRadius: item.actionRadius,
             waitingPeriod: item.waitingPeriod,
-            autoMove: item.autoMove
+            autoMove: item.autoMove,
+            effectDuration: item.effectDuration,
+            effectStrength: item.effectStrength
         })
     );
     return items;
@@ -117,6 +119,12 @@ export const serializeModels = model => {
     model.waitingPeriod = model.waitingPeriod
         ? parseInt(model.waitingPeriod)
         : null;
+    model.effectDuration = model.effectDuration
+        ? parseInt(model.effectDuration)
+        : null;
+    model.effectStrength = model.effectStrength
+        ? parseInt(model.effectStrength)
+        : null;
 
     return model;
 };
@@ -132,6 +140,12 @@ export const serializeItem = item => {
         : null;
     item.waitingPeriod = item.waitingPeriod
         ? parseInt(item.waitingPeriod)
+        : null;
+    item.effectDuration = item.effectDuration
+        ? parseInt(item.effectDuration)
+        : null;
+    item.effectStrength = item.effectStrength
+        ? parseInt(item.effectStrength)
         : null;
 
     return item;

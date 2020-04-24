@@ -188,10 +188,10 @@ export const ITEMS_TIPS = {
         placement: 'right'
     },
 
-    'Prisme de transfert': {
+    'Portail de transfert': {
         tip: (
             <span>
-                <strong> Prisme de transfert</strong>
+                <strong> Portail de transfert</strong>
                 <br /> Transfère un item à un joueur allié
             </span>
         ),

@@ -67,7 +67,9 @@ export const addItem = (idConfig, item) => {
         visibilityRadius: item.visibilityRadius,
         actionRadius: item.actionRadius,
         waitingPeriod: item.waitingPeriod,
-        autoMove: item.autoMove
+        autoMove: item.autoMove,
+        effectDuration: item.effectDuration,
+        effectStrength: item.effectStrength
     });
 };
 
