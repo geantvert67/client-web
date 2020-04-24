@@ -1,8 +1,20 @@
 import { addItemsModel } from '../service/configuration';
 
-export const initializeItemModels = configId => {
+export const initializeItemModels = (duration, id) => {
+    const effectDuration = duration ? Math.ceil(duration * 0.05) : 300;
+
     return Promise.all(
-        itemModels.map(im => addItemsModel(configId, { name: im.name }))
+        itemModels.map(im => {
+            const i = { name: im.name };
+
+            if (itemsWithDuration.includes(im.name)) {
+                i.effectDuration = effectDuration;
+            }
+            if (itemsWithEffect.includes(im.name)) {
+                i.effectStrength = 50;
+            }
+            return addItemsModel(id, i);
+        })
     );
 };
 
@@ -76,3 +88,12 @@ export const itemModels = [
             "Révèle au joueur la position d'un cristal pendant quelques secondes"
     }
 ];
+
+export const itemsWithDuration = [
+    'Sentinelle',
+    'Canon à photons',
+    'Intercepteur',
+    'Sonde'
+];
+
+export const itemsWithEffect = ['Intercepteur', 'Sonde'];

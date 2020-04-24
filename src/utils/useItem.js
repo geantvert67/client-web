@@ -37,7 +37,9 @@ export const ItemProvider = ({ children }) => {
                       visibilityRadius: im.visibilityRadius,
                       actionRadius: im.actionRadius,
                       waitingPeriod: im.waitingPeriod,
-                      autoMove: im.autoMove
+                      autoMove: im.autoMove,
+                      effectDuration: im.effectDuration,
+                      effectStrength: im.effectStrength
                   })
               )
             : toast.error(
@@ -75,7 +77,9 @@ export const ItemProvider = ({ children }) => {
                         visibilityRadius: im.visibilityRadius,
                         actionRadius: im.actionRadius,
                         waitingPeriod: im.waitingPeriod,
-                        autoMove: im.autoMove
+                        autoMove: im.autoMove,
+                        effectDuration: im.effectDuration,
+                        effectStrength: im.effectStrength
                     }) &&
                     (newItem = true);
 
