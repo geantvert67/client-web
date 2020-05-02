@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
 import GameMap from './GameMap';
-
 import MapMenuWrapper from './MapMenuWrapper';
 import { MainZoneProvider } from '../../utils/useMainZone';
 import { ForbiddenZoneProvider } from '../../utils/useForbiddenZone';
 import { FlagProvider } from '../../utils/useFlag';
 import { ItemProvider } from '../../utils/useItem';
+import { ConfigProvider } from '../../utils/useConfig';
 
 function MapCreator() {
     const [action, setAction] = useState('mainZone');
@@ -38,17 +38,19 @@ function MapCreator() {
                 <ForbiddenZoneProvider>
                     <FlagProvider configId={configurationId}>
                         <ItemProvider>
-                            <MapMenuWrapper
-                                action={action}
-                                setAction={setAction}
-                            />
-                            <GameMap
-                                configId={configurationId}
-                                defaultPosition={devicePosition}
-                                action={action}
-                                setAction={setAction}
-                                setSleepingAction={setSleepingAction}
-                            />
+                            <ConfigProvider configId={configurationId}>
+                                <MapMenuWrapper
+                                    action={action}
+                                    setAction={setAction}
+                                />
+                                <GameMap
+                                    configId={configurationId}
+                                    defaultPosition={devicePosition}
+                                    action={action}
+                                    setAction={setAction}
+                                    setSleepingAction={setSleepingAction}
+                                />
+                            </ConfigProvider>
                         </ItemProvider>
                     </FlagProvider>
                 </ForbiddenZoneProvider>

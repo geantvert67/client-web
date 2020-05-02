@@ -14,23 +14,18 @@ import { useFlag } from '../../utils/useFlag';
 import { useForm } from 'react-hook-form';
 import { IconOverlay } from '../OverlayTip';
 import FlagForm from './FlagForm';
-import { updateById, getById } from '../../service/configuration';
+import { updateById } from '../../service/configuration';
 import { serializeConfig } from '../../utils/config';
 import { toast } from 'react-toastify';
-import { useParams } from 'react-router-dom';
+import { useConfig } from '../../utils/useConfig';
 
 function FlagActions({ action, setAction }) {
     const iconFlag = require('../../img/cristal.png');
-    const [config, setConfig] = useState(null);
     const { register, handleSubmit, reset } = useForm();
-    const { configurationId } = useParams();
     const { removeAll, createRandom, showFlags, setShowFlags } = useFlag();
     const [isOpen, setIsOpen] = useState(false);
     const [showModal, setShowModal] = useState(false);
-
-    useEffect(() => {
-        getById(configurationId).then(res => setConfig(res.data));
-    }, []);
+    const { config, setConfig } = useConfig();
 
     const _createRandom = ({ nbFlags }) => {
         reset({ nbFlags: null });
