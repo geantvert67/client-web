@@ -158,7 +158,9 @@ function GameMap({
     };
 
     const centerGameArea = gameArea => {
-        map.current.leafletElement.panTo(getCenterZoneBox(gameArea));
+        if (gameArea.length > 0) {
+            map.current.leafletElement.panTo(getCenterZoneBox(gameArea));
+        }
     };
 
     return (
