@@ -50,10 +50,10 @@ function FlagActions({ action, setAction }) {
     return (
         <>
             <Row
-                className="mt-4 ml-1 mr-1 justify-content-between align-items-center pointer"
+                className="mt-2 ml-1 mr-1 justify-content-between align-items-center pointer"
                 onClick={() => setIsOpen(!isOpen)}
             >
-                <h3>Cristaux</h3>
+                <h4>Cristaux</h4>
                 <FontAwesomeIcon icon={isOpen ? faChevronUp : faChevronDown} />
             </Row>
             {isOpen && (

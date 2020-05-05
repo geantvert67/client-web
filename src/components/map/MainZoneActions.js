@@ -20,7 +20,7 @@ function MainZoneActions({ action, setAction }) {
                 className="ml-1 mr-1 justify-content-between align-items-center pointer"
                 onClick={() => setIsOpen(!isOpen)}
             >
-                <h3>Zone de jeu</h3>
+                <h4>Zone de jeu</h4>
                 <FontAwesomeIcon icon={isOpen ? faChevronUp : faChevronDown} />
             </Row>
             {isOpen && (

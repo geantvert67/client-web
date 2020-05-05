@@ -37,9 +37,7 @@ function ConfigMenu({ level, configId }) {
                     <FontAwesomeIcon icon={faSlidersH} size="lg" />
                 </Col>
             </IconOverlay>
-            <Col
-                className={`${getSeparatorClassName()} d-none d-lg-block`}
-            ></Col>
+            <Col className={`${getSeparatorClassName()}`}></Col>
 
             <IconOverlay tipKey="teams">
                 <Col
@@ -51,9 +49,7 @@ function ConfigMenu({ level, configId }) {
                 </Col>
             </IconOverlay>
 
-            <Col
-                className={`${getSeparatorClassName()} d-none d-lg-block`}
-            ></Col>
+            <Col className={`${getSeparatorClassName()}`}></Col>
 
             <IconOverlay tipKey="map">
                 <Col
