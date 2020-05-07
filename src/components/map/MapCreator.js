@@ -34,11 +34,11 @@ function MapCreator() {
         <Spinner animation="border" variant="light" />
     ) : (
         <div className="map-container">
-            <MainZoneProvider>
-                <ForbiddenZoneProvider>
-                    <FlagProvider configId={configurationId}>
-                        <ItemProvider>
-                            <ConfigProvider configId={configurationId}>
+            <ConfigProvider configId={configurationId}>
+                <MainZoneProvider>
+                    <ForbiddenZoneProvider>
+                        <FlagProvider configId={configurationId}>
+                            <ItemProvider>
                                 <MapMenuWrapper
                                     action={action}
                                     setAction={setAction}
@@ -50,11 +50,11 @@ function MapCreator() {
                                     setAction={setAction}
                                     setSleepingAction={setSleepingAction}
                                 />
-                            </ConfigProvider>
-                        </ItemProvider>
-                    </FlagProvider>
-                </ForbiddenZoneProvider>
-            </MainZoneProvider>
+                            </ItemProvider>
+                        </FlagProvider>
+                    </ForbiddenZoneProvider>
+                </MainZoneProvider>
+            </ConfigProvider>
         </div>
     );
 }
