@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import {
     exportConfiguration,
@@ -14,8 +14,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDownload } from '@fortawesome/free-solid-svg-icons';
 import { getVisibilityRadiusAuto, formatZone } from '../../utils/utils';
 import { IconOverlay } from '../OverlayTip';
+import { Spinner } from 'react-bootstrap';
 
 function DownloadButton({ configId }) {
+    const [loading, setLoading] = useState(false);
+
     const configRadius = (config, zone) => {
         const newConfig = { id: config.id };
         if (!config.playerVisibilityRadius) {
@@ -84,9 +87,9 @@ function DownloadButton({ configId }) {
                     })
                 );
             })
-            .catch(() =>
-                toast.error('Impossible de télécharger la configuration')
-            );
+            .catch(() => {
+                throw 'Impossible de télécharger la configuration';
+            });
     };
 
     const itemsRadius = (config, zone) => {
@@ -117,9 +120,9 @@ function DownloadButton({ configId }) {
                     })
                 );
             })
-            .catch(() =>
-                toast.error('Impossible de télécharger la configuration')
-            );
+            .catch(() => {
+                throw 'Impossible de télécharger la configuration';
+            });
     };
 
     const calculateRadius = () => {
@@ -140,19 +143,20 @@ function DownloadButton({ configId }) {
                             itemsRadius(config, zone)
                         ]);
                     })
-                    .catch(() =>
-                        toast.error('Veuillez créer une zone de jeu valide')
-                    );
+                    .catch(() => {
+                        throw 'Veuillez créer une zone de jeu valide';
+                    });
             })
-            .catch(() =>
-                toast.error('Impossible de télécharger la configuration')
-            );
+            .catch(err => {
+                throw err;
+            });
     };
 
     const downloadConfig = () => {
+        setLoading(true);
         calculateRadius()
             .then(() => {
-                exportConfiguration(configId)
+                return exportConfiguration(configId)
                     .then(res => {
                         const url = window.URL.createObjectURL(
                             new Blob([res.data])
@@ -163,18 +167,17 @@ function DownloadButton({ configId }) {
                         document.body.appendChild(link);
                         link.click();
                     })
-                    .catch(() =>
-                        toast.error(
-                            'Impossible de télécharger la configuration'
-                        )
-                    );
+                    .catch(() => {
+                        throw 'Impossible de télécharger la configuration';
+                    });
             })
-            .catch(() =>
-                toast.error('Impossible de télécharger la configuration')
-            );
+            .catch(err => toast.error(err))
+            .finally(() => setLoading(false));
     };
 
-    return (
+    return loading ? (
+        <Spinner size="sm" animation="border" variant="light" />
+    ) : (
         <IconOverlay tipKey="download">
             <FontAwesomeIcon
                 icon={faDownload}
