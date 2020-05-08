@@ -49,9 +49,6 @@ export function ItemOverlay({
                     placement={tip.placement}
                     overlay={
                         <Tooltip>
-                            <Row className="justify-content-md-center">
-                                <Image src={iconUrl} />
-                            </Row>
                             <Row>
                                 <Col md={{ offset: 1, span: 10 }}>
                                     {tip.tip}
@@ -87,30 +84,14 @@ export function ItemOverlay({
     );
 }
 
-export function IconOverlay({ children, tipKey, icon = false }) {
+export function IconOverlay({ children, tipKey }) {
     const tip = GENERAL_TIPS[tipKey];
-    const iconUrl = icon || null;
 
     return (
         <>
             <OverlayTrigger
                 placement={tip.placement}
-                overlay={
-                    iconUrl ? (
-                        <Tooltip>
-                            <Row className="justify-content-md-center">
-                                <Image src={iconUrl} />
-                            </Row>
-                            <Row>
-                                <Col md={{ offset: 1, span: 10 }}>
-                                    {tip.tip}
-                                </Col>
-                            </Row>
-                        </Tooltip>
-                    ) : (
-                        <Tooltip>{tip.tip}</Tooltip>
-                    )
-                }
+                overlay={<Tooltip>{tip.tip}</Tooltip>}
             >
                 {children}
             </OverlayTrigger>{' '}

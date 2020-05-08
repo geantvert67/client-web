@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, Col, Image } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -7,21 +7,49 @@ import {
     faChevronUp,
     faDice,
     faEye,
-    faEyeSlash
+    faEyeSlash,
+    faCog
 } from '@fortawesome/free-solid-svg-icons';
 import { useFlag } from '../../utils/useFlag';
 import { useForm } from 'react-hook-form';
 import { IconOverlay } from '../OverlayTip';
+import FlagForm from './FlagForm';
+import { updateById, getById } from '../../service/configuration';
+import { serializeConfig } from '../../utils/config';
+import { toast } from 'react-toastify';
+import { useParams } from 'react-router-dom';
 
 function FlagActions({ action, setAction, setSleepingAction }) {
     const iconFlag = require('../../img/cristal.png');
+    const [config, setConfig] = useState(null);
     const { register, handleSubmit, reset } = useForm();
+    const { configurationId } = useParams();
     const { removeAll, createRandom, showFlags, setShowFlags } = useFlag();
     const [isOpen, setIsOpen] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+
+    useEffect(() => {
+        getById(configurationId).then(res => setConfig(res.data));
+    }, []);
 
     const _createRandom = ({ nbFlags }) => {
         reset({ nbFlags: null });
         createRandom(nbFlags);
+    };
+
+    const handleClose = () => setShowModal(false);
+
+    const updateConfig = data => {
+        const newConfig = JSON.parse(JSON.stringify(config));
+        newConfig.flagVisibilityRadius = data.flagVisibilityRadius;
+        newConfig.flagActionRadius = data.flagActionRadius;
+
+        updateById(serializeConfig(newConfig))
+            .then(() => {
+                setConfig(newConfig);
+                handleClose();
+            })
+            .catch(err => toast.error(err.response.data));
     };
 
     return (
@@ -97,7 +125,7 @@ function FlagActions({ action, setAction, setSleepingAction }) {
                     <IconOverlay tipKey={showFlags ? 'mask' : 'unmask'}>
                         <Col
                             xs="auto"
-                            className="mb-3 actions-item"
+                            className="mb-3 mr-3 actions-item"
                             onClick={() => setShowFlags(!showFlags)}
                         >
                             <FontAwesomeIcon
@@ -105,8 +133,24 @@ function FlagActions({ action, setAction, setSleepingAction }) {
                             />
                         </Col>
                     </IconOverlay>
+                    <IconOverlay tipKey="modify">
+                        <Col
+                            xs="auto"
+                            className="mb-3 actions-item"
+                            onClick={() => setShowModal(true)}
+                        >
+                            <FontAwesomeIcon icon={faCog} />
+                        </Col>
+                    </IconOverlay>
                 </Row>
             )}
+
+            <FlagForm
+                config={config}
+                showModal={showModal}
+                handleClose={handleClose}
+                onSubmit={updateConfig}
+            />
         </>
     );
 }

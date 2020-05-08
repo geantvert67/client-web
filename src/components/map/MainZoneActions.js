@@ -25,7 +25,7 @@ function MainZoneActions({ action, setAction, setSleepingAction }) {
             </Row>
             {isOpen && (
                 <Row className="mt-3 ml-1">
-                    <IconOverlay tipKey="area" icon={iconGameArea}>
+                    <IconOverlay tipKey="area">
                         <Col
                             xs="auto"
                             className={`mb-3 mr-3 actions-item ${action ===

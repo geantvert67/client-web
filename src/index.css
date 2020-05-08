@@ -197,6 +197,13 @@ option:hover {
     cursor: pointer;
 }
 
+.btn-toast {
+    position: absolute;
+    z-index: 997;
+    bottom: 2rem;
+    right: 2rem;
+}
+
 .leaflet-popup-content-wrapper,
 .leaflet-popup-tip {
     background-color: #26292f !important;

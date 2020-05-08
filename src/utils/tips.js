@@ -35,12 +35,17 @@ export const CONFIG_TIPS = {
 };
 
 export const GENERAL_TIPS = {
+    centerOnGameArea: {
+        tip: 'Centrer sur la zone de jeu',
+        placement: 'top'
+    },
+
     area: {
         tip: (
             <span>
-                <strong> Zone de jeu</strong>
+                <strong>Zone de jeu</strong>
                 <br /> Délimite la zone dans laquelle les joueurs pourront
-                évoluer lors de la partie.
+                évoluer lors de la partie
             </span>
         ),
         placement: 'right'
@@ -49,9 +54,9 @@ export const GENERAL_TIPS = {
     forbiddenArea: {
         tip: (
             <span>
-                <strong> Zone interdite</strong>
+                <strong>Zone interdite</strong>
                 <br /> Délimite la zone dans laquelle les joueurs n'auront pas
-                le droit d'aller.
+                le droit d'aller
             </span>
         ),
         placement: 'right'
@@ -60,7 +65,7 @@ export const GENERAL_TIPS = {
     crystal: {
         tip: (
             <span>
-                <strong> Crystal </strong>
+                <strong>Cristal</strong>
                 <br /> Objet céleste que les équipes devront capturer
             </span>
         ),
@@ -83,17 +88,17 @@ export const GENERAL_TIPS = {
     },
 
     map: {
-        tip: 'Cartede jeu',
+        tip: 'Carte',
         placement: 'top'
     },
 
     delete: {
-        tip: 'Supprimer ',
+        tip: 'Supprimer',
         placement: 'top'
     },
 
     clone: {
-        tip: 'Cloner la configuration ',
+        tip: 'Copier',
         placement: 'top'
     },
 
@@ -113,7 +118,7 @@ export const GENERAL_TIPS = {
     },
 
     modify: {
-        tip: 'Modifier les paramètres ',
+        tip: 'Modifier les paramètres',
         placement: 'top'
     },
 
@@ -123,7 +128,7 @@ export const GENERAL_TIPS = {
     },
 
     addTeam: {
-        tip: 'Ajouter une équipe ',
+        tip: 'Créer',
         placement: 'top'
     },
 
@@ -164,9 +169,9 @@ export const ITEMS_TIPS = {
     Sonde: {
         tip: (
             <span>
-                <strong> Sonde</strong>
+                <strong>Sonde</strong>
                 <br /> Augmente le rayon de visibilité des éléments pendant un
-                certain temps.
+                certain temps
             </span>
         ),
         placement: 'right'
@@ -177,17 +182,17 @@ export const ITEMS_TIPS = {
             <span>
                 <strong> Noyau protecteur</strong>
                 <br /> Génère un dôme de protection qui protège le joueur contre
-                l’effet des items ennemis.
+                l’effet des items ennemis
             </span>
         ),
         placement: 'right'
     },
 
-    'Prsime de transfert': {
+    'Prisme de transfert': {
         tip: (
             <span>
                 <strong> Prisme de transfert</strong>
-                <br /> Transfère un item à un joueur allié.
+                <br /> Transfère un item à un joueur allié
             </span>
         ),
         placement: 'right'
@@ -197,8 +202,8 @@ export const ITEMS_TIPS = {
         tip: (
             <span>
                 <strong> Intercepteur</strong>
-                <br /> Réduit le rayon de visibilité des ééments que peuvent
-                percevoir les ennemis pendant un certain temps.
+                <br /> Réduit pendant une certaine durée le rayon de visibilité
+                des éléments que peuvent percevoir les ennemis
             </span>
         ),
         placement: 'right'
@@ -209,7 +214,7 @@ export const ITEMS_TIPS = {
             <span>
                 <strong> Tempête</strong>
                 <br /> Modifie aléatoirement l’emplacement de l’ensemble des
-                éléments.
+                éléments
             </span>
         ),
         placement: 'right'
@@ -218,10 +223,9 @@ export const ITEMS_TIPS = {
     'Canon à photons': {
         tip: (
             <span>
-                <strong> Canon à faux thons</strong>
-                <br /> Empèche le joueur qui l'active de capturer des crystaux,
-                d’utiliser et/ou de prendre des items pendant une durée
-                déterminée.
+                <strong>Canon à photons</strong>
+                <br /> Empêche le joueur qui l'active de capturer des cristaux,
+                d’utiliser et/ou de prendre des items pendant une certaine durée
             </span>
         ),
         placement: 'right'
@@ -231,18 +235,7 @@ export const ITEMS_TIPS = {
         tip: (
             <span>
                 <strong> Sentinelle</strong>
-                <br /> Augmente le temps d'invulnérabilité d’un crystal capturé.
-            </span>
-        ),
-        placement: 'right'
-    },
-
-    'Portail de transfert': {
-        tip: (
-            <span>
-                <strong>Portail de transfert</strong>
-                <br /> Augmente la taille de l’inventaire du joueur qui
-                l'utilise.
+                <br /> Augmente le temps d'invulnérabilité d’un crystal capturé
             </span>
         ),
         placement: 'right'
@@ -252,8 +245,8 @@ export const ITEMS_TIPS = {
         tip: (
             <span>
                 <strong> Oracle</strong>
-                <br /> Rend le prochain crystal capturé incapturable par les
-                ennemis jusqu'à la fin de la partie.
+                <br /> Rend un cristal incapturable par les ennemis jusqu'à la
+                fin de la partie
             </span>
         ),
         placement: 'right'
@@ -263,7 +256,7 @@ export const ITEMS_TIPS = {
         tip: (
             <span>
                 <strong> Disloqueur</strong>
-                <br /> Remet l'ensemble des crystaux dans un état neutre.
+                <br /> Remet l'ensemble des cristaux dans un état neutre
             </span>
         ),
         placement: 'right'
@@ -273,8 +266,8 @@ export const ITEMS_TIPS = {
         tip: (
             <span>
                 <strong> Transducteur</strong>
-                <br /> Vole un item au joueur l'activant et donne l'item à celui
-                ayant posé le transducteur.
+                <br /> Vole un item au joueur l'activant et le donne au joueur
+                ayant posé le transducteur
             </span>
         ),
         placement: 'right'
@@ -284,7 +277,7 @@ export const ITEMS_TIPS = {
         tip: (
             <span>
                 <strong> Transporteur</strong>
-                <br /> Augmente la taille de l'inventaire du joueur l'activant.
+                <br /> Augmente la taille de l'inventaire du joueur
             </span>
         ),
         placement: 'right'
@@ -294,8 +287,8 @@ export const ITEMS_TIPS = {
         tip: (
             <span>
                 <strong> Antenne</strong>
-                <br /> Révèle au joueur la position d'un crystal pendant
-                quelques secondes.
+                <br /> Révèle au joueur la position d'un cristal pendant
+                quelques secondes
             </span>
         ),
         placement: 'right'
