@@ -8,7 +8,7 @@ import {
     getZoneBox
 } from './utils';
 import { useMainZone } from './useMainZone';
-import { getById } from '../service/configuration';
+import { useConfig } from './useConfig';
 
 const FlagContext = createContext();
 
@@ -17,11 +17,7 @@ export const FlagProvider = ({ configId, children }) => {
     const [showFlags, setShowFlags] = useState(true);
     const { forbiddenZones } = useForbiddenZone();
     const { position: mainZone } = useMainZone();
-    const [config, setConfig] = useState(null);
-
-    useEffect(() => {
-        getById(configId).then(res => setConfig(res.data));
-    }, []);
+    const { config } = useConfig();
 
     const create = point => {
         const newPositon = { lat: point.latlng.lat, lng: point.latlng.lng };
