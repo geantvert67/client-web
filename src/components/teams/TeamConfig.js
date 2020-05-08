@@ -10,6 +10,10 @@ import ConfigMenu from '../configuration/ConfigMenu';
 import CreateTeam from './CreateTeam';
 import { IconOverlay } from '../OverlayTip';
 
+/**
+ * Composant TeamConfig :
+ * Formulaire de gestion des équipes
+ */
 const TeamConfig = () => {
     const { configurationId } = useParams();
 

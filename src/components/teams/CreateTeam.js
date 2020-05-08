@@ -7,6 +7,17 @@ import Color from './Color';
 import { createTeam, updateTeam } from '../../service/configuration';
 import ModalColor from './ModalColor';
 
+/**
+ * Composant CreateTeam :
+ * Formulaire de création d'une équipe
+ *
+ * props :
+ *   - configurationId : Id de la configuration en cours d'édition
+ *   - setIsOpen : Setter du booleen permettant de savoir si l'édition est en cours
+ *   - team : Equipe en cours d'édition
+ *   - teams : Liste des équipes de la configuration
+ *   - setTeams : setter de la variable teams
+ */
 const CreateTeam = ({ configurationId, setIsOpen, team, teams, setTeams }) => {
     const colors = [
         '#E02828',
