@@ -2,6 +2,10 @@ import React from 'react';
 import { Container, Row, Col, Image, Button, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
+/**
+ * Composant Home :
+ * Accueil du site avec explications du jeu
+ */
 function Home() {
     const landing = require('../img/landing.svg');
     const settings = require('../img/settings.svg');

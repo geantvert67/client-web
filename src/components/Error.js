@@ -2,6 +2,10 @@ import React from 'react';
 import { Container, Row, Col, Jumbotron, Alert } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
+/**
+ * Composant Error :
+ * Page d'erreur 404
+ */
 function Error() {
     return (
         <Container className="mt-5">
