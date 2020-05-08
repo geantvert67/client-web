@@ -6,6 +6,10 @@ import { removeConfiguration } from '../../service/configuration';
 import ConfigsListItem from './ConfigsListItem';
 import ConfigsButtons from './ConfigsButtons';
 
+/**
+ * Composant ConfigsWrapper :
+ * Composant permettant de récupérer les configurations à afficher
+ */
 const ConfigsWrapper = () => {
     const [community, setCommunity] = useState(false);
 

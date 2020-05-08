@@ -17,9 +17,9 @@ import {
     getAreas,
     getFlags,
     getItemsModel,
-    getItems,
-    getById
+    getItems
 } from '../../service/configuration';
+import { useConfig } from '../../utils/useConfig';
 import { useMainZone } from '../../utils/useMainZone';
 import { useForbiddenZone } from '../../utils/useForbiddenZone';
 import { useFlag } from '../../utils/useFlag';
@@ -38,10 +38,9 @@ function GameMap({
     configId
 }) {
     const [position, setPosition] = useState(defaultPosition);
-    const [config, setConfig] = useState(null);
     const [zoom, setZoom] = useState(17);
     const map = useRef(null);
-
+    const { config } = useConfig();
     const {
         position: mainZone,
         setPosition: setMainZone,
@@ -56,10 +55,6 @@ function GameMap({
     } = useForbiddenZone();
     const { flagsPositions, setFlagsPositions, create: createFlag } = useFlag();
     const { items, setItems, setModelItems, create: createItem } = useItem();
-
-    useEffect(() => {
-        getById(configId).then(res => setConfig(res.data));
-    }, []);
 
     useEffect(() => {
         let forbZones = [];
@@ -163,7 +158,9 @@ function GameMap({
     };
 
     const centerGameArea = gameArea => {
-        map.current.leafletElement.panTo(getCenterZoneBox(gameArea));
+        if (gameArea.length > 0) {
+            map.current.leafletElement.panTo(getCenterZoneBox(gameArea));
+        }
     };
 
     return (
@@ -210,7 +207,6 @@ function GameMap({
                         setAction={setAction}
                         setSleepingAction={setSleepingAction}
                         items={items}
-                        configId={configId}
                     />
                 </Map>
             </>

@@ -15,6 +15,13 @@ import { faDownload } from '@fortawesome/free-solid-svg-icons';
 import { getVisibilityRadiusAuto, formatZone } from '../../utils/utils';
 import { IconOverlay } from '../OverlayTip';
 
+/**
+ * Composant DownloadButton :
+ * Bouton permettant de télécharger le serveur de jeu avec une config créée
+ *
+ * props :
+ *   - configId : Id de la configuration à télécharger
+ */
 function DownloadButton({ configId }) {
     const configRadius = (config, zone) => {
         const newConfig = { id: config.id };

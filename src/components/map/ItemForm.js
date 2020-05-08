@@ -2,14 +2,29 @@ import React, { useState } from 'react';
 import { Row, Col, Modal, Button, Form } from 'react-bootstrap';
 import DurationInput from '../forms/DurationInput';
 import { useForm } from 'react-hook-form';
+import { itemsWithDuration, itemsWithEffect } from '../../utils/items';
 
 function ItemForm({ showModal, handleClose, item, onSubmit, model = true }) {
     const [duration, setDuration] = useState(item ? item.waitingPeriod : null);
+    const [effectDuration, setEffectDuration] = useState(
+        item ? item.effectDuration : null
+    );
+    const [customErrors, setCustomsErrors] = useState({});
     const { register, handleSubmit, getValues, errors } = useForm();
 
     const submit = data => {
         data.waitingPeriod = duration;
-        onSubmit(data);
+        data.effectDuration = effectDuration;
+
+        if (itemsWithDuration.includes(item.name) && !effectDuration) {
+            setCustomsErrors({
+                ...customErrors,
+                ...{ effectDuration: 'Ce champ est obligatoire' }
+            });
+        } else {
+            setCustomsErrors({});
+            onSubmit(data);
+        }
     };
 
     return (
@@ -23,7 +38,7 @@ function ItemForm({ showModal, handleClose, item, onSubmit, model = true }) {
                 <Form>
                     {!model && (
                         <Row>
-                            <Col xs={12}>
+                            <Col xs={12} className="mb-4">
                                 <label>Quantité : </label>
                                 <input
                                     className="ml-2 input-light"
@@ -44,6 +59,7 @@ function ItemForm({ showModal, handleClose, item, onSubmit, model = true }) {
                             </Col>
                         </Row>
                     )}
+
                     <Row>
                         <Col xs={12}>
                             <label>Rayon de visibilité : </label>
@@ -71,7 +87,7 @@ function ItemForm({ showModal, handleClose, item, onSubmit, model = true }) {
                     </Row>
 
                     <Row>
-                        <Col xs={12}>
+                        <Col xs={12} className="mb-4">
                             <label>Rayon d'action : </label>
                             <input
                                 className="ml-2 input-light"
@@ -163,6 +179,59 @@ function ItemForm({ showModal, handleClose, item, onSubmit, model = true }) {
                                 errors.waitingPeriod.message}
                         </Col>
                     </Row>
+
+                    {itemsWithEffect.includes(item.name) && (
+                        <Row className="mt-4">
+                            <Col xs={12}>
+                                <label>
+                                    Impact sur le rayon de visibilité :
+                                </label>
+                                <input
+                                    className="ml-2 input-light"
+                                    name="effectStrength"
+                                    type="number"
+                                    defaultValue={
+                                        item ? item.effectStrength : null
+                                    }
+                                    ref={register({
+                                        required: 'Ce champ est obligatoire',
+                                        min: {
+                                            value: 1,
+                                            message:
+                                                'Veuillez entrer un pourcentage valide'
+                                        },
+                                        max: {
+                                            value: 100,
+                                            message:
+                                                'Veuillez entrer un pourcentage valide'
+                                        }
+                                    })}
+                                />
+                                <label className="ml-2">%</label>
+                            </Col>
+                            <Col xs="auto" className="danger">
+                                {errors.effectStrength &&
+                                    errors.effectStrength.message}
+                            </Col>
+                        </Row>
+                    )}
+
+                    {itemsWithDuration.includes(item.name) && (
+                        <Row>
+                            <Col xs={12}>
+                                <label>Durée de l'effet : </label>
+                                <DurationInput
+                                    light={true}
+                                    duration={effectDuration}
+                                    setDuration={setEffectDuration}
+                                />
+                            </Col>
+                            <Col xs="auto" className="danger">
+                                {customErrors.effectDuration &&
+                                    customErrors.effectDuration}
+                            </Col>
+                        </Row>
+                    )}
                 </Form>
             </Modal.Body>
             <Modal.Footer>

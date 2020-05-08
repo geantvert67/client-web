@@ -10,6 +10,15 @@ import moment from 'moment';
 import DownloadButton from './DownloadButton';
 import { IconOverlay } from '../OverlayTip';
 
+/**
+ * Composant ConfigsListItem :
+ * Représente une configuration dans la liste des configurations
+ *
+ * props :
+ *   - configuration : Configuration à afficher
+ *   - community : Booléen à true si on se trouve dans les configs publiques
+ *   - deleteConfig : Fonction de suppression d'une config (uniquement pour les configs privées)
+ */
 const ConfigsListItem = ({ configuration, community, deleteConfig }) => {
     const cloneConfig = configId => {
         cloneConfiguration(configId)

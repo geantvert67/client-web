@@ -14,6 +14,13 @@ import { initializeItemModels } from '../../utils/items';
 import { HelpButton } from '../OverlayTip';
 import { GAME_TIPS } from '../../utils/tips';
 
+/**
+ * Composant ConfigForm :
+ * Première étape de la création d'une configuration avec les infos générales
+ *
+ * props :
+ *   - config (optionnel) : Configuration à modifier
+ */
 function ConfigForm({ config }) {
     const [showDuration, setShowDuration] = useState(
         config ? config.gameMode != 'SUPREMACY' : false
@@ -50,7 +57,7 @@ function ConfigForm({ config }) {
             create(serializeConfig(config))
                 .then(res => {
                     const configId = res.data.id;
-                    initializeItemModels(configId).then(() =>
+                    initializeItemModels(duration, configId).then(() =>
                         history.push(`/configs/${configId}/teams`)
                     );
                 })

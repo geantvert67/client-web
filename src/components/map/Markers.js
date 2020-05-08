@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Marker, Popup, Circle } from 'react-leaflet';
 import {
     iconWhiteFlag,
@@ -11,12 +11,9 @@ import { useMainZone } from '../../utils/useMainZone';
 import { useForbiddenZone } from '../../utils/useForbiddenZone';
 import { useFlag } from '../../utils/useFlag';
 import { useItem } from '../../utils/useItem';
-import { getById, updateItem } from '../../service/configuration';
 import ItemForm from './ItemForm';
 import { serializeItem } from '../../utils/config';
-import { Col, Row } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt, faCog } from '@fortawesome/free-solid-svg-icons';
+import { useConfig } from '../../utils/useConfig';
 
 function Markers({
     closePopups,
@@ -26,14 +23,9 @@ function Markers({
     action,
     setAction,
     setSleepingAction,
-    items,
-    configId
+    items
 }) {
-    const [config, setConfig] = useState(null);
-
-    useEffect(() => {
-        getById(configId).then(res => setConfig(res.data));
-    }, []);
+    const { config } = useConfig();
 
     const startDragging = () => {
         closePopups();

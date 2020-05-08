@@ -5,6 +5,14 @@ import { faSearch, faPlus } from '@fortawesome/free-solid-svg-icons';
 import InputGroup from 'react-bootstrap/InputGroup';
 import history from '../../utils/history';
 
+/**
+ * Composant ConfigsButtons :
+ * Barre des boutons permettant des switcher entre Mes configs et Configs publiques
+ *
+ * props :
+ *   - community : Booléen à true si on veut afficher les configs publiques
+ *   - setCommunity : Setter de la variable community
+ */
 const ConfigsButtons = ({ community, setCommunity }) => {
     return (
         <>

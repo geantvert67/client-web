@@ -93,7 +93,7 @@ export const getItemImage = item => {
             ? require('../img/antenne.png')
             : item.name === 'Sonde'
             ? require('../img/sonde.png')
-            : item.name === 'Prisme de transfert'
+            : item.name === 'Portail de transfert'
             ? require('../img/portail.png')
             : item.name === 'Disloqueur'
             ? require('../img/disloqueur.png')

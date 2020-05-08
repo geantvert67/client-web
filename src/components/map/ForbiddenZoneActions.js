@@ -17,10 +17,10 @@ function ForbiddenZoneActions({ action, setAction, setSleepingAction }) {
     return (
         <>
             <Row
-                className="mt-4 ml-1 mr-1 justify-content-between align-items-center pointer"
+                className="mt-2 ml-1 mr-1 justify-content-between align-items-center pointer"
                 onClick={() => setIsOpen(!isOpen)}
             >
-                <h3>Zones interdites</h3>
+                <h4>Zones interdites</h4>
                 <FontAwesomeIcon icon={isOpen ? faChevronUp : faChevronDown} />
             </Row>
 
@@ -83,7 +83,7 @@ function ForbiddenZoneItem({ action, setAction, zone }) {
 
     return (
         <Col xs={12} className="mt-1">
-            <h4>{`Zone interdite n°${index + 1}`}</h4>
+            <h5>{`Zone interdite n°${index + 1}`}</h5>
 
             <Row className="mt-1 ml-1">
                 <IconOverlay tipKey="forbiddenArea">
