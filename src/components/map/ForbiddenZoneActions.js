@@ -10,6 +10,15 @@ import {
 import { useForbiddenZone } from '../../utils/useForbiddenZone';
 import { IconOverlay } from '../OverlayTip';
 
+/**
+ * Composant ForbiddenZoneActions :
+ * Menu des actions réalisables sur les zones interdites
+ *
+ * props :
+ *   - action : Action en cours
+ *   - setAction : Setter de la variable action
+ *   - setSleepingAction : Setter d'une variable d'action dormante
+ */
 function ForbiddenZoneActions({ action, setAction, setSleepingAction }) {
     const { forbiddenZones, createZone, removeAll } = useForbiddenZone();
     const [isOpen, setIsOpen] = useState(false);

@@ -19,6 +19,15 @@ import { serializeConfig } from '../../utils/config';
 import { toast } from 'react-toastify';
 import { useConfig } from '../../utils/useConfig';
 
+/**
+ * Composant FlagActions :
+ * Menu des actions réalisables sur un cristal
+ *
+ * props :
+ *   - action : Action en cours
+ *   - setAction : Setter de la variable action
+ *   - setSleepingAction : Setter d'une variable d'action dormante
+ */
 function FlagActions({ action, setAction, setSleepingAction }) {
     const iconFlag = require('../../img/cristal.png');
     const { register, handleSubmit, reset } = useForm();

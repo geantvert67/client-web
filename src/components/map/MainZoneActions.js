@@ -9,6 +9,15 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { IconOverlay } from '../OverlayTip';
 
+/**
+ * Composant MainZoneActions :
+ * Menu des actions réalisables sur la zone de jeu
+ *
+ * props :
+ *   - action : Action en cours
+ *   - setAction : Setter de la variable action
+ *   - setSleepingAction : Setter d'une variable d'action dormante
+ */
 function MainZoneActions({ action, setAction, setSleepingAction }) {
     const { removeAll } = useMainZone();
     const [isOpen, setIsOpen] = useState(true);

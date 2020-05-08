@@ -9,6 +9,10 @@ import { FlagProvider } from '../../utils/useFlag';
 import { ItemProvider } from '../../utils/useItem';
 import { ConfigProvider } from '../../utils/useConfig';
 
+/**
+ * Composant MapCreator :
+ * Interface de création de la zone de jeu
+ */
 function MapCreator() {
     const [action, setAction] = useState('mainZone');
     const [sleepingAction, setSleepingAction] = useState('');
@@ -24,7 +28,6 @@ function MapCreator() {
         }) || setDevicePosition({ lat: 48.529918, lng: 7.737041 });
     }, []);
 
-    console.log(action, sleepingAction);
     useEffect(() => {
         (action === 'moveElementStop' || action === 'showPopupStop') &&
             setAction(sleepingAction) &&

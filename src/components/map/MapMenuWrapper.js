@@ -3,12 +3,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import MapMenu from './MapMenu';
 
-function MapMenuWrapper({
-    action,
-    setAction,
-    sleepingAction,
-    setSleepingAction
-}) {
+/**
+ * Composant MapMenuWrapper :
+ * Composant englobant le menu de création de la carte
+ *
+ * props :
+ *   - action : Action en cours
+ *   - setAction : Setter de la variable action
+ *   - setSleepingAction : Setter d'une variable d'action dormante
+ */
+function MapMenuWrapper({ action, setAction, setSleepingAction }) {
     const [isOpen, setIsOpen] = useState(false);
 
     return (

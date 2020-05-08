@@ -14,6 +14,15 @@ import { useItem } from '../../utils/useItem';
 import { toast } from 'react-toastify';
 import ConfigMenu from '../configuration/ConfigMenu';
 
+/**
+ * Composant MapMenu :
+ * Menu de création de la zone de jeu
+ *
+ * props :
+ *   - action : Action en cours
+ *   - setAction : Setter de la variable action
+ *   - setSleepingAction : Setter d'une variable d'action dormante
+ */
 function MapMenu({ action, setAction, setSleepingAction }) {
     const [loading, setLoading] = useState(false);
     const { configurationId } = useParams();

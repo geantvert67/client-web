@@ -4,6 +4,17 @@ import DurationInput from '../forms/DurationInput';
 import { useForm } from 'react-hook-form';
 import { itemsWithDuration, itemsWithEffect } from '../../utils/items';
 
+/**
+ * Composant ItemForm :
+ * Modal de paramétrage d'un item
+ *
+ * props :
+ *   - showModal : Booleen à true si la modal doit être ouverte
+ *   - handleClose : Event à déclencher à la fermeture de la modal
+ *   - item : Item à paramétrer
+ *   - onSubmit : Event à déclencher à la soumission du formulaire
+ *   - model (optionnel) : Booleen à true si la modification doit s'appliquer à tous les items identiques posés par la suite (true par défaut)
+ */
 function ItemForm({ showModal, handleClose, item, onSubmit, model = true }) {
     const [duration, setDuration] = useState(item ? item.waitingPeriod : null);
     const [effectDuration, setEffectDuration] = useState(
