@@ -6,7 +6,7 @@ import Signin from './authentification/Signin';
 import Signup from './authentification/Signup';
 import PrivateRoute from './authentification/PrivateRoute';
 import ConfigsWrapper from './configuration/ConfigsWrapper';
-import Profil from './user/Profil';
+import Settings from './user/Settings';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -29,7 +29,7 @@ const App = () => {
 
                 <Route exact path="/signin" component={Signin} />
                 <Route exact path="/signup" component={Signup} />
-                <PrivateRoute exact path="/profil" component={Profil} />
+                <PrivateRoute exact path="/settings" component={Settings} />
 
                 <PrivateRoute
                     exact

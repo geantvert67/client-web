@@ -4,7 +4,11 @@ import Nav from 'react-bootstrap/Nav';
 import { Button, Dropdown, DropdownButton } from 'react-bootstrap';
 import { NavLink, Link, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserCircle, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import {
+    faUserCircle,
+    faSignOutAlt,
+    faCog
+} from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '../utils/auth';
 
 const Menu = () => {
@@ -43,7 +47,14 @@ const Menu = () => {
                                             className="mr-2"
                                             icon={faUserCircle}
                                         />
-                                        Mon compte
+                                        Mon profil
+                                    </Dropdown.Item>
+                                    <Dropdown.Item href="/settings">
+                                        <FontAwesomeIcon
+                                            className="mr-2"
+                                            icon={faCog}
+                                        />
+                                        Paramètres
                                     </Dropdown.Item>
                                     <Dropdown.Item onClick={e => signout()}>
                                         <FontAwesomeIcon
