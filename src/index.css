@@ -408,6 +408,10 @@ th {
     border-radius: 4px;
 }
 
+.link:hover {
+    text-decoration: underline !important;
+}
+
 @media screen and (max-width: 900px) {
     .map-menu {
         width: 50%;

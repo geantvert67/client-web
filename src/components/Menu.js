@@ -36,6 +36,13 @@ const Menu = () => {
                                 >
                                     Configurations
                                 </NavLink>
+                                <NavLink
+                                    className="nav-link"
+                                    activeClassName="nav-link-active"
+                                    to="/leaderboard"
+                                >
+                                    Classement
+                                </NavLink>
                             </Nav>
                             <Nav className="align-items-center">
                                 <DropdownButton

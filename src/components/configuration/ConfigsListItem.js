@@ -28,6 +28,7 @@ const ConfigsListItem = ({ configuration, community, deleteConfig }) => {
                             <span className="priority">
                                 {!community ? (
                                     <Link
+                                        className="link"
                                         to={`/configs/${configuration.id}/edit`}
                                     >
                                         {configuration.name}

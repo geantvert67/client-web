@@ -15,6 +15,7 @@ import ConfigLoader from './configuration/ConfigLoader';
 import Error from './Error';
 import Home from './Home';
 import ProfilWrapper from './user/ProfilWrapper';
+import LeaderboardWrapper from './leaderboard/LeaderboardWrapper';
 
 toast.configure({
     hideProgressBar: true,
@@ -51,6 +52,12 @@ const App = () => {
                 <PrivateRoute
                     path="/configs/:configurationId"
                     component={ConfigLoader}
+                />
+
+                <PrivateRoute
+                    exact
+                    path="/leaderboard"
+                    component={LeaderboardWrapper}
                 />
 
                 <Route component={Error} />

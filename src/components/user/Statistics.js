@@ -58,14 +58,16 @@ function Statistics({ user }) {
                         </Col>
                     </Row>
 
-                    <Row className="justify-content-center mt-4">
-                        <Col xs="6">
-                            <Doughnut
-                                data={data}
-                                options={{ legend: { position: 'right' } }}
-                            />
-                        </Col>
-                    </Row>
+                    {user.Statistic.nbGames > 0 && (
+                        <Row className="justify-content-center mt-4">
+                            <Col xs="6">
+                                <Doughnut
+                                    data={data}
+                                    options={{ legend: { position: 'right' } }}
+                                />
+                            </Col>
+                        </Row>
+                    )}
                 </Card.Body>
             </Card>
 

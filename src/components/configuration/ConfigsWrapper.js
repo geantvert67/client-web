@@ -42,7 +42,7 @@ const ConfigsWrapper = () => {
                             </Col>
                         </Row>
                     ) : error ? (
-                        <p>erreur</p>
+                        <p>Une erreur est survenue.</p>
                     ) : configurations.length === 0 ? (
                         <p className="text-center">
                             Aucune configuration à afficher.
