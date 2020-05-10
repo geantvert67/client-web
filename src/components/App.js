@@ -14,6 +14,7 @@ import ConfigForm from './configuration/ConfigForm';
 import ConfigLoader from './configuration/ConfigLoader';
 import Error from './Error';
 import Home from './Home';
+import ProfilWrapper from './user/ProfilWrapper';
 
 toast.configure({
     hideProgressBar: true,
@@ -29,6 +30,11 @@ const App = () => {
 
                 <Route exact path="/signin" component={Signin} />
                 <Route exact path="/signup" component={Signup} />
+                <PrivateRoute
+                    exact
+                    path="/users/:userId"
+                    component={ProfilWrapper}
+                />
                 <PrivateRoute exact path="/settings" component={Settings} />
 
                 <PrivateRoute

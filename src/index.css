@@ -100,6 +100,7 @@ option:hover {
     font-weight: 700;
 }
 
+.primary-text,
 .nav-link-active {
     color: #68b684 !important;
 }

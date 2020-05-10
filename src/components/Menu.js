@@ -42,7 +42,7 @@ const Menu = () => {
                                     alignRight
                                     title={user.username}
                                 >
-                                    <Dropdown.Item href="/profil">
+                                    <Dropdown.Item href={`/users/${user.id}`}>
                                         <FontAwesomeIcon
                                             className="mr-2"
                                             icon={faUserCircle}
