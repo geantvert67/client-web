@@ -1,5 +1,11 @@
 import { addItemsModel } from '../service/configuration';
 
+/**
+ * initializeItemModels :
+ * Initialise un modèle pour les items
+ * @param duration : Durée de l'effet
+ * @param id  : Id du modèle
+ */
 export const initializeItemModels = (duration, id) => {
     const effectDuration = duration ? Math.ceil(duration * 0.05) : 300;
 
@@ -18,6 +24,9 @@ export const initializeItemModels = (duration, id) => {
     );
 };
 
+/**
+ * Ensemble des explications des modèles d'items
+ */
 export const itemModels = [
     {
         name: 'Sonde',
@@ -89,6 +98,9 @@ export const itemModels = [
     }
 ];
 
+/**
+ * Ensemble des items avec durée
+ */
 export const itemsWithDuration = [
     'Sentinelle',
     'Canon à photons',
@@ -96,4 +108,7 @@ export const itemsWithDuration = [
     'Sonde'
 ];
 
+/**
+ * Ensemble des items avec des effets
+ */
 export const itemsWithEffect = ['Intercepteur', 'Sonde'];

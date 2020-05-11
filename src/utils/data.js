@@ -1,6 +1,12 @@
 import { useState, useEffect } from 'react';
 import request from './request';
 
+/**
+ * CustomHook useDataFromUrl :
+ * Récupère les données à une url données
+ *
+ * @param url Route pour récupérer les données
+ */
 export const useDataFromUrl = url => {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);

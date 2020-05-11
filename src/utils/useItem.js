@@ -6,6 +6,10 @@ import { toast } from 'react-toastify';
 
 const ItemContext = createContext();
 
+/**
+ * Contexte des items :
+ * Permet d'avoir accès à tous les outils de gestion des items partout dans le code
+ */
 export const ItemProvider = ({ children }) => {
     const [items, setItems] = useState([]);
     const [modelItems, setModelItems] = useState([]);
