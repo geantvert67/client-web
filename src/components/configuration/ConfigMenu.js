@@ -9,6 +9,14 @@ import {
 import history from '../../utils/history';
 import { IconOverlay } from '../OverlayTip';
 
+/**
+ * Composant ConfigMenu :
+ * Menu horizontal à 3 niveaux représentant les étapes des d'une configuration (Général, Equipes, Carte de jeu)
+ *
+ * props :
+ *   - level : Etape actuelle (1: Général, 2: Equipes, 3: Carte)
+ *   - configId : Id de la configuration à éditer (inutile pour l'étape 1 si création)
+ */
 function ConfigMenu({ level, configId }) {
     const goTo = url => {
         if (configId) history.push(`/configs/${configId}${url}`);

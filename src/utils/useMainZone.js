@@ -2,6 +2,10 @@ import React, { useState, createContext, useContext } from 'react';
 
 const MainZoneContext = createContext();
 
+/**
+ * Contexte de la zone de jeu :
+ * Permet d'avoir accès à tous les outils de gestion de la zone de jeu partout dans le code
+ */
 export const MainZoneProvider = ({ children }) => {
     const [position, setPosition] = useState([]);
 

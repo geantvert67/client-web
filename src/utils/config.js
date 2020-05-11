@@ -7,6 +7,12 @@ import {
     addItem
 } from '../service/configuration';
 
+/**
+ * removeElements :
+ * Supprime tout élément posé sur la carte
+ *
+ * @param idConfig Id de la configuration
+ */
 export const removeElements = idConfig => {
     return Promise.all([
         removeZones(idConfig),
@@ -15,6 +21,16 @@ export const removeElements = idConfig => {
     ]);
 };
 
+/**
+ * updateConfig :
+ * Met à jour une configuration
+ *
+ * @param idConfig Id de la configuration à mettre à jour
+ * @param polygonPosition Tableau des positions des sommets de la zone
+ * @param forbiddenZones Tableau des zones interdites
+ * @param flagsPositions Tableau des positions des cristaux
+ * @param items Tableau des items posés
+ */
 export const updateConfig = (
     idConfig,
     polygonPosition,
@@ -57,6 +73,12 @@ export const updateConfig = (
     });
 };
 
+/**
+ * formatMainZone :
+ * Formatte le tableau de tableaux en un tableau d'objets
+ *
+ * @param zone Zone à formatter
+ */
 export const formatMainZone = zone => {
     let mainZone = [];
     zone.position.coordinates[0].map(point => {
@@ -66,6 +88,13 @@ export const formatMainZone = zone => {
     return mainZone;
 };
 
+/**
+ * formatForbiddenZone :
+ * Formatte le tableau de tableaux en un tableau d'objets
+ *
+ * @param index Numéro de la zone
+ * @param zone Zone à formatter
+ */
 export const formatForbiddenZone = (index, zone) => {
     let forbiddenZone = [];
     zone.position.coordinates[0].map(point => {
@@ -75,6 +104,12 @@ export const formatForbiddenZone = (index, zone) => {
     return forbiddenZone;
 };
 
+/**
+ * formatFlags :
+ * Formatte le tableau de tableaux en un tableau d'objets
+ *
+ * @param f Cristaux à formatter
+ */
 export const formatFlags = f => {
     let flags = [];
     f.data.map(flag =>
@@ -86,6 +121,12 @@ export const formatFlags = f => {
     return flags;
 };
 
+/**
+ * formatItems :
+ * Formatte le tableau de tableaux en un tableau d'objets
+ *
+ * @param i Items à formatter
+ */
 export const formatItems = i => {
     let items = [];
     i.data.map(item =>
@@ -108,6 +149,12 @@ export const formatItems = i => {
     return items;
 };
 
+/**
+ * serializeModels :
+ * Serialise un modèle d'item
+ *
+ * @param model Model à sérialiser
+ */
 export const serializeModels = model => {
     model.autoMove = model.autoMove === 'true';
     model.visibilityRadius = model.visibilityRadius
@@ -129,6 +176,12 @@ export const serializeModels = model => {
     return model;
 };
 
+/**
+ * serializeItem :
+ * Serialise un item
+ *
+ * @param model Item à sérialiser
+ */
 export const serializeItem = item => {
     item.autoMove = item.autoMove === 'true';
     item.quantity = item.quantity ? parseInt(item.quantity) : 1;
@@ -151,6 +204,12 @@ export const serializeItem = item => {
     return item;
 };
 
+/**
+ * serializeConfig :
+ * Serialise une configuration
+ *
+ * @param config Configuration à sérialiser
+ */
 export const serializeConfig = config => {
     config.isPrivate = config.isPrivate === 'true';
     config.duration = config.duration ? parseInt(config.duration) : null;

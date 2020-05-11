@@ -1,3 +1,9 @@
+/**
+ * checkStatus :
+ * Vérifie si le code de retour de la réponse est bon
+ *
+ * @param res Réponse de la requête
+ */
 export const checkStatus = res => {
     if (res.ok) {
         return res;
@@ -8,6 +14,14 @@ export const checkStatus = res => {
     }
 };
 
+/**
+ * isInZone :
+ * Vérifie si un point se trouve dans une zone
+ *
+ * @param x Latitude du point
+ * @param y Longitude du point
+ * @param polygonPosition Tableau des sommets d'un polygone
+ */
 export const isInZone = (x, y, polygonPosition) => {
     let inside = false;
     for (
@@ -26,6 +40,13 @@ export const isInZone = (x, y, polygonPosition) => {
     return inside;
 };
 
+/**
+ * getDistance :
+ * Calcule la distance entre 2 coordonnées
+ *
+ * @param origin Point de départ
+ * @param destination Point d'arrivée
+ */
 export const getDistance = (origin, destination) => {
     let lon1 = toRadian(origin.lng),
         lat1 = toRadian(origin.lat),
@@ -47,6 +68,12 @@ const toRadian = degree => {
     return (degree * Math.PI) / 180;
 };
 
+/**
+ * getZoneBox :
+ * Calcule la boite rectangulaire minimale dans laquelle se trouve la zone
+ *
+ * @param polygonPosition Zone à traiter
+ */
 export const getZoneBox = polygonPosition => {
     let x_max = -180,
         y_max = -90;
@@ -63,12 +90,25 @@ export const getZoneBox = polygonPosition => {
     return { x_max, x_min, y_max, y_min };
 };
 
+/**
+ * getCenterZoneBox :
+ * Calcule le centre de la boîte rectangulaire minimale d'une zone
+ *
+ * @param polygonPosition Zone à traiter
+ */
 export const getCenterZoneBox = polygonPosition => {
     const { x_max, x_min, y_max, y_min } = getZoneBox(polygonPosition);
 
     return { lng: (x_max + x_min) / 2, lat: (y_max + y_min) / 2 };
 };
 
+/**
+ * getVisibilityRadiusAuto :
+ * Calcule un rayon de visibilité par rapport à la zone de jeu
+ *
+ * @param polygonPosition Zone de jeu
+ * @param coeff Coefficient de taille
+ */
 export const getVisibilityRadiusAuto = (polygonPosition, coeff) => {
     const { x_max, x_min, y_max, y_min } = getZoneBox(polygonPosition);
     const origin = { lng: x_max, lat: y_max };
@@ -79,10 +119,21 @@ export const getVisibilityRadiusAuto = (polygonPosition, coeff) => {
     );
 };
 
+/**
+ * formatZone :
+ * Formatte une zone en objet
+ * @param zone Zone à traiter
+ */
 export const formatZone = zone => {
     return zone.map(z => ({ lat: z[0], lng: z[1] }));
 };
 
+/**
+ * getItemImage :
+ * Retourne l'image de l'item en paramètre
+ *
+ * @param item Item à récupérer
+ */
 export const getItemImage = item => {
     let iconUrl =
         item.name === 'Sentinelle'

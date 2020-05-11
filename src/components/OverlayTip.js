@@ -11,6 +11,13 @@ import { getItemImage } from '../utils/utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 
+/**
+ * Composant HelpButton :
+ * Point d'aide à survoler
+ *
+ * props :
+ *   - tipKey : Clé de l'aide
+ */
 export function HelpButton({ tipKey }) {
     const tip = CONFIG_TIPS[tipKey];
 
@@ -30,11 +37,26 @@ export function HelpButton({ tipKey }) {
     );
 }
 
+/**
+ * Composant ItemOverlay :
+ * Item avec explication de l'effet en overlay
+ *
+ * props :
+ *   - item : Item survolé
+ *   - setAction : Setter de la variable action
+ *   - setSelectedModelItem : Setter de la variable selectedModelItem
+ *   - setSleepingAction : Setter de la variable d'action dormante
+ *   - action : Action en cours
+ *   - selectedModelItem : Modele d'item sélectionné
+ *   - index : Rang du modèle sélectionné
+ *
+ */
 export function ItemOverlay({
     item,
     setAction,
     setSelectedModelItem,
     selectedModelItem,
+    setSleepingAction,
     action,
     index
 }) {
@@ -63,7 +85,9 @@ export function ItemOverlay({
                             selectedModelItem === index &&
                             'actions-item-selected'}`}
                         onClick={() => {
-                            setAction('items');
+                            action === 'showPopup'
+                                ? setSleepingAction('items')
+                                : setAction('items');
                             setSelectedModelItem(index);
                         }}
                     >

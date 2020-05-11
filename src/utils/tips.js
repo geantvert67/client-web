@@ -3,6 +3,9 @@ import React from 'react';
 const autoSentence =
     'En laissant le champ vide, une valeur par défaut sera automatiquement calculée selon la configuration de la partie. ';
 
+/**
+ * Aides pour la configuration
+ */
 export const CONFIG_TIPS = {
     // Config des modèles
     visibilityRadius: {
@@ -34,6 +37,9 @@ export const CONFIG_TIPS = {
     }
 };
 
+/**
+ * Aide pour les généralités
+ */
 export const GENERAL_TIPS = {
     centerOnGameArea: {
         tip: 'Centrer sur la zone de jeu',
@@ -143,6 +149,9 @@ export const GENERAL_TIPS = {
     }
 };
 
+/**
+ * Aides pour les types de partie
+ */
 export const GAME_TIPS = {
     supremacy: {
         tip:
@@ -163,6 +172,9 @@ export const GAME_TIPS = {
     }
 };
 
+/**
+ * Aide pour les items
+ */
 export const ITEMS_TIPS = {
     // Description des items
 

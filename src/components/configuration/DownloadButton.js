@@ -16,6 +16,13 @@ import { getVisibilityRadiusAuto, formatZone } from '../../utils/utils';
 import { IconOverlay } from '../OverlayTip';
 import { Spinner } from 'react-bootstrap';
 
+/**
+ * Composant DownloadButton :
+ * Bouton permettant de télécharger le serveur de jeu avec une config créée
+ *
+ * props :
+ *   - configId : Id de la configuration à télécharger
+ */
 function DownloadButton({ configId }) {
     const [loading, setLoading] = useState(false);
 

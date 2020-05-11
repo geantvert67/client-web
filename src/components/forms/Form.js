@@ -5,6 +5,14 @@ import { Form as F } from 'react-bootstrap';
 const FormContext = createContext();
 export const useFormContext = () => useContext(FormContext);
 
+/**
+ * Composant Form :
+ * Formulaire personnalisé de l'appli web CrystalZ
+ *
+ * props :
+ *   - children : Tableau des composatns enfants
+ *   - onSubmit : Event appelé lors de la soumission du formulaire
+ */
 function Form({ children, onSubmit }) {
     const { register, handleSubmit, errors } = useForm();
 

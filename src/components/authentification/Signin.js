@@ -5,6 +5,10 @@ import Form from '../forms/Form';
 import Button from '../forms/Button';
 import Input from '../forms/Input';
 
+/**
+ * Composant Signin :
+ * Composant permettant à un utilisateur de se connecter
+ */
 const Signin = () => {
     const { signin } = useAuth();
     const [error, setError] = useState('');

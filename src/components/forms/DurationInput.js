@@ -1,6 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Table } from 'react-bootstrap';
 
+/**
+ * Composant DurationInput :
+ * Input des durées personnalisé pour l'appli web CrystalZ
+ *
+ * props :
+ *   - duration : Valeur actuelle de la durée
+ *   - setDuration : Setter de la variable duration
+ *   - light (optionnel) : Booleen à true si l'input doit être clair (false par défaut)
+ *   - onBlur (optionnel) : Event appelé uniquement sur les typeahead
+ */
 function DurationInput({
     duration,
     setDuration,

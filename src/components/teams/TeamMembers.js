@@ -6,6 +6,17 @@ import { removeMember } from '../../service/configuration';
 import { toast } from 'react-toastify';
 import { IconOverlay } from '../OverlayTip';
 
+/**
+ * Composant CreateTeam :
+ * Formulaire de gestion d'un membre d'une équipe
+ *
+ * props :
+ *   - configurationId : Id de la configuration en cours d'édition
+ *   - teamId: Id de l'équipe en cours d'édition
+ *   - member : Membre à afficher
+ *   - members : Liste des membres de l'équipe
+ *   - setMembers : Setter de la variable members
+ */
 const TeamMembers = ({
     configurationId,
     teamId,

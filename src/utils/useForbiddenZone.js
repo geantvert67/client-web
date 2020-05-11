@@ -2,6 +2,10 @@ import React, { useState, createContext, useContext } from 'react';
 
 const ForbiddenZoneContext = createContext();
 
+/**
+ * Contexte des zones interdites :
+ * Permet d'avoir accès à tous les outils de gestion des zones interdites partout dans le code
+ */
 export const ForbiddenZoneProvider = ({ children }) => {
     const [forbiddenZones, setForbiddenZones] = useState([]);
     const [forbiddenZoneIndex, setForbiddenZoneIndex] = useState(-1);
