@@ -7,7 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faUserCircle,
     faSignOutAlt,
-    faCog
+    faCog,
+    faHistory
 } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '../utils/auth';
 
@@ -55,6 +56,13 @@ const Menu = () => {
                                             icon={faUserCircle}
                                         />
                                         Mon profil
+                                    </Dropdown.Item>
+                                    <Dropdown.Item href="/games">
+                                        <FontAwesomeIcon
+                                            className="mr-2"
+                                            icon={faHistory}
+                                        />
+                                        Historique des parties
                                     </Dropdown.Item>
                                     <Dropdown.Item href="/settings">
                                         <FontAwesomeIcon

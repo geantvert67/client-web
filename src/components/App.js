@@ -16,6 +16,7 @@ import Error from './Error';
 import Home from './Home';
 import ProfilWrapper from './user/ProfilWrapper';
 import LeaderboardWrapper from './leaderboard/LeaderboardWrapper';
+import GamesWrapper from './games/GamesWrapper';
 
 toast.configure({
     hideProgressBar: true,
@@ -59,6 +60,8 @@ const App = () => {
                     path="/leaderboard"
                     component={LeaderboardWrapper}
                 />
+
+                <PrivateRoute exact path="/games" component={GamesWrapper} />
 
                 <Route component={Error} />
             </Switch>
