@@ -1,8 +1,8 @@
 import request from '../utils/request';
 
-export const getAll = (page, pageSize, name) => {
+export const getAll = (page, pageSize, name, gameModes) => {
     return request.get(
-        `/configs?page=${page}&pageSize=${pageSize}&name=${name}`
+        `/configs?page=${page}&pageSize=${pageSize}&name=${name}&gameModes=${gameModes}`
     );
 };
 

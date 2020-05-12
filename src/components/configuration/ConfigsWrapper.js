@@ -9,10 +9,12 @@ import ConfigsButtons from './ConfigsButtons';
 import ConfigsFilter from './ConfigsFilter';
 
 const PAGE_SIZE = 15;
+const GAMEMODES = ['FLAG', 'TIME', 'SUPREMACY'];
 
 const ConfigsWrapper = () => {
     const [community, setCommunity] = useState(false);
     const [nameFilter, setNameFilter] = useState('');
+    const [gameModeFilter, setGameModeFilter] = useState(GAMEMODES);
     const [hasMore, setHasMore] = useState(true);
     const [configurations, setConfigurations] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -24,15 +26,21 @@ const ConfigsWrapper = () => {
         fetchConfigs([])
             .catch(err => setError(err))
             .finally(() => setLoading(false));
-    }, [nameFilter]);
+    }, [nameFilter, gameModeFilter]);
 
     const fetchConfigs = configurations => {
         const p = community
-            ? getAll(configurations.length / PAGE_SIZE, PAGE_SIZE, nameFilter)
+            ? getAll(
+                  configurations.length / PAGE_SIZE,
+                  PAGE_SIZE,
+                  nameFilter,
+                  gameModeFilter
+              )
             : getConfigs(
                   configurations.length / PAGE_SIZE,
                   PAGE_SIZE,
-                  nameFilter
+                  nameFilter,
+                  gameModeFilter
               );
 
         return p.then(res => {
@@ -62,7 +70,12 @@ const ConfigsWrapper = () => {
                         setCommunity={setCommunity}
                     />
 
-                    <ConfigsFilter setName={setNameFilter} />
+                    <ConfigsFilter
+                        setName={setNameFilter}
+                        gameModes={GAMEMODES}
+                        gameModeFilter={gameModeFilter}
+                        setGameModeFilter={setGameModeFilter}
+                    />
 
                     {loading ? (
                         <Row className="justify-content-center">

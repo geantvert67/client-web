@@ -1,16 +1,31 @@
 import React, { useState, useCallback } from 'react';
 import _ from 'lodash';
-import { Row, Col, Form } from 'react-bootstrap';
+import { Row, Col, Form, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import InputGroup from 'react-bootstrap/InputGroup';
 
-function ConfigsFilter({ setName }) {
+function ConfigsFilter({
+    setName,
+    gameModes,
+    gameModeFilter,
+    setGameModeFilter
+}) {
     const [search, setSearch] = useState('');
+
     const debounceSearch = useCallback(
         _.debounce(s => setName(s), 300),
         []
     );
+
+    const handleGameModeFilter = gameMode => {
+        if (gameModeFilter.includes(gameMode)) {
+            if (gameModeFilter.length > 1)
+                setGameModeFilter(gameModeFilter.filter(g => g !== gameMode));
+        } else {
+            setGameModeFilter([...gameModeFilter, gameMode]);
+        }
+    };
 
     return (
         <Row className="mb-5">
@@ -31,6 +46,23 @@ function ConfigsFilter({ setName }) {
                         }}
                     />
                 </InputGroup>
+            </Col>
+
+            <Col md="auto">
+                {gameModes.map(g => (
+                    <Button
+                        key={g}
+                        variant="success"
+                        className={`mx-2 ${
+                            gameModeFilter.includes(g)
+                                ? 'btn-primary'
+                                : 'btn-dark'
+                        }`}
+                        onClick={() => handleGameModeFilter(g)}
+                    >
+                        {g}
+                    </Button>
+                ))}
             </Col>
         </Row>
     );

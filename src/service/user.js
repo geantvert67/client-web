@@ -5,9 +5,9 @@ export const getByIdWithStats = id => {
     return request.get(`users/${id}/statistics`);
 };
 
-export const getConfigs = (page, pageSize, name) => {
+export const getConfigs = (page, pageSize, name, gameModes) => {
     return request.get(
-        `/user/configs?page=${page}&pageSize=${pageSize}&name=${name}`
+        `/user/configs?page=${page}&pageSize=${pageSize}&name=${name}&gameModes=${gameModes}`
     );
 };
 
