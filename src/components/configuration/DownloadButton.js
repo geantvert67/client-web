@@ -8,7 +8,8 @@ import {
     getItemsModel,
     updateItemsModel,
     updateItem,
-    getItems
+    getItems,
+    getTeams
 } from '../../service/configuration';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDownload } from '@fortawesome/free-solid-svg-icons';
@@ -152,24 +153,38 @@ function DownloadButton({ configId }) {
             });
     };
 
+    const checkTeams = () => {
+        return getTeams(configId)
+            .then(res => {
+                if (res.data.length < 2) {
+                    throw 'Veuillez créer au minimum 2 équipes';
+                }
+            })
+            .catch(() => {
+                throw 'Veuillez créer au minimum 2 équipes';
+            });
+    };
+
     const downloadConfig = () => {
         setLoading(true);
-        calculateRadius()
+        checkTeams()
             .then(() => {
-                return exportConfiguration(configId)
-                    .then(res => {
-                        const url = window.URL.createObjectURL(
-                            new Blob([res.data])
-                        );
-                        const link = document.createElement('a');
-                        link.href = url;
-                        link.setAttribute('download', 'installer.zip');
-                        document.body.appendChild(link);
-                        link.click();
-                    })
-                    .catch(() => {
-                        throw 'Impossible de télécharger la configuration';
-                    });
+                calculateRadius().then(() => {
+                    return exportConfiguration(configId)
+                        .then(res => {
+                            const url = window.URL.createObjectURL(
+                                new Blob([res.data])
+                            );
+                            const link = document.createElement('a');
+                            link.href = url;
+                            link.setAttribute('download', 'installer.zip');
+                            document.body.appendChild(link);
+                            link.click();
+                        })
+                        .catch(() => {
+                            throw 'Impossible de télécharger la configuration';
+                        });
+                });
             })
             .catch(err => toast.error(err))
             .finally(() => setLoading(false));

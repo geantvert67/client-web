@@ -48,6 +48,10 @@ export const exportConfiguration = idConfig => {
     return request.get(`/configs/${idConfig}/export`, { responseType: 'blob' });
 };
 
+export const getTeams = idConfig => {
+    return request.get(`/configs/${idConfig}/teams`);
+};
+
 export const createTeam = (idConfig, credentials) => {
     return request.post(`/configs/${idConfig}/teams`, credentials);
 };
