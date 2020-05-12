@@ -1,5 +1,9 @@
 import request from '../utils/request';
 
+export const getAll = (page, pageSize) => {
+    return request.get(`/configs?page=${page}&pageSize=${pageSize}`);
+};
+
 export const create = config => {
     return request.post('/configs', config);
 };
