@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }) => {
             .post('/signup', user)
             .then(res => {
                 setError('');
-                Cookies.set('token', res.data.token);
+                Cookies.set('token', res.data.token, { expires: 365 });
                 setUser(res.data.user);
                 history.push('/configs');
             })
@@ -59,7 +59,7 @@ export const AuthProvider = ({ children }) => {
             .post('/signin', credentials)
             .then(res => {
                 setError('');
-                Cookies.set('token', res.data.token);
+                Cookies.set('token', res.data.token, { expires: 365 });
                 setUser(res.data.user);
                 history.push('/configs');
             })

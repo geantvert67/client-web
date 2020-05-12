@@ -100,6 +100,7 @@ option:hover {
     font-weight: 700;
 }
 
+.primary-text,
 .nav-link-active {
     color: #68b684 !important;
 }
@@ -405,6 +406,17 @@ th {
     left: 0;
     border-bottom: 5px solid #68b684;
     border-radius: 4px;
+}
+
+.link:hover {
+    text-decoration: underline !important;
+}
+
+.team-color {
+    height: 50px;
+    width: 50px;
+    border-radius: 4px;
+    box-shadow: 0px 1px 3px #1b1e22;
 }
 
 @media screen and (max-width: 900px) {

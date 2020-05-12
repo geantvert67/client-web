@@ -6,7 +6,7 @@ import Signin from './authentification/Signin';
 import Signup from './authentification/Signup';
 import PrivateRoute from './authentification/PrivateRoute';
 import ConfigsWrapper from './configuration/ConfigsWrapper';
-import Profil from './user/Profil';
+import Settings from './user/Settings';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -14,6 +14,10 @@ import ConfigForm from './configuration/ConfigForm';
 import ConfigLoader from './configuration/ConfigLoader';
 import Error from './Error';
 import Home from './Home';
+import ProfilWrapper from './user/ProfilWrapper';
+import LeaderboardWrapper from './leaderboard/LeaderboardWrapper';
+import GamesWrapper from './games/GamesWrapper';
+import GameWrapper from './games/GameWrapper';
 
 toast.configure({
     hideProgressBar: true,
@@ -33,7 +37,12 @@ const App = () => {
 
                 <Route exact path="/signin" component={Signin} />
                 <Route exact path="/signup" component={Signup} />
-                <PrivateRoute exact path="/profil" component={Profil} />
+                <PrivateRoute
+                    exact
+                    path="/users/:userId"
+                    component={ProfilWrapper}
+                />
+                <PrivateRoute exact path="/settings" component={Settings} />
 
                 <PrivateRoute
                     exact
@@ -49,6 +58,19 @@ const App = () => {
                 <PrivateRoute
                     path="/configs/:configurationId"
                     component={ConfigLoader}
+                />
+
+                <PrivateRoute
+                    exact
+                    path="/leaderboard"
+                    component={LeaderboardWrapper}
+                />
+
+                <PrivateRoute exact path="/games" component={GamesWrapper} />
+                <PrivateRoute
+                    exact
+                    path="/games/:gameId"
+                    component={GameWrapper}
                 />
 
                 <Route component={Error} />

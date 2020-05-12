@@ -1,5 +1,11 @@
 import request from '../utils/request';
 
+export const getAll = (page, pageSize, name, gameModes) => {
+    return request.get(
+        `/configs?page=${page}&pageSize=${pageSize}&name=${name}&gameModes=${gameModes}`
+    );
+};
+
 export const create = config => {
     return request.post('/configs', config);
 };
@@ -46,6 +52,10 @@ export const cloneConfiguration = idConfig => {
 
 export const exportConfiguration = idConfig => {
     return request.get(`/configs/${idConfig}/export`, { responseType: 'blob' });
+};
+
+export const getTeams = idConfig => {
+    return request.get(`/configs/${idConfig}/teams`);
 };
 
 export const createTeam = (idConfig, credentials) => {

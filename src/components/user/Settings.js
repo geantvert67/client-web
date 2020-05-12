@@ -6,10 +6,10 @@ import Button from '../forms/Button';
 import { useAuth } from '../../utils/auth';
 
 /**
- * Composant Profil :
- * Formulaire de gestion d'un profil
+ * Composant Settings :
+ * Formulaire de gestion de son compte
  */
-const Profil = () => {
+const Settings = () => {
     const { user, changeUsername, changePassword } = useAuth();
     const [usernameError, setUsernameError] = useState('');
     const [passwordError, setPasswordError] = useState('');
@@ -26,7 +26,7 @@ const Profil = () => {
         <Container className="mt-5">
             <Row>
                 <Col md={{ span: 6, offset: 3 }}>
-                    <h3 className="mb-5">Profil</h3>
+                    <h3 className="mb-5">Nom d'utilisateur</h3>
 
                     <Form onSubmit={updateUsername}>
                         {usernameError && (
@@ -109,4 +109,4 @@ const Profil = () => {
     );
 };
 
-export default Profil;
+export default Settings;
