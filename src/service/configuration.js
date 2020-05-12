@@ -1,7 +1,9 @@
 import request from '../utils/request';
 
-export const getAll = (page, pageSize) => {
-    return request.get(`/configs?page=${page}&pageSize=${pageSize}`);
+export const getAll = (page, pageSize, name) => {
+    return request.get(
+        `/configs?page=${page}&pageSize=${pageSize}&name=${name}`
+    );
 };
 
 export const create = config => {

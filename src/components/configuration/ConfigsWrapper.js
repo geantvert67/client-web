@@ -6,11 +6,13 @@ import { removeConfiguration, getAll } from '../../service/configuration';
 import { getConfigs } from '../../service/user';
 import ConfigsListItem from './ConfigsListItem';
 import ConfigsButtons from './ConfigsButtons';
+import ConfigsFilter from './ConfigsFilter';
 
 const PAGE_SIZE = 15;
 
 const ConfigsWrapper = () => {
     const [community, setCommunity] = useState(false);
+    const [nameFilter, setNameFilter] = useState('');
     const [hasMore, setHasMore] = useState(true);
     const [configurations, setConfigurations] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -22,12 +24,16 @@ const ConfigsWrapper = () => {
         fetchConfigs([])
             .catch(err => setError(err))
             .finally(() => setLoading(false));
-    }, []);
+    }, [nameFilter]);
 
     const fetchConfigs = configurations => {
         const p = community
-            ? getAll(configurations.length / PAGE_SIZE, PAGE_SIZE)
-            : getConfigs(configurations.length / PAGE_SIZE, PAGE_SIZE);
+            ? getAll(configurations.length / PAGE_SIZE, PAGE_SIZE, nameFilter)
+            : getConfigs(
+                  configurations.length / PAGE_SIZE,
+                  PAGE_SIZE,
+                  nameFilter
+              );
 
         return p.then(res => {
             if (res.data.length < PAGE_SIZE) {
@@ -55,6 +61,8 @@ const ConfigsWrapper = () => {
                         community={community}
                         setCommunity={setCommunity}
                     />
+
+                    <ConfigsFilter setName={setNameFilter} />
 
                     {loading ? (
                         <Row className="justify-content-center">
