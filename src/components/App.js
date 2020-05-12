@@ -17,6 +17,7 @@ import Home from './Home';
 import ProfilWrapper from './user/ProfilWrapper';
 import LeaderboardWrapper from './leaderboard/LeaderboardWrapper';
 import GamesWrapper from './games/GamesWrapper';
+import GameWrapper from './games/GameWrapper';
 
 toast.configure({
     hideProgressBar: true,
@@ -62,6 +63,11 @@ const App = () => {
                 />
 
                 <PrivateRoute exact path="/games" component={GamesWrapper} />
+                <PrivateRoute
+                    exact
+                    path="/games/:gameId"
+                    component={GameWrapper}
+                />
 
                 <Route component={Error} />
             </Switch>

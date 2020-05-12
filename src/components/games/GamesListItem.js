@@ -1,14 +1,10 @@
 import React from 'react';
 import { Card, Row, Col } from 'react-bootstrap';
 import moment from 'moment';
+import { Link } from 'react-router-dom';
+import { getGameColor } from '../../utils/game';
 
 function GamesListItem({ game }) {
-    const getColor = () => {
-        if (game.hasWon) return '#68b684';
-        else if (game.hasLost) return '#eb4646';
-        else return '#d2d2d2';
-    };
-
     return (
         <Card className="mb-3">
             <Card.Body>
@@ -18,7 +14,7 @@ function GamesListItem({ game }) {
                         className="text-center"
                         style={{
                             textTransform: 'uppercase',
-                            color: getColor()
+                            color: getGameColor(game)
                         }}
                     >
                         {game.hasWon
@@ -30,7 +26,14 @@ function GamesListItem({ game }) {
 
                     <Col xs={10}>
                         <Card.Title>
-                            <span className="priority">{game.Game.name}</span>
+                            <span className="priority">
+                                <Link
+                                    className="link"
+                                    to={`/games/${game.GameId}`}
+                                >
+                                    {game.Game.name}
+                                </Link>
+                            </span>
                             {' - '}
                             <span className="redirect">
                                 {game.Game.gameMode}
