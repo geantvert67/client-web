@@ -12,6 +12,10 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '../utils/auth';
 
+/**
+ * Composant Menu :
+ * Menu de navigation du site
+ */
 const Menu = () => {
     const { user, signout } = useAuth();
     const { pathname } = useLocation();

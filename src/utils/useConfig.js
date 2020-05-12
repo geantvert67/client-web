@@ -3,6 +3,10 @@ import { getById } from '../service/configuration';
 
 const ConfigContext = createContext();
 
+/**
+ * Contexte de la configuration :
+ * Permet d'avoir accès à la variable config qui contient les infos de configuration partout dans le code
+ */
 export const ConfigProvider = ({ configId, children }) => {
     const [config, setConfig] = useState(null);
 

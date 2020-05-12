@@ -15,6 +15,20 @@ import ItemForm from './ItemForm';
 import { serializeItem } from '../../utils/config';
 import { useConfig } from '../../utils/useConfig';
 
+/**
+ * Composant Markers :
+ * Regroupe l'ensemble des marqueurs à afficher sur la carte
+ *
+ * props :
+ *   - closePopups : Méthode de fermeture des popups
+ *   - polygonPosition : Tableau des coordonnées des points de la zone de jeu
+ *   - flagsPositions : Tableau des coordonnées des cristaux
+ *   - forbiddenZones : Tableau de tableaux des coordonnées des points des zones interdites
+ *   - action : Action en cours
+ *   - setAction : Setter de la variable action
+ *   - setSleepingAction : Setter d'une variable d'action dormante
+ *   - items : Tableau des items posés
+ */
 function Markers({
     closePopups,
     polygonPosition,
@@ -30,7 +44,7 @@ function Markers({
     const startDragging = () => {
         closePopups();
         setAction('moveElement');
-        setSleepingAction(action);
+        action !== 'showPopupStop' && setSleepingAction(action);
     };
 
     const stopDragging = () => {

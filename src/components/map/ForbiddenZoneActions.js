@@ -10,7 +10,16 @@ import {
 import { useForbiddenZone } from '../../utils/useForbiddenZone';
 import { IconOverlay } from '../OverlayTip';
 
-function ForbiddenZoneActions({ action, setAction }) {
+/**
+ * Composant ForbiddenZoneActions :
+ * Menu des actions réalisables sur les zones interdites
+ *
+ * props :
+ *   - action : Action en cours
+ *   - setAction : Setter de la variable action
+ *   - setSleepingAction : Setter d'une variable d'action dormante
+ */
+function ForbiddenZoneActions({ action, setAction, setSleepingAction }) {
     const { forbiddenZones, createZone, removeAll } = useForbiddenZone();
     const [isOpen, setIsOpen] = useState(false);
 
@@ -31,7 +40,9 @@ function ForbiddenZoneActions({ action, setAction }) {
                             xs="auto"
                             className="mr-3 actions-item"
                             onClick={() => {
-                                setAction('forbiddenZone');
+                                action === 'showPopup'
+                                    ? setSleepingAction('forbiddenZone')
+                                    : setAction('forbiddenZone');
                                 createZone();
                             }}
                         >

@@ -2,6 +2,16 @@ import React from 'react';
 import { Modal, Form, Row, Col, Button } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 
+/**
+ * Composant FlagForm :
+ * Modal de paramétrage d'un cristal
+ *
+ * props :
+ *   - config : Configuration en cours d'édition
+ *   - showModal : Booleen à true si la modal doit être ouverte
+ *   - handleClose : Event à déclencher à la fermeture de la modal
+ *   - onSubmit : Event à déclencher à la soumission du formulaire
+ */
 function FlagForm({ config, showModal, handleClose, onSubmit }) {
     const { register, handleSubmit, getValues, errors } = useForm();
 

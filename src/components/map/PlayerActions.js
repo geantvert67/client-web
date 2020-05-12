@@ -13,6 +13,10 @@ import { serializeConfig } from '../../utils/config';
 import { toast } from 'react-toastify';
 import { useConfig } from '../../utils/useConfig';
 
+/**
+ * Composant PlayerActions :
+ * Menu des actions réalisables sur les joueurs
+ */
 function PlayerActions() {
     const [isOpen, setIsOpen] = useState(false);
     const [showModal, setShowModal] = useState(false);

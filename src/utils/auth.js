@@ -7,6 +7,10 @@ import { Row, Col, Spinner, Container } from 'react-bootstrap';
 
 const AuthContext = createContext();
 
+/**
+ * Contexte d'authentification :
+ * Permet d'avoir accès à la variable user et aux méthodes d'authentification partout dans le code
+ */
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);

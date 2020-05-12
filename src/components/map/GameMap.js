@@ -30,6 +30,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faVectorSquare } from '@fortawesome/free-solid-svg-icons';
 import { IconOverlay } from '../OverlayTip';
 
+/**
+ * Composant GameMap :
+ * Représente la carte de l'application
+ *
+ * props :
+ *   - defaultPosition : Coordonnées sur lesquelles est centrée la carte à son affichage
+ *   - action : Action en cours
+ *   - setAction : Setter de la variable action
+ *   - setSleepingAction : Setter d'une variable d'action dormante
+ *   - configId : Id de la configuration en cours d'édition
+ */
 function GameMap({
     defaultPosition,
     action,

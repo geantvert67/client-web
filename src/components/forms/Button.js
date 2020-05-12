@@ -2,6 +2,15 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useFormContext } from './Form';
 import { Spinner, Button as B } from 'react-bootstrap';
 
+/**
+ * Composant Button :
+ * Bouton personnalisé de l'appli web CrystalZ
+ *
+ * props :
+ *   - children : Tableau des composants enfants
+ *   - loading (optionnel) : booleen à true si un chargement est en cours (false par défaut)
+ *   - props : Autres props du bouton
+ */
 function Button({ children, loading = false, ...props }) {
     const { errors } = useFormContext();
     const [width, setWidth] = useState(0);

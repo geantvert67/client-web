@@ -8,6 +8,10 @@ import { getById } from '../../service/configuration';
 import ConfigFormWrapper from './ConfigFormWrapper';
 import Error from '../Error';
 
+/**
+ * Composant ConfigLoader :
+ * Récupère la configuration en contexte et ajoute les PrivateRoute d'édition d'une configuration
+ */
 function ConfigLoader() {
     const [config, setConfig] = useState(null);
     const [loading, setLoading] = useState(true);

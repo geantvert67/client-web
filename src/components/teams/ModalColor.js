@@ -2,6 +2,17 @@ import React, { useState } from 'react';
 import { Modal, Button, Container, Row, Col } from 'react-bootstrap';
 import { SketchPicker } from 'react-color';
 
+/**
+ * Composant ModalColor :
+ * Modal de création d'une couleur personnalisée
+ *
+ * props :
+ *   - show : Booleen à true si la modal est ouverte
+ *   - setShow : Setter de la variable show
+ *   - colorChange : Liste des changements de couleurs
+ *   - setColorChange : Setter de la variable colorChange
+ *   - setColor : Setter de la variable indiquant la couleur sélectionnée
+ */
 const ModalColor = ({
     show,
     setShow,

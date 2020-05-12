@@ -4,6 +4,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import history from '../../utils/history';
 
+/**
+ * Composant ConfigsButtons :
+ * Barre des boutons permettant des switcher entre Mes configs et Configs publiques
+ *
+ * props :
+ *   - community : Booléen à true si on veut afficher les configs publiques
+ *   - setCommunity : Setter de la variable community
+ */
 const ConfigsButtons = ({ community, setCommunity }) => {
     return (
         <Row className="mb-5 justify-content-between">

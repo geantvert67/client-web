@@ -1,5 +1,8 @@
 import L from 'leaflet';
 
+/**
+ * Icone d'un cristal
+ */
 const iconWhiteFlag = new L.Icon({
     iconUrl: require('../../img/cristal.png'),
     iconRetinaUrl: require('../../img/cristal.png'),
@@ -9,6 +12,9 @@ const iconWhiteFlag = new L.Icon({
     className: 'leaflet-div-icon'
 });
 
+/**
+ * Icone de délimitation de la zone de jeu
+ */
 const iconGameArea = new L.Icon({
     iconUrl: require('../../img/gameArea.png'),
     iconRetinaUrl: require('../../img/gameArea.png'),
@@ -18,6 +24,9 @@ const iconGameArea = new L.Icon({
     className: 'leaflet-div-icon'
 });
 
+/**
+ * Icone de délimitation d'une zone interdite
+ */
 const iconForbiddenArea = new L.Icon({
     iconUrl: require('../../img/forbiddenArea.png'),
     iconRetinaUrl: require('../../img/forbiddenArea.png'),
@@ -27,6 +36,12 @@ const iconForbiddenArea = new L.Icon({
     className: 'leaflet-div-icon'
 });
 
+/**
+ * Fonction getItemIcon :
+ * Retourne l'icone d'un item
+ *
+ * @param item Item dont on cherche l'icone
+ */
 const getItemIcon = item => {
     if (!item) return iconWhiteFlag;
 

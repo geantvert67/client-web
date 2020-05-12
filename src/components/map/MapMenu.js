@@ -14,7 +14,16 @@ import { useItem } from '../../utils/useItem';
 import { toast } from 'react-toastify';
 import ConfigMenu from '../configuration/ConfigMenu';
 
-function MapMenu({ action, setAction }) {
+/**
+ * Composant MapMenu :
+ * Menu de création de la zone de jeu
+ *
+ * props :
+ *   - action : Action en cours
+ *   - setAction : Setter de la variable action
+ *   - setSleepingAction : Setter d'une variable d'action dormante
+ */
+function MapMenu({ action, setAction, setSleepingAction }) {
     const [loading, setLoading] = useState(false);
     const { configurationId } = useParams();
     const { position: mainZone } = useMainZone();
@@ -52,14 +61,27 @@ function MapMenu({ action, setAction }) {
                         </Col>
                     </Row>
 
-                    <MainZoneActions action={action} setAction={setAction} />
+                    <MainZoneActions
+                        action={action}
+                        setAction={setAction}
+                        setSleepingAction={setSleepingAction}
+                    />
                     <ForbiddenZoneActions
                         action={action}
                         setAction={setAction}
+                        setSleepingAction={setSleepingAction}
+                    />
+                    <FlagActions
+                        action={action}
+                        setAction={setAction}
+                        setSleepingAction={setSleepingAction}
+                    />
+                    <ItemActions
+                        action={action}
+                        setAction={setAction}
+                        setSleepingAction={setSleepingAction}
                     />
                     <PlayerActions />
-                    <FlagActions action={action} setAction={setAction} />
-                    <ItemActions action={action} setAction={setAction} />
                 </Col>
             </Row>
             <Row className="mt-4 justify-content-end">

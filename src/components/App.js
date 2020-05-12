@@ -24,6 +24,10 @@ toast.configure({
     pauseOnHover: false
 });
 
+/**
+ * Composant App :
+ * Point d'entrée de l'application CrystalZ, liste les routes générales
+ */
 const App = () => {
     return (
         <AuthProvider>

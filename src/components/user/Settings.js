@@ -5,6 +5,10 @@ import Form from '../forms/Form';
 import Button from '../forms/Button';
 import { useAuth } from '../../utils/auth';
 
+/**
+ * Composant Settings :
+ * Formulaire de gestion de son compte
+ */
 const Settings = () => {
     const { user, changeUsername, changePassword } = useAuth();
     const [usernameError, setUsernameError] = useState('');

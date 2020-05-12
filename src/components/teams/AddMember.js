@@ -6,6 +6,16 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 import { IconOverlay } from '../OverlayTip';
 
+/**
+ * Composant AddMember :
+ * Input d'ajout d'un membre dans une équipe
+ *
+ * props :
+ *   - configurationId : Id de la configuration en cours d'édition
+ *   - teamId : Id de l'équipe en cours d'édition
+ *   - members : Membres de l'équipe
+ *   - setMembers : setter de la variable members
+ */
 const AddMember = ({ configurationId, teamId, members, setMembers }) => {
     const [name, setName] = useState('');
     const [member, setMember] = useState([]);

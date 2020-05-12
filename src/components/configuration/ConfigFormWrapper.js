@@ -4,6 +4,10 @@ import { Row, Col, Spinner, Container } from 'react-bootstrap';
 import { getById } from '../../service/configuration';
 import ConfigForm from './ConfigForm';
 
+/**
+ * Composant ConfigFormWrapper :
+ * Composant récupérant la configuration en contexte et affiche ConfigForm dès la récupération
+ */
 function ConfigFormWrapper() {
     const [config, setConfig] = useState(null);
     const [loading, setLoading] = useState(true);

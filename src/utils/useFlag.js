@@ -12,6 +12,10 @@ import { useConfig } from './useConfig';
 
 const FlagContext = createContext();
 
+/**
+ * Contexte des cristaux :
+ * Permet d'avoir accès à tous les outils de gestion des cristaux partout dans le code
+ */
 export const FlagProvider = ({ configId, children }) => {
     const [flagsPositions, setFlagsPositions] = useState([]);
     const [showFlags, setShowFlags] = useState(true);

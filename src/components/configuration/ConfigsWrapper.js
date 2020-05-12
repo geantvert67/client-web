@@ -11,6 +11,10 @@ import ConfigsFilter from './ConfigsFilter';
 const PAGE_SIZE = 15;
 const GAMEMODES = ['FLAG', 'TIME', 'SUPREMACY'];
 
+/**
+ * Composant ConfigsWrapper :
+ * Composant permettant de récupérer les configurations à afficher
+ */
 const ConfigsWrapper = () => {
     const [community, setCommunity] = useState(false);
     const [nameFilter, setNameFilter] = useState('');

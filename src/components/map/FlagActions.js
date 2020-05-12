@@ -19,7 +19,16 @@ import { serializeConfig } from '../../utils/config';
 import { toast } from 'react-toastify';
 import { useConfig } from '../../utils/useConfig';
 
-function FlagActions({ action, setAction }) {
+/**
+ * Composant FlagActions :
+ * Menu des actions réalisables sur un cristal
+ *
+ * props :
+ *   - action : Action en cours
+ *   - setAction : Setter de la variable action
+ *   - setSleepingAction : Setter d'une variable d'action dormante
+ */
+function FlagActions({ action, setAction, setSleepingAction }) {
     const iconFlag = require('../../img/cristal.png');
     const { register, handleSubmit, reset } = useForm();
     const { removeAll, createRandom, showFlags, setShowFlags } = useFlag();
@@ -63,7 +72,11 @@ function FlagActions({ action, setAction }) {
                             xs="auto"
                             className={`mb-3 mr-3 actions-item ${action ===
                                 'flags' && 'actions-item-selected'}`}
-                            onClick={() => setAction('flags')}
+                            onClick={() =>
+                                action === 'showPopup'
+                                    ? setSleepingAction('flags')
+                                    : setAction('flags')
+                            }
                         >
                             <Image
                                 style={{ maxWidth: '25px', maxHeight: '25px' }}

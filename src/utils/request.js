@@ -1,6 +1,9 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
+/**
+ * Objet permettant de faire les requêtes Axios
+ */
 const request = axios.create({
     baseURL: process.env.REACT_APP_API_URL
 });
