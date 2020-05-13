@@ -176,7 +176,7 @@ function DownloadButton({ configId }) {
         setLoading(true);
         checkTeams()
             .then(() => {
-                calculateRadius().then(() => {
+                return calculateRadius().then(() => {
                     return exportConfiguration(configId)
                         .then(res => {
                             const url = window.URL.createObjectURL(
