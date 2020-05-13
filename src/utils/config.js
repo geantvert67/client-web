@@ -213,25 +213,27 @@ export const serializeItem = item => {
 export const serializeConfig = config => {
     config.isPrivate = config.isPrivate === 'true';
     config.duration = config.duration ? parseInt(config.duration) : null;
-    config.maxPlayers = config.maxPlayers ? parseInt(config.maxPlayers) : null;
+    config.maxPlayers = config.maxPlayers
+        ? parseInt(config.maxPlayers)
+        : undefined;
     config.inventorySize = config.inventorySize
         ? parseInt(config.inventorySize)
         : undefined;
     config.playerVisibilityRadius = config.playerVisibilityRadius
         ? parseFloat(config.playerVisibilityRadius)
-        : null;
+        : undefined;
     config.playerActionRadius = config.playerActionRadius
         ? parseFloat(config.playerActionRadius)
-        : null;
+        : undefined;
     config.flagVisibilityRadius = config.flagVisibilityRadius
         ? parseFloat(config.flagVisibilityRadius)
-        : null;
+        : undefined;
     config.flagActionRadius = config.flagActionRadius
         ? parseFloat(config.flagActionRadius)
-        : null;
+        : undefined;
     config.flagCaptureDuration = config.flagCaptureDuration
         ? parseInt(config.flagCaptureDuration)
-        : null;
+        : undefined;
 
     return config;
 };

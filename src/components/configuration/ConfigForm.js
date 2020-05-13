@@ -119,9 +119,11 @@ function ConfigForm({ config }) {
                             as="select"
                             name="gameMode"
                             defaultValue={config && config.gameMode}
-                            onChange={e =>
-                                setShowDuration(e.target.value != 'SUPREMACY')
-                            }
+                            onChange={e => {
+                                setShowDuration(e.target.value != 'SUPREMACY');
+                                e.target.value === 'SUPREMACY' &&
+                                    setDuration(null);
+                            }}
                             validationSchema={{
                                 required: 'Ce champ est obligatoire'
                             }}
