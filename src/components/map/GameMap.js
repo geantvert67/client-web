@@ -199,9 +199,9 @@ function GameMap({
                     <TileLayer url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" />
                     <Polygon color="green" positions={mainZone} />
 
-                    {forbiddenZones.map(zone => (
+                    {forbiddenZones.map((zone, index) => (
                         <Polygon
-                            key={zone.id}
+                            key={index}
                             color="red"
                             positions={
                                 forbiddenZones[forbiddenZones.indexOf(zone)]

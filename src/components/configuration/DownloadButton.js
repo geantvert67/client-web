@@ -176,7 +176,7 @@ function DownloadButton({ configId }) {
         setLoading(true);
         checkTeams()
             .then(() => {
-                calculateRadius().then(() => {
+                return calculateRadius().then(() => {
                     return exportConfiguration(configId)
                         .then(res => {
                             const url = window.URL.createObjectURL(
@@ -184,7 +184,7 @@ function DownloadButton({ configId }) {
                             );
                             const link = document.createElement('a');
                             link.href = url;
-                            link.setAttribute('download', 'installer.zip');
+                            link.setAttribute('download', 'crystalz.zip');
                             document.body.appendChild(link);
                             link.click();
                         })

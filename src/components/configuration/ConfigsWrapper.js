@@ -30,7 +30,7 @@ const ConfigsWrapper = () => {
         fetchConfigs([])
             .catch(err => setError(err))
             .finally(() => setLoading(false));
-    }, [nameFilter, gameModeFilter]);
+    }, [nameFilter, gameModeFilter, community]);
 
     const fetchConfigs = configurations => {
         const p = community
