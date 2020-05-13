@@ -71,6 +71,7 @@ function MapMenu({ action, setAction, setSleepingAction }) {
                         setAction={setAction}
                         setSleepingAction={setSleepingAction}
                     />
+                    <PlayerActions />
                     <FlagActions
                         action={action}
                         setAction={setAction}
@@ -81,7 +82,6 @@ function MapMenu({ action, setAction, setSleepingAction }) {
                         setAction={setAction}
                         setSleepingAction={setSleepingAction}
                     />
-                    <PlayerActions />
                 </Col>
             </Row>
             <Row className="mt-4 justify-content-end">
