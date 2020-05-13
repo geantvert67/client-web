@@ -184,7 +184,7 @@ function DownloadButton({ configId }) {
                             );
                             const link = document.createElement('a');
                             link.href = url;
-                            link.setAttribute('download', 'installer.zip');
+                            link.setAttribute('download', 'crystalz.zip');
                             document.body.appendChild(link);
                             link.click();
                         })
