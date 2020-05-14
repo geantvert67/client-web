@@ -31,9 +31,9 @@ function Home() {
                         domination d’un territoire.
                     </p>
 
-                    <Link to="/signup">
+                    <Link to="/crystalz.apk" target="_blank" download>
                         <Button variant="success" className="btn-primary">
-                            S'inscrire
+                            Télécharger l'application Android
                         </Button>
                     </Link>
                 </Col>
