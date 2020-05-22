@@ -1,8 +1,7 @@
 /**
- * checkStatus :
  * Vérifie si le code de retour de la réponse est bon
  *
- * @param res Réponse de la requête
+ * @param object res Réponse de la requête
  */
 export const checkStatus = res => {
     if (res.ok) {
@@ -15,12 +14,11 @@ export const checkStatus = res => {
 };
 
 /**
- * isInZone :
  * Vérifie si un point se trouve dans une zone
  *
- * @param x Latitude du point
- * @param y Longitude du point
- * @param polygonPosition Tableau des sommets d'un polygone
+ * @param int x Latitude du point
+ * @param int y Longitude du point
+ * @param array polygonPosition Tableau des sommets d'un polygone
  */
 export const isInZone = (x, y, polygonPosition) => {
     let inside = false;
@@ -41,11 +39,10 @@ export const isInZone = (x, y, polygonPosition) => {
 };
 
 /**
- * getDistance :
- * Calcule la distance entre 2 coordonnées
+ * Calcule la distance entre 2 points
  *
- * @param origin Point de départ
- * @param destination Point d'arrivée
+ * @param object origin Point de départ
+ * @param object destination Point d'arrivée
  */
 export const getDistance = (origin, destination) => {
     let lon1 = toRadian(origin.lng),
@@ -64,15 +61,19 @@ export const getDistance = (origin, destination) => {
     return c * EARTH_RADIUS * 1000;
 };
 
+/**
+ * Convertit un angle en Celcius en radians
+ *
+ * @param int degree L'angle à convertir
+ */
 const toRadian = degree => {
     return (degree * Math.PI) / 180;
 };
 
 /**
- * getZoneBox :
  * Calcule la boite rectangulaire minimale dans laquelle se trouve la zone
  *
- * @param polygonPosition Zone à traiter
+ * @param array polygonPosition Zone à traiter
  */
 export const getZoneBox = polygonPosition => {
     let x_max = -180,
@@ -91,10 +92,9 @@ export const getZoneBox = polygonPosition => {
 };
 
 /**
- * getCenterZoneBox :
  * Calcule le centre de la boîte rectangulaire minimale d'une zone
  *
- * @param polygonPosition Zone à traiter
+ * @param array polygonPosition Zone à traiter
  */
 export const getCenterZoneBox = polygonPosition => {
     const { x_max, x_min, y_max, y_min } = getZoneBox(polygonPosition);
@@ -103,11 +103,10 @@ export const getCenterZoneBox = polygonPosition => {
 };
 
 /**
- * getVisibilityRadiusAuto :
- * Calcule un rayon de visibilité par rapport à la zone de jeu
+ * Calcule un rayon de visibilité par rapport à la taille de la  zone de jeu
  *
- * @param polygonPosition Zone de jeu
- * @param coeff Coefficient de taille
+ * @param array polygonPosition Zone de jeu
+ * @param int coeff Coefficient de taille
  */
 export const getVisibilityRadiusAuto = (polygonPosition, coeff) => {
     const { x_max, x_min, y_max, y_min } = getZoneBox(polygonPosition);
@@ -120,19 +119,18 @@ export const getVisibilityRadiusAuto = (polygonPosition, coeff) => {
 };
 
 /**
- * formatZone :
  * Formatte une zone en objet
- * @param zone Zone à traiter
+ *
+ * @param array zone Zone à traiter
  */
 export const formatZone = zone => {
     return zone.map(z => ({ lat: z[0], lng: z[1] }));
 };
 
 /**
- * getItemImage :
  * Retourne l'image de l'item en paramètre
  *
- * @param item Item à récupérer
+ * @param string item Item à récupérer
  */
 export const getItemImage = item => {
     let iconUrl =
@@ -165,6 +163,11 @@ export const getItemImage = item => {
     return iconUrl;
 };
 
+/**
+ * Convertit une durée exprimée en secondes en uen durée au format hh:mm:ss
+ *
+ * @param int seconds Durée à convertir
+ */
 export const secondsToDuration = seconds => {
     const h = Math.floor(seconds / 3600);
     const m = Math.floor((seconds % 3600) / 60);

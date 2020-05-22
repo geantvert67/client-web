@@ -1,10 +1,10 @@
 import { addItemsModel } from '../service/configuration';
 
 /**
- * initializeItemModels :
  * Initialise un modèle pour les items
- * @param duration : Durée de l'effet
- * @param id  : Id du modèle
+ *
+ * @param int duration Durée de l'effet
+ * @param int id Id du modèle
  */
 export const initializeItemModels = (duration, id) => {
     const effectDuration = duration ? Math.ceil(duration * 0.05) : 300;
@@ -99,7 +99,7 @@ export const itemModels = [
 ];
 
 /**
- * Ensemble des items avec durée
+ * Liste des items ayant une durée d'utilisation
  */
 export const itemsWithDuration = [
     'Sentinelle',
@@ -109,6 +109,6 @@ export const itemsWithDuration = [
 ];
 
 /**
- * Ensemble des items avec des effets
+ * Liste des items ayant un impact sur le rayon de visibilité
  */
 export const itemsWithEffect = ['Intercepteur', 'Sonde'];

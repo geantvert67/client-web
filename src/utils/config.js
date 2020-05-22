@@ -8,10 +8,9 @@ import {
 } from '../service/configuration';
 
 /**
- * removeElements :
  * Supprime tout élément posé sur la carte
  *
- * @param idConfig Id de la configuration
+ * @param int idConfig Id de la configuration
  */
 export const removeElements = idConfig => {
     return Promise.all([
@@ -22,14 +21,13 @@ export const removeElements = idConfig => {
 };
 
 /**
- * updateConfig :
  * Met à jour une configuration
  *
- * @param idConfig Id de la configuration à mettre à jour
- * @param polygonPosition Tableau des positions des sommets de la zone
- * @param forbiddenZones Tableau des zones interdites
- * @param flagsPositions Tableau des positions des cristaux
- * @param items Tableau des items posés
+ * @param int idConfig Id de la configuration à mettre à jour
+ * @param array polygonPosition Tableau des positions des sommets de la zone
+ * @param array forbiddenZones Tableau des zones interdites
+ * @param array flagsPositions Tableau des positions des cristaux
+ * @param array items Tableau des items posés
  */
 export const updateConfig = (
     idConfig,
@@ -74,10 +72,9 @@ export const updateConfig = (
 };
 
 /**
- * formatMainZone :
  * Formatte le tableau de tableaux en un tableau d'objets
  *
- * @param zone Zone à formatter
+ * @param array zone Zone à formatter
  */
 export const formatMainZone = zone => {
     let mainZone = [];
@@ -89,11 +86,10 @@ export const formatMainZone = zone => {
 };
 
 /**
- * formatForbiddenZone :
  * Formatte le tableau de tableaux en un tableau d'objets
  *
- * @param index Numéro de la zone
- * @param zone Zone à formatter
+ * @param int index Numéro de la zone
+ * @param array zone Zone à formatter
  */
 export const formatForbiddenZone = (index, zone) => {
     let forbiddenZone = [];
@@ -105,10 +101,9 @@ export const formatForbiddenZone = (index, zone) => {
 };
 
 /**
- * formatFlags :
  * Formatte le tableau de tableaux en un tableau d'objets
  *
- * @param f Cristaux à formatter
+ * @param array f Cristaux à formatter
  */
 export const formatFlags = f => {
     let flags = [];
@@ -122,10 +117,9 @@ export const formatFlags = f => {
 };
 
 /**
- * formatItems :
  * Formatte le tableau de tableaux en un tableau d'objets
  *
- * @param i Items à formatter
+ * @param array i Items à formatter
  */
 export const formatItems = i => {
     let items = [];
@@ -150,10 +144,9 @@ export const formatItems = i => {
 };
 
 /**
- * serializeModels :
  * Serialise un modèle d'item
  *
- * @param model Model à sérialiser
+ * @param object model Model à sérialiser
  */
 export const serializeModels = model => {
     model.autoMove = model.autoMove === 'true';
@@ -177,10 +170,9 @@ export const serializeModels = model => {
 };
 
 /**
- * serializeItem :
  * Serialise un item
  *
- * @param model Item à sérialiser
+ * @param object item Item à sérialiser
  */
 export const serializeItem = item => {
     item.autoMove = item.autoMove === 'true';
@@ -205,10 +197,9 @@ export const serializeItem = item => {
 };
 
 /**
- * serializeConfig :
  * Serialise une configuration
  *
- * @param config Configuration à sérialiser
+ * @param object config Configuration à sérialiser
  */
 export const serializeConfig = config => {
     config.isPrivate = config.isPrivate === 'true';
