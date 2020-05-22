@@ -4,6 +4,10 @@ import { useDataFromUrl } from '../../utils/data';
 import { useParams } from 'react-router-dom';
 import Game from './Game';
 
+/**
+ * Composant GameWrapper :
+ * Récupère le score de tous les joueurs d'une partie
+ */
 function GameWrapper() {
     const { gameId } = useParams();
     const { loading, error, data: histories } = useDataFromUrl(

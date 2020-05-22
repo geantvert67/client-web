@@ -6,6 +6,13 @@ import { getGameColor } from '../../utils/game';
 import { secondsToDuration } from '../../utils/utils';
 import { useAuth } from '../../utils/auth';
 
+/**
+ * Composant Game :
+ * Affiche le score des joueurs et des équipes d'une partie
+ *
+ * props :
+ *   - histories : Liste des scores des joueurs
+ */
 function Game({ histories }) {
     const { user } = useAuth();
     const game = _.find(histories, { UserId: user.id });

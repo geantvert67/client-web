@@ -7,6 +7,14 @@ const FILTERS = [
     { value: 'all', text: 'Tout afficher' }
 ];
 
+/**
+ * Composant GamesFilter :
+ * Permet de filtrer l'historique des parties
+ *
+ * props :
+ *   - filter : Le filtre
+ *   - setFilter : Fonction permettant de modifier le filtre
+ */
 function GamesFilter({ filter, setFilter }) {
     return (
         <Row className="justify-content-end mb-5">

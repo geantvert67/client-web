@@ -7,6 +7,10 @@ import GamesFilter from './GamesFilter';
 
 const PAGE_SIZE = 15;
 
+/**
+ * Composant GamesWrapper :
+ * Récupère l'historiques des parties de l'utilisateur connecté
+ */
 function GamesWrapper() {
     const [hasMore, setHasMore] = useState(true);
     const [games, setGames] = useState([]);
