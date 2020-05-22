@@ -4,6 +4,13 @@ import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { getGameColor } from '../../utils/game';
 
+/**
+ * Composant GamesListItem :
+ * Représente une partie dans l'historique des parties
+ *
+ * props :
+ *   - game : La partie
+ */
 function GamesListItem({ game }) {
     return (
         <Card className="mb-3">

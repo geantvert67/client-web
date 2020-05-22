@@ -4,6 +4,10 @@ import { useDataFromUrl } from '../../utils/data';
 import LeaderboardList from './LeaderboardList';
 import LeaderboardButtons from './LeaderboardButtons';
 
+/**
+ * Composant LeaderboardWrapper :
+ * Récupère le classement des meilleurs joueurs
+ */
 function LeaderboardWrapper() {
     const [filter, setFilter] = useState('SUPREMACY');
     const { loading, error, data: players } = useDataFromUrl(

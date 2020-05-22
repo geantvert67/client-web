@@ -3,6 +3,15 @@ import { Row, Col } from 'react-bootstrap';
 import { secondsToDuration } from '../../utils/utils';
 import { Link } from 'react-router-dom';
 
+/**
+ * Composant LeaderboardListItem :
+ * Représente un joueur dans le classement des meilleurs joueurs
+ *
+ * props :
+ *   - index : La position du joueur dans le classement
+ *   - player : Le joueur
+ *   - filter : Le critère de classement
+ */
 function LeaderboardListItem({ index, player, filter }) {
     const getScore = () => {
         switch (filter) {

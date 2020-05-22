@@ -3,6 +3,13 @@ import { Card, Row, Col } from 'react-bootstrap';
 import moment from 'moment';
 import { Doughnut } from 'react-chartjs-2';
 
+/**
+ * Composant Statistics :
+ * Affiche les statistiques d'un utilisateur
+ *
+ * props :
+ *   - user : L'utilisateur et ses statistiques
+ */
 function Statistics({ user }) {
     const data = {
         labels: ['Victoires', 'Égalités', 'Défaites'],

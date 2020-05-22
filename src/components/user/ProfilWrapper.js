@@ -5,6 +5,10 @@ import { getByIdWithStats } from '../../service/user';
 import Error from '../Error';
 import Statistics from './Statistics';
 
+/**
+ * Composant ProfilWrrapper :
+ * Récupère le profil d'un utilisateur ainsi que ses statistiques
+ */
 function ProfilWrapper() {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);

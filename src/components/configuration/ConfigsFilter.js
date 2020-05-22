@@ -5,6 +5,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import InputGroup from 'react-bootstrap/InputGroup';
 
+/**
+ * Composant ConfigsFilter:
+ * Filtres sur la liste des configurations
+ *
+ * props :
+ *   - setName : Fonction permettant de modifier le filtre sur le nom
+ *   - gameModes : Liste des modes de jeu disponibles
+ *   - gameModeFilter : Liste des filtres sur le mode de jeu
+ *   - setGameModeFilter : Fonction permettant de modifier la liste des filtres
+ *                         sur le mode de jeu
+ */
 function ConfigsFilter({
     setName,
     gameModes,
