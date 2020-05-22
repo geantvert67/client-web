@@ -2,6 +2,14 @@ import React from 'react';
 import LeaderboardListItem from './LeaderboardListItem';
 import { Card, Row, Col } from 'react-bootstrap';
 
+/**
+ * Composant LeaderboardList :
+ * Classement des meilleurs joueurs
+ *
+ * props :
+ *   - players : Les joueurs
+ *   - filter : Le critère de classement
+ */
 function LeaderboardList({ players, filter }) {
     const getScoreName = () => {
         switch (filter) {
