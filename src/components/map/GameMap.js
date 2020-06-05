@@ -48,8 +48,8 @@ function GameMap({
     setSleepingAction,
     configId
 }) {
-    const [position, setPosition] = useState(defaultPosition);
-    const [zoom, setZoom] = useState(17);
+    const [position] = useState(defaultPosition);
+    const [zoom] = useState(17);
     const map = useRef(null);
     const { config } = useConfig();
     const {
@@ -83,11 +83,11 @@ function GameMap({
         setForbiddenZoneIndex(zoneIndex);
         setForbiddenZones(forbZones);
 
-        getFlags(configId).then(flags => setFlagsPositions(formatFlags(flags)));
+        getFlags(configId).then(res => setFlagsPositions(formatFlags(res)));
 
         getItemsModel(configId).then(res => setModelItems(res.data));
 
-        getItems(configId).then(items => setItems(formatItems(items)));
+        getItems(configId).then(res => setItems(formatItems(res)));
     }, []);
 
     useEffect(() => {

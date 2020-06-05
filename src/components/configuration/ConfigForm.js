@@ -31,11 +31,11 @@ function ConfigForm({ config }) {
     const [duration, setDuration] = useState(config ? config.duration : null);
     const [error, setError] = useState('');
 
-    const validate = config => {
+    const validate = data => {
         if (
-            (config.gameMode != 'SUPREMACY' && !duration) ||
-            (config.gameMode != 'SUPREMACY' && duration < 60) ||
-            (config.gameMode != 'SUPREMACY' && duration > 31536000)
+            (data.gameMode != 'SUPREMACY' && !duration) ||
+            (data.gameMode != 'SUPREMACY' && duration < 60) ||
+            (data.gameMode != 'SUPREMACY' && duration > 31536000)
         ) {
             setError(
                 'Veuillez entrer une durée comprise entre 60 secondes et 1 an'
@@ -50,11 +50,12 @@ function ConfigForm({ config }) {
         return false;
     };
 
-    const createConfig = config => {
-        if (validate(config)) {
-            config.flagCaptureDuration = flagCaptureDuration;
-            config.duration = config.gameMode != 'SUPREMACY' ? duration : null;
-            create(serializeConfig(config))
+    const createConfig = newConfig => {
+        if (validate(newConfig)) {
+            newConfig.flagCaptureDuration = flagCaptureDuration;
+            newConfig.duration =
+                config.gameMode != 'SUPREMACY' ? duration : null;
+            create(serializeConfig(newConfig))
                 .then(res => {
                     const configId = res.data.id;
                     initializeItemModels(duration, configId).then(() =>

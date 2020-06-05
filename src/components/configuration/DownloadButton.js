@@ -139,10 +139,8 @@ function DownloadButton({ configId }) {
                 const config = res.data;
 
                 return getAreas(configId)
-                    .then(res => {
-                        let zone = res.data.filter(
-                            z => z.forbidden === false
-                        )[0];
+                    .then(r => {
+                        let zone = r.data.filter(z => z.forbidden === false)[0];
                         zone = formatZone(zone.position.coordinates[0]);
 
                         return Promise.all([
