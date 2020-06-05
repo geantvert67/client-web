@@ -48,7 +48,7 @@ export const FlagProvider = ({ children }) => {
             isInZone(point.latlng.lat, point.latlng.lng, mainZone)
             ? setFlagsPositions(flagsPositions.concat(newPositon))
             : toast.error(
-                  'Veuillez placer les drapeaux dans une zone de jeu valide'
+                  'Veuillez placer les cristaux dans une zone de jeu valide'
               );
     };
 
