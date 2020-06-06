@@ -72,12 +72,14 @@ function GameMap({
         let zoneIndex = -1;
         getAreas(configId).then(zones => {
             zoneIndex++;
-            zones.data.map(zone =>
-                !zone.forbidden
-                    ? (setMainZone(formatMainZone(zone)),
-                      centerGameArea(formatMainZone(zone)))
-                    : forbZones.push(formatForbiddenZone(zoneIndex, zone))
-            );
+            zones.data.forEach(zone => {
+                if (!zone.forbidden) {
+                    setMainZone(formatMainZone(zone));
+                    centerGameArea(formatMainZone(zone));
+                } else {
+                    forbZones.push(formatForbiddenZone(zoneIndex, zone));
+                }
+            });
         });
 
         setForbiddenZoneIndex(zoneIndex);
