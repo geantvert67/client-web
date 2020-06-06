@@ -247,7 +247,7 @@ export const ITEMS_TIPS = {
         tip: (
             <span>
                 <strong> Sentinelle</strong>
-                <br /> Augmente le temps d'invulnérabilité d’un crystal capturé
+                <br /> Augmente le temps d'invulnérabilité d’un cristal capturé
             </span>
         ),
         placement: 'right'

@@ -1,11 +1,6 @@
 import React from 'react';
 import { OverlayTrigger, Tooltip, Image, Row, Col } from 'react-bootstrap';
-import {
-    CONFIG_TIPS,
-    ITEMS_TIPS,
-    GENERAL_TIPS,
-    GAME_TIPS
-} from '../utils/tips';
+import { CONFIG_TIPS, ITEMS_TIPS, GENERAL_TIPS } from '../utils/tips';
 import { getItemImage } from '../utils/utils';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
