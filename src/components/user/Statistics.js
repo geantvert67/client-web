@@ -92,7 +92,7 @@ function Statistics({ user }) {
                             </h4>
                         </Col>
                         <Col xs="auto">
-                            <label>Pièges ayant fait mouche</label>
+                            <label>Joueurs piégés</label>
                             <h4 className="mb-0">{user.Statistic.nbTraps}</h4>
                         </Col>
                     </Row>
