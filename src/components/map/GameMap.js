@@ -24,8 +24,9 @@ import { useMainZone } from '../../utils/useMainZone';
 import { useForbiddenZone } from '../../utils/useForbiddenZone';
 import { useFlag } from '../../utils/useFlag';
 import { useItem } from '../../utils/useItem';
+import { updateConfig } from '../../utils/config';
 import { toast } from 'react-toastify';
-import { Button } from 'react-bootstrap';
+import { Button, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faVectorSquare } from '@fortawesome/free-solid-svg-icons';
 import { IconOverlay } from '../OverlayTip';
@@ -48,6 +49,7 @@ function GameMap({
     setSleepingAction,
     configId
 }) {
+    const [loading, setLoading] = useState(false);
     const [position] = useState(defaultPosition);
     const [zoom] = useState(17);
     const map = useRef(null);
@@ -176,18 +178,51 @@ function GameMap({
         }
     };
 
+    const saveMap = () => {
+        if (mainZone.length === 0) {
+            toast.error(
+                "Veuillez créer une zone de jeu avant d'enregistrer la carte"
+            );
+        } else {
+            setLoading(true);
+            updateConfig(
+                configId,
+                mainZone,
+                forbiddenZones,
+                flagsPositions,
+                items
+            )
+                .then(() => toast.success('Configuration enregistrée'))
+                .catch(() => toast.error('Une erreur est survenue'))
+                .finally(() => setLoading(false));
+        }
+    };
+
     return (
         defaultPosition.length !== 0 && (
             <>
-                <IconOverlay tipKey="centerOnGameArea">
-                    <Button
-                        variant="light"
-                        className="btn-toast"
-                        onClick={() => centerGameArea(mainZone)}
-                    >
-                        <FontAwesomeIcon icon={faVectorSquare} />
-                    </Button>
-                </IconOverlay>
+                <Row className="btn-toast">
+                    <Col xs="auto">
+                        <Button
+                            variant="success"
+                            className="btn-primary"
+                            disabled={loading}
+                            onClick={() => !loading && saveMap()}
+                        >
+                            {loading ? 'Enregistrement ...' : 'Enregistrer'}
+                        </Button>
+                    </Col>
+                    <Col xs="auto">
+                        <IconOverlay tipKey="centerOnGameArea">
+                            <Button
+                                variant="light"
+                                onClick={() => centerGameArea(mainZone)}
+                            >
+                                <FontAwesomeIcon icon={faVectorSquare} />
+                            </Button>
+                        </IconOverlay>
+                    </Col>
+                </Row>
 
                 <Map
                     ref={map}
