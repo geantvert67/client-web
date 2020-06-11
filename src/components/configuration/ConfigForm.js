@@ -176,6 +176,7 @@ function ConfigForm({ config }) {
                         <label className="mt-5">
                             Nombre maximum de joueurs par équipe
                         </label>
+                        <HelpButton tipKey="maxPlayers" />
                         <Input
                             type="number"
                             name="maxPlayers"
