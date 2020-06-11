@@ -13,6 +13,7 @@ import ItemActions from './ItemActions';
 import { useItem } from '../../utils/useItem';
 import { toast } from 'react-toastify';
 import ConfigMenu from '../configuration/ConfigMenu';
+import ResetAction from './ResetAction';
 
 /**
  * Composant MapMenu :
@@ -60,6 +61,8 @@ function MapMenu({ action, setAction, setSleepingAction }) {
                             <ConfigMenu level={3} configId={configurationId} />
                         </Col>
                     </Row>
+
+                    <ResetAction action={action} setAction={setAction} />
 
                     <MainZoneActions
                         action={action}

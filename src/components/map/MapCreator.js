@@ -14,7 +14,7 @@ import { ConfigProvider } from '../../utils/useConfig';
  * Interface de création de la zone de jeu
  */
 function MapCreator() {
-    const [action, setAction] = useState('mainZone');
+    const [action, setAction] = useState(null);
     const [sleepingAction, setSleepingAction] = useState('');
     const [devicePosition, setDevicePosition] = useState([]);
     const { configurationId } = useParams();

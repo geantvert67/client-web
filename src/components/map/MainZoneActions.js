@@ -20,7 +20,7 @@ import { IconOverlay } from '../OverlayTip';
  */
 function MainZoneActions({ action, setAction, setSleepingAction }) {
     const { removeAll } = useMainZone();
-    const [isOpen, setIsOpen] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
     const iconGameArea = require('../../img/gameArea.png');
 
     return (
