@@ -16,11 +16,26 @@ import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 export function HelpButton({ tipKey }) {
     const tip = CONFIG_TIPS[tipKey];
 
+    const renderTooltip = props => {
+        return (
+            <Tooltip id={tipKey} {...props}>
+                {tip.tip}
+            </Tooltip>
+        );
+    };
+
     return (
         <>
             <OverlayTrigger
                 placement={tip.placement}
-                overlay={<Tooltip>{tip.tip}</Tooltip>}
+                overlay={renderTooltip}
+                popperConfig={{
+                    modifiers: {
+                        preventOverflow: {
+                            enabled: false
+                        }
+                    }
+                }}
             >
                 <FontAwesomeIcon
                     className="ml-2"
@@ -67,20 +82,29 @@ export function ItemOverlay({
         setSelectedModelItem(index);
     };
 
+    const renderTooltip = props => {
+        return (
+            <Tooltip id={item.name} {...props}>
+                <Row>
+                    <Col md={{ offset: 1, span: 10 }}>{tip.tip}</Col>
+                </Row>
+            </Tooltip>
+        );
+    };
+
     return (
         <>
             {tip && (
                 <OverlayTrigger
                     placement={tip.placement}
-                    overlay={
-                        <Tooltip>
-                            <Row>
-                                <Col md={{ offset: 1, span: 10 }}>
-                                    {tip.tip}
-                                </Col>
-                            </Row>
-                        </Tooltip>
-                    }
+                    overlay={renderTooltip}
+                    popperConfig={{
+                        modifiers: {
+                            preventOverflow: {
+                                enabled: false
+                            }
+                        }
+                    }}
                 >
                     <Col
                         xs="auto"
@@ -107,14 +131,27 @@ export function ItemOverlay({
 export function IconOverlay({ children, tipKey }) {
     const tip = GENERAL_TIPS[tipKey];
 
+    const renderTooltip = props => {
+        return (
+            <Tooltip id={tipKey} {...props}>
+                {tip.tip}
+            </Tooltip>
+        );
+    };
+
     return (
-        <>
-            <OverlayTrigger
-                placement={tip.placement}
-                overlay={<Tooltip>{tip.tip}</Tooltip>}
-            >
-                {children}
-            </OverlayTrigger>
-        </>
+        <OverlayTrigger
+            placement={tip.placement}
+            overlay={renderTooltip}
+            popperConfig={{
+                modifiers: {
+                    preventOverflow: {
+                        enabled: false
+                    }
+                }
+            }}
+        >
+            {children}
+        </OverlayTrigger>
     );
 }
