@@ -28,8 +28,10 @@ import { updateConfig } from '../../utils/config';
 import { toast } from 'react-toastify';
 import { Button, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faVectorSquare } from '@fortawesome/free-solid-svg-icons';
+import { faVectorSquare, faCopy } from '@fortawesome/free-solid-svg-icons';
 import { IconOverlay } from '../OverlayTip';
+import history from '../../utils/history';
+import { cloneConfiguration } from '../../service/configuration';
 
 /**
  * Composant GameMap :
@@ -41,13 +43,15 @@ import { IconOverlay } from '../OverlayTip';
  *   - setAction : Setter de la variable action
  *   - setSleepingAction : Setter d'une variable d'action dormante
  *   - configId : Id de la configuration en cours d'édition
+ *   - isOwner : Si l'utilisateur possède la configuration ou non
  */
 function GameMap({
     defaultPosition,
     action,
     setAction,
     setSleepingAction,
-    configId
+    configId,
+    isOwner
 }) {
     const [loading, setLoading] = useState(false);
     const [position] = useState(defaultPosition);
@@ -198,30 +202,58 @@ function GameMap({
         }
     };
 
+    const cloneConfig = () => {
+        cloneConfiguration(configId)
+            .then(res => {
+                history.push(`/configs/${res.data.id}/edit`);
+            })
+            .catch(() => toast.error('Impossible de cloner la configuration'));
+    };
+
     return (
         defaultPosition.length !== 0 && (
             <>
                 <Row className="btn-toast">
-                    <Col xs="auto">
-                        <Button
-                            variant="success"
-                            className="btn-primary"
-                            disabled={loading}
-                            onClick={() => !loading && saveMap()}
-                        >
-                            {loading ? 'Enregistrement ...' : 'Enregistrer'}
-                        </Button>
-                    </Col>
-                    <Col xs="auto">
-                        <IconOverlay tipKey="centerOnGameArea">
-                            <Button
-                                variant="light"
-                                onClick={() => centerGameArea(mainZone)}
-                            >
-                                <FontAwesomeIcon icon={faVectorSquare} />
-                            </Button>
-                        </IconOverlay>
-                    </Col>
+                    {isOwner ? (
+                        <>
+                            <Col xs="auto">
+                                <Button
+                                    variant="success"
+                                    className="btn-primary"
+                                    disabled={loading}
+                                    onClick={() => !loading && saveMap()}
+                                >
+                                    {loading
+                                        ? 'Enregistrement ...'
+                                        : 'Enregistrer'}
+                                </Button>
+                            </Col>
+                            <Col xs="auto">
+                                <IconOverlay tipKey="centerOnGameArea">
+                                    <Button
+                                        variant="light"
+                                        onClick={() => centerGameArea(mainZone)}
+                                    >
+                                        <FontAwesomeIcon
+                                            icon={faVectorSquare}
+                                        />
+                                    </Button>
+                                </IconOverlay>
+                            </Col>
+                        </>
+                    ) : (
+                        <Col xs="auto">
+                            <IconOverlay tipKey="clone">
+                                <Button
+                                    variant="success"
+                                    className="btn-primary"
+                                    onClick={() => cloneConfig()}
+                                >
+                                    <FontAwesomeIcon icon={faCopy} size="lg" />
+                                </Button>
+                            </IconOverlay>
+                        </Col>
+                    )}
                 </Row>
 
                 <Map

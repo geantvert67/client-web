@@ -113,6 +113,11 @@ export const GENERAL_TIPS = {
         placement: 'top'
     },
 
+    seeMap: {
+        tip: 'Voir la carte',
+        placement: 'top'
+    },
+
     mask: {
         tip: 'Masquer sur la carte',
         placement: 'top'

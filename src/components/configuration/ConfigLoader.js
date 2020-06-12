@@ -49,6 +49,11 @@ function ConfigLoader() {
                 path="/configs/:configurationId/map"
                 component={MapCreator}
             />
+            <PrivateRoute
+                exact
+                path="/configs/:configurationId/preview"
+                component={() => <MapCreator isOwner={false} />}
+            />
             <Route component={Error} />
         </Switch>
     ) : (
