@@ -58,6 +58,15 @@ export function ItemOverlay({
     const tip = ITEMS_TIPS[item.name];
     const iconUrl = getItemImage(item);
 
+    const handleAction = () => {
+        if (action === 'showPopup') setSleepingAction('items');
+        else if (action === 'items' && selectedModelItem === index)
+            setAction(null);
+        else setAction('items');
+
+        setSelectedModelItem(index);
+    };
+
     return (
         <>
             {tip && (
@@ -79,12 +88,7 @@ export function ItemOverlay({
                             'items' &&
                             selectedModelItem === index &&
                             'actions-item-selected'}`}
-                        onClick={() => {
-                            action === 'showPopup'
-                                ? setSleepingAction('items')
-                                : setAction('items');
-                            setSelectedModelItem(index);
-                        }}
+                        onClick={handleAction}
                     >
                         <Image
                             style={{
@@ -110,7 +114,7 @@ export function IconOverlay({ children, tipKey }) {
                 overlay={<Tooltip>{tip.tip}</Tooltip>}
             >
                 {children}
-            </OverlayTrigger>{' '}
+            </OverlayTrigger>
         </>
     );
 }

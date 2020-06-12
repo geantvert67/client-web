@@ -46,6 +46,7 @@ function MapCreator() {
                                 <MapMenuWrapper
                                     action={action}
                                     setAction={setAction}
+                                    setSleepingAction={setSleepingAction}
                                 />
                                 <GameMap
                                     configId={configurationId}
