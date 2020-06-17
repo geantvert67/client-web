@@ -49,7 +49,6 @@ function DownloadButton({ configId }) {
 
 function DownloadModal({ configId, showModal, handleClose }) {
     const [loading, setLoading] = useState(false);
-    const [mode, setMode] = useState('rapide');
 
     const configRadius = (config, zone) => {
         const newConfig = { id: config.id };
@@ -194,12 +193,12 @@ function DownloadModal({ configId, showModal, handleClose }) {
             });
     };
 
-    const downloadConfig = mode => {
+    const downloadConfig = () => {
         setLoading(true);
         checkTeams()
             .then(() => {
                 return calculateRadius().then(() => {
-                    return exportConfiguration(configId, mode)
+                    return exportConfiguration(configId)
                         .then(res => {
                             const url = window.URL.createObjectURL(
                                 new Blob([res.data])
@@ -219,11 +218,6 @@ function DownloadModal({ configId, showModal, handleClose }) {
             .finally(() => setLoading(false));
     };
 
-    const handleDownload = mode => {
-        setMode(mode);
-        downloadConfig(mode);
-    };
-
     return (
         <Modal show={showModal} onHide={handleClose} centered>
             <Modal.Header>
@@ -235,22 +229,6 @@ function DownloadModal({ configId, showModal, handleClose }) {
                     Docker et Docker-compose sur votre ordinateur.
                 </label>
 
-                <h5>Installation rapide (MacOS)</h5>
-                <label>
-                    Aller dans le dossier Config_python > build puis
-                    double-cliquer sur CrystalZ-1.0
-                </label>
-                <Button
-                    variant="success"
-                    className="btn-primary"
-                    onClick={() => handleDownload('rapide')}
-                    disabled={loading}
-                >
-                    {loading && mode === 'rapide'
-                        ? 'Téléchargement ...'
-                        : 'Télécharger'}
-                </Button>
-
                 <h5 className="mt-3">
                     Installation manuelle (MacOS, Linux, Windows)
                 </h5>
@@ -261,12 +239,10 @@ function DownloadModal({ configId, showModal, handleClose }) {
                 <Button
                     variant="success"
                     className="btn-primary"
-                    onClick={() => handleDownload('manuel')}
+                    onClick={downloadConfig}
                     disabled={loading}
                 >
-                    {loading && mode === 'manuel'
-                        ? 'Téléchargement ...'
-                        : 'Télécharger'}
+                    {loading ? 'Téléchargement ...' : 'Télécharger'}
                 </Button>
             </Modal.Body>
         </Modal>
