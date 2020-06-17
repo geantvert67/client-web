@@ -56,6 +56,12 @@ function FlagActions({ action, setAction, setSleepingAction }) {
             .catch(err => toast.error(err.response.data));
     };
 
+    const handleAction = () => {
+        if (action === 'showPopup') setSleepingAction('flags');
+        else if (action === 'flags') setAction(null);
+        else setAction('flags');
+    };
+
     return (
         <>
             <Row
@@ -72,11 +78,7 @@ function FlagActions({ action, setAction, setSleepingAction }) {
                             xs="auto"
                             className={`mb-3 mr-3 actions-item ${action ===
                                 'flags' && 'actions-item-selected'}`}
-                            onClick={() =>
-                                action === 'showPopup'
-                                    ? setSleepingAction('flags')
-                                    : setAction('flags')
-                            }
+                            onClick={handleAction}
                         >
                             <Image
                                 style={{ maxWidth: '25px', maxHeight: '25px' }}

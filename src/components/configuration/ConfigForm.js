@@ -13,6 +13,7 @@ import DurationInput from '../forms/DurationInput';
 import { initializeItemModels } from '../../utils/items';
 import { HelpButton } from '../OverlayTip';
 import { GAME_TIPS } from '../../utils/tips';
+import { toast } from 'react-toastify';
 
 /**
  * Composant ConfigForm :
@@ -54,7 +55,7 @@ function ConfigForm({ config }) {
         if (validate(newConfig)) {
             newConfig.flagCaptureDuration = flagCaptureDuration;
             newConfig.duration =
-                config.gameMode != 'SUPREMACY' ? duration : null;
+                newConfig.gameMode != 'SUPREMACY' ? duration : null;
             create(serializeConfig(newConfig))
                 .then(res => {
                     const configId = res.data.id;
@@ -73,9 +74,7 @@ function ConfigForm({ config }) {
             newConfig.duration =
                 newConfig.gameMode != 'SUPREMACY' ? duration : null;
             updateById(serializeConfig(newConfig))
-                .then(res => {
-                    history.push(`/configs/${res.data.id}/teams`);
-                })
+                .then(() => toast.success('Configuration modifiée'))
                 .catch(err => setError(err.response.data));
         }
     };
@@ -177,6 +176,7 @@ function ConfigForm({ config }) {
                         <label className="mt-5">
                             Nombre maximum de joueurs par équipe
                         </label>
+                        <HelpButton tipKey="maxPlayers" />
                         <Input
                             type="number"
                             name="maxPlayers"
@@ -210,7 +210,7 @@ function ConfigForm({ config }) {
                                     className="btn-primary"
                                     type="submit"
                                 >
-                                    {config ? 'Modifier' : 'Créer'}
+                                    {config ? 'Enregistrer' : 'Créer'}
                                 </Button>
                             </Col>
                         </Row>
